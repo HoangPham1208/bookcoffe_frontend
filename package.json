@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -36,6 +36,8 @@
     ]
   },
   "devDependencies": {
+    "flowbite": "^2.2.1",
+    "flowbite-react": "^0.7.2",
     "react-router-dom": "^6.21.0",
     "tailwindcss": "^3.3.6"
   }
