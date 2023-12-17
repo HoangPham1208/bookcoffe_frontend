@@ -1,8 +1,10 @@
 import React from "react";
 import NavBar from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddBook() {
+  const navigate = useNavigate();
   return (
     <div>
       <NavBar />
@@ -10,7 +12,7 @@ export default function AddBook() {
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
             <li>
-              <button className="hover:underline">Sách</button>
+              <button onClick={()=>navigate("/book")} className="hover:underline">Sách</button>
             </li>
             <li>
               <button>Bàn</button>
@@ -56,7 +58,13 @@ export default function AddBook() {
             {/* Mô tả */}
             <div className="mb-5">
               <Label for="mota">Mô tả</Label>
-              <Textarea id="mota" placeholder="Mô tả" className="w-full" required rows={5}/>
+              <Textarea
+                id="mota"
+                placeholder="Mô tả"
+                className="w-full"
+                required
+                rows={5}
+              />
             </div>
             {/* Giá */}
             <div className="mb-5">
@@ -69,10 +77,13 @@ export default function AddBook() {
               <TextInput id="kho" placeholder="Kho" className="w-full" />
             </div>
             <div className="flex place-content-end gap-10">
-                <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">Hủy</Button>
-                <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">Hoàn tất</Button>
+              <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+                Hủy
+              </Button>
+              <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                Hoàn tất
+              </Button>
             </div>
-
           </div>
         </div>
       </main>
