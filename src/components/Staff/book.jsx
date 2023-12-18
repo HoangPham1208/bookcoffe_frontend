@@ -26,19 +26,19 @@ export default function Book() {
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
             <li>
-              <button className="hover:underline">Sách</button>
+              <button className="underline">Sách</button>
             </li>
             <li>
-              <button>Bàn</button>
+              <button  className="hover:underline">Bàn</button>
             </li>
             <li>
-              <button>Đơn hàng</button>
+              <button  className="hover:underline">Đơn hàng</button>
             </li>
             <li>
-              <button>Voucher</button>
+              <button  className="hover:underline">Voucher</button>
             </li>
             <li>
-              <button>Nhân viên</button>
+              <button  className="hover:underline">Nhân viên</button>
             </li>
           </ul>
         </div>
@@ -58,7 +58,7 @@ export default function Book() {
               <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Tên</Table.HeadCell>
               <Table.HeadCell>Kho</Table.HeadCell>
-              <Table.HeadCell>Price</Table.HeadCell>
+              <Table.HeadCell>Giá</Table.HeadCell>
               <Table.HeadCell>
                 <span className="sr-only">Edit</span>
               </Table.HeadCell>
