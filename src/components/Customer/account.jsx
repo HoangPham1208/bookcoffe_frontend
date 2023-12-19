@@ -1,4 +1,4 @@
-import Navbar from "../navbar";
+import { Navbar } from "../navbar";
 import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
 
@@ -26,7 +26,9 @@ export default function Account() {
                   alt="avatar"
                   className="rounded-full h-96"
                 />
-                <Button className="mt-5 ml-28 bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">Change avatar</Button>
+                <Button className="mt-5 ml-28 bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                  Change avatar
+                </Button>
                 {/* <Label for="avatar" className="ml-40">Avatar</Label> */}
               </div>
             </div>
@@ -100,7 +102,9 @@ export default function Account() {
             <div className="w-2/12 ml-36 font-semibold text-xl">Mật khẩu</div>
             <div className="w-full mr-36">
               <div className="mb-5">
-                <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">Change password</Button>
+                <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+                  Change password
+                </Button>
               </div>
               <div className="mb-5">
                 <Label for="old password">Old password</Label>
@@ -124,10 +128,14 @@ export default function Account() {
             <div className="flex">
               <div className="ml-36 grid grid-cols-2 gap-10">
                 <div className="place-self-center">
-                  <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">Save</Button>
+                  <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                    Save
+                  </Button>
                 </div>
                 <div className="place-self-center ">
-                  <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">Cancel</Button>
+                  <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+                    Cancel
+                  </Button>
                 </div>
               </div>
               <div className="w-full"></div>

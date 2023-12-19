@@ -38,7 +38,7 @@ export default function Wrapper() {
 
   return (
     <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-      <Carousel slide={false}>
+      <Carousel slide={true}>
         {carouselItems.map((item, index) => (
           <div
             key={index}

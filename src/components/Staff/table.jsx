@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../navbar";
+import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
@@ -29,30 +29,28 @@ const items2 = [
     quantity: "10",
     voucher: "myvoucher123",
     totalPrice: "1000000",
-  }
-  ,
+  },
   {
     number: "1",
     name: "Bàn họp 1",
     quantity: "10",
     voucher: "myvoucher123",
     totalPrice: "1000000",
-  }
-  ,
+  },
   {
     number: "1",
     name: "Bàn họp 1",
     quantity: "10",
     voucher: "myvoucher123",
     totalPrice: "1000000",
-  }
+  },
 ];
 
 export default function MyTable() {
   const navigate = useNavigate();
   return (
     <div>
-      <NavBar />
+      <Navbar />
       <main>
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
@@ -77,9 +75,7 @@ export default function MyTable() {
         {/* Đặt bàn */}
 
         <div className="flex ml-36 gap-4">
-          <Button
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
-          >
+          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
             Thêm bàn
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
@@ -119,7 +115,7 @@ export default function MyTable() {
           </Table>
         </div>
         <hr className="border-black mx-36 my-10" />
-        
+
         {/* Lích sử đặt bàn */}
 
         <div className="ml-36 text-lg font-semibold">Lịch sử đặt bàn</div>

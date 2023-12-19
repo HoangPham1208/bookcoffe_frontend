@@ -1,30 +1,29 @@
 import React from "react";
-import NavBar from "../navbar";
+import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 const items2 = [
-    {
-        number: "1",
-        name: "Nguyễn Văn A",
-        timeStart: "10/10/2021",
-        salary: "1000000",
-    }
-    ,
-    {
-        number: "1",
-        name: "Nguyễn Văn A",
-        timeStart: "10/10/2021",
-        salary: "1000000",
-    }
+  {
+    number: "1",
+    name: "Nguyễn Văn A",
+    timeStart: "10/10/2021",
+    salary: "1000000",
+  },
+  {
+    number: "1",
+    name: "Nguyễn Văn A",
+    timeStart: "10/10/2021",
+    salary: "1000000",
+  },
 ];
 
 export default function Staff() {
   const navigate = useNavigate();
   return (
     <div>
-      <NavBar />
+      <Navbar />
       <main>
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">

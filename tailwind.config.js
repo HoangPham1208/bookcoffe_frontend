@@ -7,6 +7,31 @@ module.exports = {
   ],
   theme: {
     extend: {
+      
+      colors: {
+        'blue-secondary': '#1488db',
+        'blue-selection': '#8ac4ed',
+        'card-background': '#e8f3fb',
+        'page-background': '#f7f9fc',
+        'button-primary': '#032b91',
+        'button-primary-hover': '#0d3eba',
+        'button-primary-active': '#032478',
+        'button-hover': '#DEEDF7',
+        'button-active': '#BBD7EC',
+        'button-dark': '#000000',
+        // 'button-primary-dark': '#0545E6',
+        'button-primary-dark': '#0539be',
+        // 'button-primary-hover-dark': '#1959FA',
+        'button-primary-hover-dark': '#003edd',
+        // 'button-primary-active-dark': '#0338BF',
+        'button-primary-active-dark': '#0046f9',
+        'button-hover-dark': '#2a2a2e',
+        'button-active-dark': '#39393d',
+        'page-background-dark': '#131316',
+        'content-background-dark': '#39393C',
+        'card-background-dark': '#4f4f59',
+        'dark-surface': '#FBF8FD'
+      },
       fontFamily: {
         sans: ["Inter", defaultTheme.fontFamily.sans],
         bookTitle: ["Playfair Display", defaultTheme.fontFamily.serif],

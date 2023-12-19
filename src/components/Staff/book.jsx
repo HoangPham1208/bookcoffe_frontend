@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../navbar";
+import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ export default function Book() {
   const navigate = useNavigate();
   return (
     <div>
-      <NavBar />
+      <Navbar />
       <main>
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
@@ -29,21 +29,24 @@ export default function Book() {
               <button className="underline">Sách</button>
             </li>
             <li>
-              <button  className="hover:underline">Bàn</button>
+              <button className="hover:underline">Bàn</button>
             </li>
             <li>
-              <button  className="hover:underline">Đơn hàng</button>
+              <button className="hover:underline">Đơn hàng</button>
             </li>
             <li>
-              <button  className="hover:underline">Voucher</button>
+              <button className="hover:underline">Voucher</button>
             </li>
             <li>
-              <button  className="hover:underline">Nhân viên</button>
+              <button className="hover:underline">Nhân viên</button>
             </li>
           </ul>
         </div>
         <div className="flex ml-36 gap-4">
-          <Button onClick={()=>navigate('/addbook')} className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button
+            onClick={() => navigate("/addbook")}
+            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+          >
             Thêm sách
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
@@ -71,10 +74,7 @@ export default function Book() {
                       <Checkbox />
                     </Table.Cell>
                     <Table.Cell>
-                        <img
-                            src="/the-fault-in-our-stars.png"
-                            className="h-28"
-                        />
+                      <img src="/the-fault-in-our-stars.png" className="h-28" />
                     </Table.Cell>
                     <Table.Cell>{item.name}</Table.Cell>
                     <Table.Cell>{item.quantity}</Table.Cell>

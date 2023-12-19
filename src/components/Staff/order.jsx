@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../navbar";
+import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ export default function Order() {
   const navigate = useNavigate();
   return (
     <div>
-      <NavBar />
+      <Navbar />
       <main>
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
