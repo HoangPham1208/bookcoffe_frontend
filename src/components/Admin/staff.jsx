@@ -28,19 +28,41 @@ export default function Staff() {
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
             <li>
-              <button className="hover:underline">Sách</button>
+              <button
+                onClick={() => navigate("/book")}
+                className="hover:underline"
+              >
+                Sách
+              </button>
             </li>
             <li>
-              <button className="hover:underline">Bàn</button>
+              <button
+                onClick={() => navigate("/table")}
+                className="hover:underline"
+              >
+                Bàn
+              </button>
             </li>
             <li>
-              <button className="hover:underline">Đơn hàng</button>
+              <button
+                onClick={() => navigate("/order")}
+                className="hover:underline"
+              >
+                Đơn hàng
+              </button>
             </li>
             <li>
-              <button className="hover:underline">Voucher</button>
+              <button
+                onClick={() => navigate("/voucher")}
+                className="hover:underline"
+              >
+                Voucher
+              </button>
             </li>
             <li>
-              <button className="underline">Nhân viên</button>
+              <button onClick={() => navigate("/staff")} className="underline">
+                Nhân viên
+              </button>
             </li>
           </ul>
         </div>

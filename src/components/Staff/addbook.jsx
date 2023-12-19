@@ -11,22 +11,20 @@ export default function AddBook() {
       <main>
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
-            <li>
-              <button onClick={() => navigate("/book")} className="underline">
-                Sách
-              </button>
+          <li>
+              <button onClick={()=>navigate('/book')} className="underline">Sách</button>
             </li>
             <li>
-              <button className="hover:underline">Bàn</button>
+              <button onClick={()=>navigate('/table')} className="hover:underline">Bàn</button>
             </li>
             <li>
-              <button className="hover:underline">Đơn hàng</button>
+              <button onClick={()=>navigate('/order')} className="hover:underline">Đơn hàng</button>
             </li>
             <li>
-              <button className="hover:underline">Voucher</button>
+              <button onClick={()=>navigate('/voucher')} className="hover:underline">Voucher</button>
             </li>
             <li>
-              <button className="hover:underline">Nhân viên</button>
+              <button onClick={()=>navigate('/staff')} className="hover:underline">Nhân viên</button>
             </li>
           </ul>
         </div>
