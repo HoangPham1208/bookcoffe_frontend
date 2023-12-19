@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/HomePage/home";
 import Account from "./components/Customer/account";
+import NewBlog from "./components/HomePage/newblog";
 // Staff
 import Book from "./components/Staff/book";
 import AddBook from "./components/Staff/addbook";
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element = {<Home/>} />
         <Route path="/account" element = {<Account/>} />
+        <Route path="/newblog" element = {<NewBlog/>} />
         {/* Staff */}
         <Route path="/book" element = {<Book/>} />
         <Route path="/addbook" element = {<AddBook/>} />

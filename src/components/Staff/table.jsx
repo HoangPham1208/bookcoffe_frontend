@@ -29,23 +29,21 @@ const items2 = [
     quantity: "10",
     voucher: "myvoucher123",
     totalPrice: "1000000",
-  }
-  ,
+  },
   {
     number: "1",
     name: "Bàn họp 1",
     quantity: "10",
     voucher: "myvoucher123",
     totalPrice: "1000000",
-  }
-  ,
+  },
   {
     number: "1",
     name: "Bàn họp 1",
     quantity: "10",
     voucher: "myvoucher123",
     totalPrice: "1000000",
-  }
+  },
 ];
 
 export default function MyTable() {
@@ -57,19 +55,44 @@ export default function MyTable() {
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
             <li>
-              <button className="hover:underline">Sách</button>
+              <button
+                onClick={() => navigate("/book")}
+                className="hover:underline"
+              >
+                Sách
+              </button>
             </li>
             <li>
-              <button className="underline">Bàn</button>
+              <button
+                onClick={() => navigate("/table")}
+                className="underline"
+              >
+                Bàn
+              </button>
             </li>
             <li>
-              <button className="hover:underline">Đơn hàng</button>
+              <button
+                onClick={() => navigate("/order")}
+                className="hover:underline"
+              >
+                Đơn hàng
+              </button>
             </li>
             <li>
-              <button className="hover:underline">Voucher</button>
+              <button
+                onClick={() => navigate("/voucher")}
+                className="hover:underline"
+              >
+                Voucher
+              </button>
             </li>
             <li>
-              <button className="hover:underline">Nhân viên</button>
+              <button
+                onClick={() => navigate("/staff")}
+                className="hover:underline"
+              >
+                Nhân viên
+              </button>
             </li>
           </ul>
         </div>
@@ -77,9 +100,7 @@ export default function MyTable() {
         {/* Đặt bàn */}
 
         <div className="flex ml-36 gap-4">
-          <Button
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
-          >
+          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
             Thêm bàn
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
@@ -119,7 +140,7 @@ export default function MyTable() {
           </Table>
         </div>
         <hr className="border-black mx-36 my-10" />
-        
+
         {/* Lích sử đặt bàn */}
 
         <div className="ml-36 text-lg font-semibold">Lịch sử đặt bàn</div>
