@@ -15,23 +15,22 @@ function LoginDialog({ visible, onClose }) {
     const userData = {
       userName: userName,
       password: password,
-    }
-    axios.post("http://localhost:5000/login", userData)
-    .then(res => {
-      console.log(res.data);
-      // cookie setup
-      cookie.set("accessToken", res.data.accessToken, {path: "/"});
-      cookie.set("refreshToken", res.data.refreshToken, {path: "/"});
-      cookie.set("userName", res.data.userName, {path: "/"});
-      cookie.set("role", res.data.role, {path: "/"});
-      
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-  const handleRegister = () => {
-  }
+    };
+    axios
+      .post("http://localhost:5000/login", userData)
+      .then((res) => {
+        console.log(res.data);
+        // cookie setup
+        cookie.set("accessToken", res.data.accessToken, { path: "/" });
+        cookie.set("refreshToken", res.data.refreshToken, { path: "/" });
+        cookie.set("userName", res.data.userName, { path: "/" });
+        cookie.set("role", res.data.role, { path: "/" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleRegister = () => {};
   return (
     <>
       <div
@@ -54,9 +53,24 @@ function LoginDialog({ visible, onClose }) {
             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </svg>
         </button>
-        <FloatingLabel onChange={(e)=>{setUserName(e.target.value)}} variant="standard" label="Tài khoản" className="w-80 select-none" />
-        <FloatingLabel type="password" onChange={(e)=>{setPassword(e.target.value)}} variant="standard" label="Mật khẩu" className="w-80 select-none" />
-        <div className="flex w-full flex-row justify-between px-2">
+        <FloatingLabel
+          onChange={(e) => {
+            setUserName(e.target.value);
+          }}
+          variant="standard"
+          label="Tài khoản"
+          className="w-80 select-none"
+        />
+        <FloatingLabel
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          variant="standard"
+          label="Mật khẩu"
+          className="w-80 select-none"
+        />
+        <div className="flex w-full flex-row justify-center px-2">
           <button
             onClick={handleLogin}
             id="edit-account"
@@ -65,10 +79,136 @@ function LoginDialog({ visible, onClose }) {
           >
             Đăng nhập
           </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function SignUpDialog({ visible, onClose }) {
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
+  const [wrongPassword, setWrongPassword] = useState(false); // [false, true]
+  const handleOnClose = () => {
+    onClose();
+  };
+  if (!visible) return null;
+  const handleRegister = () => {
+    if (!email.includes("@")) {
+      alert("Email không hợp lệ, vui lòng nhập lại!");
+      return;
+    }
+    if (password !== rePassword) {
+      alert("Mật khẩu không khớp, vui lòng nhập lại!");
+      return;
+    }
+    const userData = {
+      userName: userName,
+      email: email,
+      address: address,
+      password: password,
+    };
+    axios
+      .post("http://localhost:5000/signup", userData)
+      .then((res) => {
+        console.log(res.data);
+        // show success dialog
+        alert("Đăng ký thành công!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <>
+      <div
+        id="user-card-expanded"
+        className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
+      >
+        <p className="text-left font-bold w-full">Đăng ký</p>
+        <button
+          onClick={handleOnClose}
+          className="absolute right-5 top-0 cursor-pointer rounded-full transition-all hover:bg-[#d7e1e9] active:bg-[#b9cad8] dark:hover:bg-button-hover-dark dark:active:bg-button-active-dark"
+          id="user-card-expanded-close"
+        >
+          <svg
+            className="dark:fill-dark-surface"
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 -960 960 960"
+            width="24"
+          >
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg>
+        </button>
+        <FloatingLabel
+          onChange={(e) => {
+            setUserName(e.target.value);
+          }}
+          variant="standard"
+          label="Tài khoản"
+          className="w-80 select-none"
+        />
+        <FloatingLabel
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          variant="standard"
+          label="Email"
+          className="w-80 select-none"
+        />
+        <FloatingLabel
+          onChange={(e) => {
+            setAddress(e.target.value);
+          }}
+          variant="standard"
+          label="Địa chỉ"
+          className="w-80 select-none"
+        />
+        <FloatingLabel
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          variant="standard"
+          label="Mật khẩu"
+          className="w-80 select-none"
+        />
+        <div>
+          <div class="relative">
+            <FloatingLabel
+              type="password"
+              onChange={(e) => {
+                setRePassword(e.target.value);
+                if (password === e.target.value) {
+                  setWrongPassword(false);
+                } else {
+                  setWrongPassword(true);
+                }
+              }}
+              variant="standard"
+              label="Nhập lại mật khẩu"
+              className="w-80 select-none"
+            />
+          </div>
+          {wrongPassword && (
+            <p
+              id="filled_error_help"
+              class="mt-2 text-xs text-red-600 dark:text-red-400"
+            >
+              <span class="font-medium"> Mật khẩu không khớp </span>
+            </p>
+          )}
+        </div>
+        <div className="flex w-full flex-row justify-center px-2">
           <button
-            id="logout"
+            onClick={handleRegister}
+            id="edit-account"
             type="button"
-            className="items inline-flex gap-x-3 rounded-full px-6 py-2.5 text-center text-black shadow-1 transition ease-out hover:bg-button-hover hover:shadow-3 active:bg-button-active dark:bg-button-dark dark:text-dark-surface dark:hover:bg-button-hover-dark dark:active:bg-button-active-dark"
+            className="items inline-flex gap-x-3 rounded-full bg-button-primary px-6 py-2.5 text-center text-white shadow-1 transition ease-out hover:bg-button-primary-hover hover:shadow-3 active:bg-button-primary-active dark:bg-button-primary-dark dark:hover:bg-button-primary-hover-dark dark:active:bg-button-primary-active-dark"
           >
             Đăng ký
           </button>
@@ -80,7 +220,9 @@ function LoginDialog({ visible, onClose }) {
 
 export function Navbar({ mode = "logout" }) {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
-  const handleOnClose = () => setShowLoginDialog(false);
+  const [showSignUpDialog, setShowSignUpDialog] = useState(false);
+  const handleLoginOnClose = () => setShowLoginDialog(false);
+  const handleSignUpOnClose = () => setShowSignUpDialog(false);
   return (
     <nav className="flex bg-[#A9C7F4] w-full h-[60px] px-[50px] justify-between items-center shrink-0 select-none">
       <a className="flex flex-row items-center h-1/2 space-x-2" href="/">
@@ -117,9 +259,15 @@ export function Navbar({ mode = "logout" }) {
       {(() => {
         if (mode === "login")
           return (
-            <div id="login" className="text-black font-bold">
-              <button onClick={() => setShowLoginDialog(true)}>
-                Đăng nhập/Đăng ký
+            <div id="login" className="text-black font-bold ">
+              <button className="mx-4" onClick={() => setShowLoginDialog(true)}>
+                Đăng nhập
+              </button>
+              <button
+                className="mx-4"
+                onClick={() => setShowSignUpDialog(true)}
+              >
+                Đăng ký
               </button>
             </div>
           );
@@ -177,8 +325,8 @@ export function Navbar({ mode = "logout" }) {
           );
         }
       })()}
-
-      <LoginDialog visible={showLoginDialog} onClose={handleOnClose} />
+      <LoginDialog visible={showLoginDialog} onClose={handleLoginOnClose} />
+      <SignUpDialog visible={showSignUpDialog} onClose={handleSignUpOnClose} />
     </nav>
   );
 }
