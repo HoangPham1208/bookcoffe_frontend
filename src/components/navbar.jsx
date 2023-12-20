@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FloatingLabel } from "flowbite-react";
 import axios from "axios";
 import Cookie from "universal-cookie";
+import RefreshTokenAPI from "./Utils/token";
 
 function LoginDialog({ visible, onClose }) {
   const [userName, setUserName] = useState("");
@@ -30,7 +31,6 @@ function LoginDialog({ visible, onClose }) {
         console.log(err);
       });
   };
-  const handleRegister = () => {};
   return (
     <>
       <div
@@ -120,6 +120,7 @@ function SignUpDialog({ visible, onClose }) {
       })
       .catch((err) => {
         console.log(err);
+        alert("Tên tài khoản đã tồn tại!");
       });
   };
   return (
@@ -218,6 +219,44 @@ function SignUpDialog({ visible, onClose }) {
   );
 }
 
+function Logout() {
+  const handleLogOut = () => {
+    const cookie = new Cookie();
+    // need to refresh token before call api
+    RefreshTokenAPI();
+    axios
+      .post("http://localhost:5000/logout", null, {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        console.log("logout success");
+        // cookie setup
+        cookie.remove("accessToken");
+        cookie.remove("refreshToken");
+        cookie.remove("userName");
+        cookie.remove("role");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <button onClick={handleLogOut} className="flex-none">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24"
+        width="24"
+        viewBox="0 0 512 512"
+      >
+        <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
+      </svg>
+    </button>
+  );
+}
+
 export function Navbar({ mode = "logout" }) {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showSignUpDialog, setShowSignUpDialog] = useState(false);
@@ -310,17 +349,7 @@ export function Navbar({ mode = "logout" }) {
                   Nhân viên
                 </p>
               </div>
-              <div className="flex-none">
-                <svg
-                  className="fill-black dark:fill-dark-surface"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height={24}
-                  viewBox="0 -960 960 960"
-                  width={24}
-                >
-                  <path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
-                </svg>
-              </div>
+              <Logout />
             </div>
           );
         }
