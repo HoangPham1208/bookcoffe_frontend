@@ -262,39 +262,84 @@ export function Navbar({ mode = "logout" }) {
   const [showSignUpDialog, setShowSignUpDialog] = useState(false);
   const handleLoginOnClose = () => setShowLoginDialog(false);
   const handleSignUpOnClose = () => setShowSignUpDialog(false);
+  const role = new Cookie().get("role");
   return (
     <nav className="flex bg-[#A9C7F4] w-full h-[60px] px-[50px] justify-between items-center shrink-0 select-none">
-      <a className="flex flex-row items-center h-1/2 space-x-2" href="/">
+      <a
+        className="flex flex-row items-center h-1/2 space-x-2 select-none"
+        href="#"
+      >
         <p className="font-bold">Book Cafe</p>
       </a>
       <ul className="flex justify-between items-center gap-[30px]">
-        <li>
-          <a className="hover:underline font-bold transition" href="/">
-            Trang chủ
-          </a>
-        </li>
-        <li>
-          <a className="hover:underline transition" href="/dish">
-            Món
-          </a>
-        </li>
-        <li>
-          <a className="hover:underline transition" href="/table">
-            Bàn
-          </a>
-        </li>
-        <li>
-          <a className="hover:underline transition" href="/cart/invoice">
-            Hoá đơn
-          </a>
-        </li>
-        <li>
-          <a className="hover:underline transition" href="/admin">
-            Quản lý
-          </a>
-        </li>
+        {(() => {
+          if (role === "staff") {
+            return (
+              <>
+                <li>
+                  <a className="hover:underline font-bold transition" href="#">
+                    Đơn nước
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Đơn đặt sách
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Lịch sử
+                  </a>
+                </li>
+              </>
+            );
+          } else if (role === "admin") {
+            return (
+              <>
+                <li>
+                  <a className="hover:underline font-bold transition" href="#">
+                    Trang chủ
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Quản lí
+                  </a>
+                </li>
+              </>
+            );
+          } else
+            return (
+              <>
+                <li>
+                  <a className="hover:underline font-bold transition" href="#">
+                    Trang chủ
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Sách
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Địa điểm
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline transition" href="#">
+                    Trợ giúp
+                  </a>
+                </li>
+              </>
+            );
+        })()}
       </ul>
-
       {(() => {
         if (mode === "login")
           return (
@@ -320,7 +365,7 @@ export function Navbar({ mode = "logout" }) {
                 className="text-black font-bold flex flex-row space-x-3"
                 id="cartButton"
               >
-                <a href="/cart">
+                <a href="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height={24}
