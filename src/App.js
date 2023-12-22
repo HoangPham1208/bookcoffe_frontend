@@ -11,10 +11,13 @@ import Account from "./components/Customer/account";
 
 // Staff
 import OrderDrink from "./components/Staff/orderDrink";
-import Book from "./components/Staff/book";
-import AddBook from "./components/Staff/addbook";
-import MyTable from "./components/Staff/table";
-import Order from "./components/Staff/order";
+import AddDrink from "./components/Staff/addDrink";
+import OrderBook from "./components/Staff/orderBook";
+
+import Book from "./components/book";
+import AddBook from "./components/addbook";
+import MyTable from "./components/table";
+import Order from "./components/order";
 
 // Admin
 import Manage from "./components/Admin/manage";
@@ -34,6 +37,9 @@ function App() {
           <Route path="/account" element={<Account />} />
           {/* Staff */}
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
+          <Route path="/staff/order/drinks/add" element={<AddDrink />} />
+          <Route path="/staff/order/books" element={<OrderBook />} />
+          {/* Don't know what to do with this route, do it later */}
           <Route path="/book" element={<Book />} />
           <Route path="/addBook" element={<AddBook />} />
           <Route path="/table" element={<MyTable />} />
