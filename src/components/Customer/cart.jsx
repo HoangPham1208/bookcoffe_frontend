@@ -16,20 +16,13 @@ const items = [
   },
 ];
 
-export default function OrderDrink() {
+export default function Cart() {
   return (
     <>
       <Navbar />
       <main>
-        <div className="mx-36 my-7 text-3xl font-semibold">Tạo đơn #128</div>
-        <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-            Thêm món
-          </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-            Xóa món
-          </Button>
-        </div>
+        <div className="mx-36 my-7 text-3xl font-semibold">Giỏ hàng</div>
+        
         <div className="grid grid-cols-2 my-5">
           <div>
             {items.map((item, index) => (
