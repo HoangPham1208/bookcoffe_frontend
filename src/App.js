@@ -6,9 +6,11 @@ import Home from "./components/Guest/home";
 import NewBlog from "./components/Guest/newblog";
 // Customer 
 import HomeUser from "./components/Customer/homeUser";
+import Cart from "./components/Customer/cart";
 import Account from "./components/Customer/account";
 
 // Staff
+import OrderDrink from "./components/Staff/orderDrink";
 import Book from "./components/Staff/book";
 import AddBook from "./components/Staff/addbook";
 import MyTable from "./components/Staff/table";
@@ -28,8 +30,10 @@ function App() {
         <Route element={<PrivateRoutes />}>
           {/* Customer */}
           <Route path="/homeUser" element={<HomeUser />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/account" element={<Account />} />
           {/* Staff */}
+          <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/book" element={<Book />} />
           <Route path="/addBook" element={<AddBook />} />
           <Route path="/table" element={<MyTable />} />
