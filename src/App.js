@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PrivateRoutes from "./components/Utils/protected";
+
 import Home from "./components/HomePage/home";
 import Account from "./components/Customer/account";
 import NewBlog from "./components/HomePage/newblog";
@@ -16,17 +18,20 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element = {<Home/>} />
-        <Route path="/account" element = {<Account/>} />
-        <Route path="/newblog" element = {<NewBlog/>} />
-        {/* Staff */}
-        <Route path="/book" element = {<Book/>} />
-        <Route path="/addbook" element = {<AddBook/>} />
-        <Route path="/table" element = {<MyTable/>} />
-        <Route path="/order" element = {<Order/>} />
-        {/* Admin */}
-        <Route path="/voucher" element = {<Voucher/>} />
-        <Route path="/staff" element = {<Staff/>} />
+        <Route path="/" element={<Home />} />
+        
+        <Route element={<PrivateRoutes />}>
+          <Route path="/account" element={<Account />} />
+          <Route path="/newblog" element={<NewBlog />} />
+          {/* Staff */}
+          <Route path="/book" element={<Book />} />
+          <Route path="/addbook" element={<AddBook />} />
+          <Route path="/table" element={<MyTable />} />
+          <Route path="/order" element={<Order />} />
+          {/* Admin */}
+          <Route path="/voucher" element={<Voucher />} />
+          <Route path="/staff" element={<Staff />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
