@@ -13,7 +13,7 @@ export default function BestBook() {
       imageSrc: '/the-fault-in-our-stars.png',
       title: 'The Fault in Our Stars',
       author: 'John Green',
-      rating: '4.95',
+      rating: '4.95' 
     },
     {
       imageSrc: '/the-fault-in-our-stars.png',
