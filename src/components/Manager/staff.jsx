@@ -77,7 +77,15 @@ export default function Staff() {
             Chi tiết
           </Button>
         </div>
-        <hr className="mt-10 ml-36" />
+        <div class="relative text-gray-600 mx-36 my-7">
+          <input
+            type="search"
+            name="serch"
+            placeholder="Tìm kiếm"
+            class="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+          />
+        </div>
+        <hr className="mt-10 ml-36 border-black" />
         <div className="overflow-x-auto mx-36 py-10">
           <Table hoverable>
             <Table.Head>

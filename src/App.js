@@ -14,15 +14,19 @@ import OrderDrink from "./components/Staff/orderDrink";
 import AddDrink from "./components/Staff/addDrink";
 import OrderBook from "./components/Staff/orderBook";
 
-import Book from "./components/book";
-import AddBook from "./components/addbook";
-import MyTable from "./components/table";
-import Order from "./components/order";
+// Manager
+import HomeManager from "./components/Manager/homeManager";
+import Book from "./components/Manager/book";
+import BookDetails from "./components/Manager/bookDetail";
+import AddCopy from "./components/Manager/addCopy";
+import Order from "./components/Manager/order";
+import Voucher from "./components/Manager/voucher";
+import Staff from "./components/Manager/staff";
 
 // Admin
-import Manage from "./components/Admin/manage";
-import Voucher from "./components/Admin/voucher";
-import Staff from "./components/Admin/staff";
+import HomeAdmin from "./components/Admin/homeAdmin";
+import AddBook from "./components/Admin/addbook";
+import MyLocation from "./components/Admin/location";
 
 function App() {
   return (
@@ -39,15 +43,23 @@ function App() {
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />
           <Route path="/staff/order/books" element={<OrderBook />} />
-          {/* Don't know what to do with this route, do it later */}
-          <Route path="/book" element={<Book />} />
-          <Route path="/addBook" element={<AddBook />} />
-          <Route path="/table" element={<MyTable />} />
-          <Route path="/order" element={<Order />} />
+          {/* Manager */}
+          <Route path="/manager" element={<HomeManager />} />
+          <Route path="/manager/books" element={<Book />} />
+          <Route path="/manager/books/:id" element={<BookDetails />} />
+          <Route path="/manager/books/:id/addcopy" element={<AddCopy />} />
+          <Route path="/manager/orders" element={<Order />} />
+          <Route path="/manager/vouchers" element={<Voucher />} />
+          <Route path="/manager/staff" element={<Staff />} />
           {/* Admin - inherited from staff */}
-          <Route path="/manage" element={<Manage />} />
-          <Route path="/voucher" element={<Voucher />} />
-          <Route path="/staff" element={<Staff />} />
+          <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/admin/books" element={<Book />} />
+          <Route path="/admin/books/add" element={<AddBook />} />
+          <Route path="/admin/locations" element={<MyLocation />} />
+          <Route path="/admin/orders" element={<Order />} />
+          <Route path="/admin/vouchers" element={<Voucher />} />
+          <Route path="/admin/staff" element={<Staff />} />
+
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

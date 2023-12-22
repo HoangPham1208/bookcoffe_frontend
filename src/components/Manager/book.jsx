@@ -4,28 +4,20 @@ import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
-const items2 = [
+const items = [
   {
-    number: "1",
-    name: "Bàn họp 1",
-    condition: "10",
-    discount: "10%",
+    name: "The Fault in Our Stars",
+    quantity: 10,
+    price: 100000,
   },
   {
-    number: "1",
-    name: "Bàn họp 1",
-    condition: "10",
-    discount: "10%",
-  },
-  {
-    number: "1",
-    name: "Bàn họp 1",
-    condition: "10",
-    discount: "10%",
+    name: "The Fault in Our Stars",
+    quantity: 10,
+    price: 100000,
   },
 ];
 
-export default function Voucher() {
+export default function Book() {
   const navigate = useNavigate();
   return (
     <div>
@@ -34,10 +26,7 @@ export default function Voucher() {
         <div>
           <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
             <li>
-              <button
-                onClick={() => navigate("/book")}
-                className="hover:underline"
-              >
+              <button onClick={() => navigate("/book")} className="underline">
                 Sách
               </button>
             </li>
@@ -60,7 +49,7 @@ export default function Voucher() {
             <li>
               <button
                 onClick={() => navigate("/voucher")}
-                className="underline"
+                className="hover:underline"
               >
                 Voucher
               </button>
@@ -76,37 +65,55 @@ export default function Voucher() {
           </ul>
         </div>
         <div className="flex ml-36 gap-4">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-            Thêm voucher
+          <Button
+            onClick={() => navigate("/addbook")}
+            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+          >
+            Thêm copy
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-            Xóa voucher
-          </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-            Chi tiết
+            Xóa sách
           </Button>
         </div>
-        <hr className="mt-10 ml-36" />
-        <div className="overflow-x-auto mx-36 py-10">
+        <div class="relative text-gray-600 mx-36 my-7">
+          <input
+            type="search"
+            name="serch"
+            placeholder="Tìm kiếm"
+            class="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+          />
+        </div>
+        <hr className="border-black mx-36 my-10" />
+        <div className="overflow-x-auto mx-36">
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell className="p-4"></Table.HeadCell>
-              <Table.HeadCell>ID</Table.HeadCell>
+              <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Tên</Table.HeadCell>
-              <Table.HeadCell>Điều kiện</Table.HeadCell>
-              <Table.HeadCell>Giảm giá</Table.HeadCell>
+              <Table.HeadCell>Kho</Table.HeadCell>
+              <Table.HeadCell>Giá</Table.HeadCell>
+              <Table.HeadCell>
+                <span className="sr-only">Edit</span>
+              </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {items2.map((item) => (
+              {items.map((item) => (
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="p-4">
                       <Checkbox />
                     </Table.Cell>
-                    <Table.Cell>{item.number}</Table.Cell>
+                    <Table.Cell>
+                      <img src="/the-fault-in-our-stars.png" className="h-28" />
+                    </Table.Cell>
                     <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{item.condition}</Table.Cell>
-                    <Table.Cell>{item.discount}</Table.Cell>
+                    <Table.Cell>{item.quantity}</Table.Cell>
+                    <Table.Cell>{item.price}</Table.Cell>
+                    <Table.Cell>
+                      <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                        Chi tiết
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 </>
               ))}
