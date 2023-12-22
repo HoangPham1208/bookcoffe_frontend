@@ -11,6 +11,7 @@ import MyTable from "./components/Staff/table";
 import Order from "./components/Staff/order";
 
 // Admin
+import Manage from "./components/Admin/manage";
 import Voucher from "./components/Admin/voucher";
 import Staff from "./components/Admin/staff";
 
@@ -19,16 +20,17 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        
+
         <Route element={<PrivateRoutes />}>
           <Route path="/account" element={<Account />} />
-          <Route path="/newblog" element={<NewBlog />} />
+          <Route path="/newBlog" element={<NewBlog />} />
           {/* Staff */}
           <Route path="/book" element={<Book />} />
-          <Route path="/addbook" element={<AddBook />} />
+          <Route path="/addBook" element={<AddBook />} />
           <Route path="/table" element={<MyTable />} />
           <Route path="/order" element={<Order />} />
-          {/* Admin */}
+          {/* Admin - inherited from staff */}
+          <Route path="/manage" element={<Manage />} />
           <Route path="/voucher" element={<Voucher />} />
           <Route path="/staff" element={<Staff />} />
         </Route>
