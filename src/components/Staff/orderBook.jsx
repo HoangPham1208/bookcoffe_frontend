@@ -1,9 +1,10 @@
 import React from "react";
 import { Navbar } from "../navbar";
 import { Button } from "flowbite-react";
-import { FloatingLabel } from "flowbite-react";
 import { Table } from "flowbite-react";
 import { Checkbox } from "flowbite-react";
+import { Radio } from "flowbite-react";
+
 
 const items = [
   {
@@ -63,9 +64,13 @@ export default function OrderBook() {
       <Navbar />
       <main>
         <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
+        
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
             Xác nhận đơn
+          </Button>
+          <Button className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+            Thêm đơn
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
             Xóa đơn
@@ -98,7 +103,11 @@ export default function OrderBook() {
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="p-4">
-                      <Checkbox />
+                      {/* checkbox only one choice */}
+                      <Radio
+                        name="checkbox"
+                        className="text-[#6750A4]"
+                      />
                     </Table.Cell>
                     <Table.Cell>{item.number}</Table.Cell>
                     <Table.Cell>{item.name}</Table.Cell>

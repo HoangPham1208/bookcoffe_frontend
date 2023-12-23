@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar } from "../navbar";
 import { Button } from "flowbite-react";
 import { FloatingLabel } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const items = [
   {
@@ -17,13 +18,17 @@ const items = [
 ];
 
 export default function OrderDrink() {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
       <main>
         <div className="mx-36 my-7 text-3xl font-semibold">Tạo đơn #128</div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button
+            onClick={() => navigate("/staff/order/drinks/add")}
+            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+          >
             Thêm món
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
@@ -80,7 +85,10 @@ export default function OrderDrink() {
                   viewBox="0 0 448 512"
                   className="inline-block mr-2 "
                 >
-                  <path fill="#ffffff" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  <path
+                    fill="#ffffff"
+                    d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                  />
                 </svg>
                 Xác nhận đơn
               </Button>
