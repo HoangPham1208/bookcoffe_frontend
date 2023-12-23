@@ -13,7 +13,7 @@ export default function Account() {
           </div>
           <div className="w-full"></div>
         </div>
-        <main>
+        <main className="my-5">
           <hr className="mx-36 border-black" />
           <div className="flex my-5">
             <div className="w-2/12 ml-36 font-semibold text-xl">

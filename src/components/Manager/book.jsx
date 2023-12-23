@@ -3,6 +3,7 @@ import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const items = [
   {
@@ -19,6 +20,7 @@ const items = [
 
 export default function Book() {
   const navigate = useNavigate();
+  const role = new Cookies().get("role");
   return (
     <div>
       <Navbar />
@@ -66,7 +68,14 @@ export default function Book() {
         </div>
         <div className="flex ml-36 gap-4">
           <Button
-            onClick={() => navigate("/addbook")}
+            onClick={() => {
+              if (role === "manager"){
+                navigate("/manager/books/1/addcopy");
+              }
+              else if ( role === "admin"){
+                navigate("/admin/books/1/addcopy");
+              }
+            }}
             className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
           >
             Thêm copy

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FloatingLabel } from "flowbite-react";
 import axios from "axios";
 import Cookie from "universal-cookie";
 import RefreshTokenAPI from "./Utils/token";
+import { useNavigate } from "react-router-dom";
 
 function LoginDialog({ visible, onClose }) {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const handleOnClose = () => {
@@ -26,6 +28,20 @@ function LoginDialog({ visible, onClose }) {
         cookie.set("refreshToken", res.data.refreshToken, { path: "/" });
         cookie.set("userName", res.data.userName, { path: "/" });
         cookie.set("role", res.data.role, { path: "/" });
+        // navigate("/homeUser");
+        if (res.data.role === "customer") {
+          localStorage.setItem("page", "home");
+          navigate("/homeUser");
+        } else if (res.data.role === "staff") {
+          localStorage.setItem("page", "drink");
+          navigate("/staff/order/drinks");
+        } else if (res.data.role === "manager") {
+          localStorage.setItem("page", "home");
+          navigate("/manager");
+        } else if (res.data.role === "admin") {
+          localStorage.setItem("page", "home");
+          navigate("/admin");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -220,6 +236,7 @@ function SignUpDialog({ visible, onClose }) {
 }
 
 function Logout() {
+  const navigate = useNavigate();
   const handleLogOut = () => {
     const cookie = new Cookie();
     // need to refresh token before call api
@@ -238,6 +255,8 @@ function Logout() {
         cookie.remove("refreshToken");
         cookie.remove("userName");
         cookie.remove("role");
+        localStorage.clear();
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -258,6 +277,7 @@ function Logout() {
 }
 
 export function Navbar({ mode = "logout" }) {
+  const navigate = useNavigate();
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showSignUpDialog, setShowSignUpDialog] = useState(false);
   const handleLoginOnClose = () => setShowLoginDialog(false);
@@ -277,34 +297,83 @@ export function Navbar({ mode = "logout" }) {
             return (
               <>
                 <li>
-                  <a className="hover:underline font-bold transition" href="#">
-                    Đơn nước
-                  </a>
+                  <button
+                    className="hover:underline transition"
+                    onClick={() => {
+                      localStorage.setItem("page", "drink");
+                      navigate("/staff/order/drinks");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "drink" ||
+                    localStorage.getItem("page") === null ? (
+                      <p className="font-bold">Đơn nước</p>
+                    ) : (
+                      <p>Đơn nước</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
-                    Đơn đặt sách
-                  </a>
+                  <button
+                    className="hover:underline transition"
+                    onClick={() => {
+                      localStorage.setItem("page", "books");
+                      navigate("/staff/order/books");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "books" ? (
+                      <p className="font-bold">Đơn đặt sách</p>
+                    ) : (
+                      <p>Đơn đặt sách</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
+                  <button className="hover:underline transition">
                     Lịch sử
-                  </a>
+                  </button>
                 </li>
               </>
             );
-          } else if (role === "admin") {
+          } else if (role === "admin" || role === "manager") {
             return (
               <>
                 <li>
-                  <a className="hover:underline font-bold transition" href="#">
-                    Trang chủ
-                  </a>
+                  <button
+                    className="hover:underline transition"
+                    onClick={() => {
+                      localStorage.setItem("page", "home");
+                      if (role === "admin") {
+                        navigate("/admin");
+                      } else {
+                        navigate("/manager");
+                      }
+                    }}
+                  >
+                    {localStorage.getItem("page") === "home" ? (
+                      <p className="font-bold">Trang chủ</p>
+                    ) : (
+                      <p>Trang chủ</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
-                    Quản lí
-                  </a>
+                  <button
+                    className="hover:underline transition"
+                    onClick={() => {
+                      localStorage.setItem("page", "manage");
+                      if (role === "admin") {
+                        navigate("/admin/books");
+                      } else {
+                        navigate("/manager/books");
+                      }
+                    }}
+                  >
+                    {localStorage.getItem("page") === "manage" ? (
+                      <p className="font-bold">Quản lí</p>
+                    ) : (
+                      <p>Quản lí</p>
+                    )}
+                  </button>
                 </li>
               </>
             );
@@ -312,29 +381,58 @@ export function Navbar({ mode = "logout" }) {
             return (
               <>
                 <li>
-                  <a className="hover:underline font-bold transition" href="#">
-                    Trang chủ
-                  </a>
+                  <button
+                    className="hover:underline transition"
+                    onClick={() => {
+                      localStorage.setItem("page", "home");
+                      if (role === "customer") {
+                        navigate("/homeUser");
+                      } else navigate("/");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "home" ||
+                    localStorage.getItem("page") === null ? (
+                      <p className="font-bold">Trang chủ</p>
+                    ) : (
+                      <p>Trang chủ</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
-                    Sách
-                  </a>
+                  <button className="hover:underline transition">
+                    {localStorage.getItem("page") === "book" ? (
+                      <p className="font-bold">Sách</p>
+                    ) : (
+                      <p>Sách</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
-                    Địa điểm
-                  </a>
+                  <button className="hover:underline transition">
+                    {localStorage.getItem("page") === "location" ? (
+                      <p className="font-bold">Địa điểm</p>
+                    ) : (
+                      <p>Địa điểm</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
-                    Blog
-                  </a>
+                  <button className="hover:underline transition">
+                    {localStorage.getItem("page") === "blog" ? (
+                      <p className="font-bold">Blog</p>
+                    ) : (
+                      <p>Blog</p>
+                    )}
+                  </button>
                 </li>
                 <li>
-                  <a className="hover:underline transition" href="#">
-                    Trợ giúp
-                  </a>
+                  <button className="hover:underline transition">
+                    {localStorage.getItem("page") === "help" ? (
+                      <p className="font-bold">Trợ giúp</p>
+                    ) : (
+                      <p>Trợ giúp</p>
+                    )}
+                  </button>
                 </li>
               </>
             );
@@ -361,34 +459,56 @@ export function Navbar({ mode = "logout" }) {
               id="user-card"
               className="my-auto flex flex-row items-center space-x-5 rounded-xl transition-all ease-out  dark:hover:bg-button-hover-dark dark:active:bg-button-active-dark max-sm:p-0 sm:basis-96"
             >
-              <button
-                className="text-black font-bold flex flex-row space-x-3"
-                id="cartButton"
-              >
-                <a href="#">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height={24}
-                    viewBox="0 -960 960 960"
-                    width={24}
+              {role === "customer" ? (
+                <button
+                  className="text-black font-bold flex flex-row space-x-3"
+                  id="cartButton"
+                >
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "cart");
+                      navigate("/cart");
+                    }}
                   >
-                    <path d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z" />
-                  </svg>
-                </a>
-                <a>3</a>
-              </button>
-              <div
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height={24}
+                      viewBox="0 -960 960 960"
+                      width={24}
+                    >
+                      <path d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z" />
+                    </svg>
+                  </button>
+                  {/* <span>3</span> */}
+                  {localStorage.getItem("page") === "cart" ? (
+                    <p className="underline">3</p>
+                  ) : (
+                    <p>3</p>
+                  )}
+                </button>
+              ) : null}
+              <button
+                onClick={() => {
+                  localStorage.setItem("page", "account");
+                  navigate("/account");
+                }}
                 id="user-avatar"
                 className="h-[48px] w-[48px] flex-none overflow-clip rounded-full bg-gray-300 transition-all max-sm:scale-90"
               >
                 <img src="/avatar.png" className="h-[48px] w-[48px]" />
-              </div>
+              </button>
               <div className="grow flex-col text-left transition-all">
                 <div
                   className="flex flex-row space-x-2 transition-all max-sm:hidden font-bold"
                   id="user-info"
                 >
-                  <p id="user-name">Lê Nguyên Chương</p>
+                  <p id="user-name">
+                    {localStorage.getItem("page") === "account" ? (
+                      <p className="underline">Lê Nguyên Chương</p>
+                    ) : (
+                      <p>Lê Nguyên Chương</p>
+                    )}
+                  </p>
                 </div>
                 <p id="user-role" className="font-bold text-sm">
                   Nhân viên
