@@ -276,6 +276,7 @@ function Logout() {
   );
 }
 
+
 export function Navbar({ mode = "logout" }) {
   const navigate = useNavigate();
   const [showLoginDialog, setShowLoginDialog] = useState(false);
@@ -283,6 +284,7 @@ export function Navbar({ mode = "logout" }) {
   const handleLoginOnClose = () => setShowLoginDialog(false);
   const handleSignUpOnClose = () => setShowSignUpDialog(false);
   const role = new Cookie().get("role");
+  const name = new Cookie().get("userName");
   return (
     <nav className="flex bg-[#A9C7F4] w-full h-[60px] px-[50px] justify-between items-center shrink-0 select-none">
       <a
@@ -505,14 +507,14 @@ export function Navbar({ mode = "logout" }) {
                 >
                   <p id="user-name">
                     {localStorage.getItem("page") === "account" ? (
-                      <p className="underline">Lê Nguyên Chương</p>
+                      <p className="underline">{name}</p>
                     ) : (
-                      <p>Lê Nguyên Chương</p>
+                      <p>{name}</p>
                     )}
                   </p>
                 </div>
                 <p id="user-role" className="font-bold text-sm">
-                  Nhân viên
+                  {role}
                 </p>
               </div>
               <Logout />
