@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar } from "../navbar";
 import { Button } from "flowbite-react";
 import { Table } from "flowbite-react";
@@ -8,8 +8,14 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
 
-
-function Check() {
+function Check({ visible, onAccept, onCancel }) {
+  const handleSuccess = () => {
+    onAccept();
+  };
+  const handleCancel = () => {
+    onCancel();
+  };
+  if (visible === false) return null;
   return (
     <>
       <div
@@ -18,10 +24,16 @@ function Check() {
       >
         <div>Bạn muốn xác nhận đơn đặt sách #1 chứ?</div>
         <div className="flex place-content-start gap-10 my-5">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button
+            onClick={handleSuccess}
+            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+          >
             Hoàn tất
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button
+            onClick={handleCancel}
+            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+          >
             Hủy
           </Button>
         </div>
@@ -30,7 +42,14 @@ function Check() {
   );
 }
 
-function Success() {
+function Success({ visible, setVisible }) {
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setVisible();
+    }, 2000);
+    return () => { clearTimeout(timerId); };
+  }, [visible]);
+  if (visible === false) return null;
   return (
     <>
       <div
@@ -46,6 +65,21 @@ function Success() {
 export default function OrderBook() {
   const cookie = new Cookies();
   const [items, setItems] = React.useState([]);
+  const [check, setCheck] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const handleCheck = () => {
+    setCheck(true);
+  };
+  const handleCheckSuccess = () => {
+    setSuccess(true);
+    setCheck(false);
+  };
+  const handleCheckCancel = () => {
+    setCheck(false);
+  };
+  const handleSuccesCancle = () => {
+    setSuccess(false);
+  }
   useEffect(() => {
     RefreshTokenAPI();
     axios
@@ -72,7 +106,10 @@ export default function OrderBook() {
         <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button
+            onClick={handleCheck}
+            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+          >
             Xác nhận đơn
           </Button>
           <Button className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
@@ -95,7 +132,7 @@ export default function OrderBook() {
           <Table hoverable>
             <Table.Head className="text-center">
               <Table.HeadCell className="p-4"></Table.HeadCell>
-              <Table.HeadCell >ID</Table.HeadCell>
+              <Table.HeadCell>ID</Table.HeadCell>
               <Table.HeadCell>Tên người đặt</Table.HeadCell>
               <Table.HeadCell>Địa điểm</Table.HeadCell>
               <Table.HeadCell>Ngày đặt</Table.HeadCell>
@@ -116,13 +153,18 @@ export default function OrderBook() {
                     <Table.Cell>{item.reservationId}</Table.Cell>
                     <Table.Cell>{item.userName}</Table.Cell>
                     <Table.Cell>{item.address}</Table.Cell>
-                    <Table.Cell>{
-                    // item.reservationDate 2023-12-20T05:12:12.000Z
-                    (() => {
-                      let date = item.reservationDate.split("T")[0] + " - " + item.reservationDate.split("T")[1].split(".")[0];
-                      return date
-                    })()
-                    }</Table.Cell>
+                    <Table.Cell>
+                      {
+                        // item.reservationDate 2023-12-20T05:12:12.000Z
+                        (() => {
+                          let date =
+                            item.reservationDate.split("T")[0] +
+                            " - " +
+                            item.reservationDate.split("T")[1].split(".")[0];
+                          return date;
+                        })()
+                      }
+                    </Table.Cell>
                     <Table.Cell>{item.quantity}</Table.Cell>
                     <Table.Cell>{item.isConfirm}</Table.Cell>
                     <Table.Cell>
@@ -137,8 +179,12 @@ export default function OrderBook() {
           </Table>
         </div>
       </main>
-      <Check />
-      <Success />
+      <Check
+        visible={check}
+        onAccept={handleCheckSuccess}
+        onCancel={handleCheckCancel}
+      />
+      <Success visible={success} setVisible={handleSuccesCancle} />
     </>
   );
 }
