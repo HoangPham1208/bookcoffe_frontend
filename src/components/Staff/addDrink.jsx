@@ -41,9 +41,6 @@ export default function AddDrink() {
               <Table.HeadCell>Tên</Table.HeadCell>
               <Table.HeadCell>Kho</Table.HeadCell>
               <Table.HeadCell>Giá</Table.HeadCell>
-              <Table.HeadCell>
-                <span className="sr-only">Edit</span>
-              </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
               {items.map((item) => (
@@ -58,11 +55,6 @@ export default function AddDrink() {
                     <Table.Cell>{item.name}</Table.Cell>
                     <Table.Cell>{item.quantity}</Table.Cell>
                     <Table.Cell>{item.price}</Table.Cell>
-                    <Table.Cell>
-                      <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-                        Chỉnh sửa
-                      </Button>
-                    </Table.Cell>
                   </Table.Row>
                 </>
               ))}

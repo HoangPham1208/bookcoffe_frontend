@@ -58,17 +58,20 @@ function Success({ visible, setVisible }) {
         id="user-card-expanded"
         className="absolute top-16 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
       >
-        <div>Xác nhận đơn hàng #1 thành công</div>
+        <div>Xác nhận đơn hàng thành công</div>
       </div>
     </>
   );
 }
 
-export default function OrderBook() {
+export default function OrderLocation() {
   const cookie = new Cookies();
   const [items, setItems] = React.useState([]);
   const [check, setCheck] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
+  const [data, setData] = React.useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [refresh, setRefresh] = useState(false); // <-- declare state variable
   const handleCheck = () => {
     setCheck(true);
   };
@@ -100,27 +103,38 @@ export default function OrderBook() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refresh]);
+  const handleConfirm = () => {
+    RefreshTokenAPI();
+    axios
+      .post(
+        "http://localhost:4000/api/staff/confirmReservation",
+        {
+          reservationId: data.reservationId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.get("accessToken")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setItems(res.data);
+        handleCheckSuccess();
+        setRefresh(!refresh); // <-- toggle value to force useEffect to run again
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <Navbar />
       <main>
-        <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
+        <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt chỗ</div>
 
-        <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button
-            onClick={handleCheck}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
-          >
-            Xác nhận đơn
-          </Button>
-          <Button className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-            Thêm đơn
-          </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-            Xóa đơn
-          </Button>
-        </div>
+        
         <div class="relative text-gray-600 mx-36 my-7">
           <input
             type="search"
@@ -142,42 +156,61 @@ export default function OrderBook() {
               <Table.HeadCell></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {items.map(
-                (item) =>
-                  item.isConfirm === 0 && (
-                    <>
-                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell className="p-4">
-                          {/* checkbox only one choice */}
-                          <Radio name="checkbox" className="text-[#6750A4]" />
-                        </Table.Cell>
-                        <Table.Cell>{item.reservationId}</Table.Cell>
-                        <Table.Cell>{item.userName}</Table.Cell>
-                        <Table.Cell>{item.address}</Table.Cell>
-                        <Table.Cell>
-                          {
-                            // item.reservationDate 2023-12-20T05:12:12.000Z
-                            (() => {
-                              let date =
-                                item.reservationDate.split("T")[0] +
-                                " - " +
-                                item.reservationDate
-                                  .split("T")[1]
-                                  .split(".")[0];
-                              return date;
-                            })()
-                          }
-                        </Table.Cell>
-                        <Table.Cell>{item.quantity}</Table.Cell>
-                        <Table.Cell className="grid justify-items-center">
-                          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]  ">
-                            Xác nhận
-                          </Button>
-                        </Table.Cell>
-                      </Table.Row>
-                    </>
-                  )
-              )}
+              {(() => {
+                if (Array.isArray(items)) {
+                  return items.map(
+                    (item, index) =>
+                      item.isConfirm === 0 && (
+                        <Table.Row
+                          key={index}
+                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                        >
+                          <Table.Cell className="p-4">
+                            {/* checkbox only one choice */}
+                            <Radio
+                              name="checkbox"
+                              className="text-[#6750A4]"
+                              onClick={() => {
+                                setData(item);
+                                setSelectedItem(index);
+                              }}
+                            />
+                          </Table.Cell>
+                          <Table.Cell>{item.reservationId}</Table.Cell>
+                          <Table.Cell>{item.userName}</Table.Cell>
+                          <Table.Cell>{item.address}</Table.Cell>
+                          <Table.Cell>
+                            {
+                              // item.reservationDate 2023-12-20T05:12:12.000Z
+                              (() => {
+                                let date =
+                                  item.reservationDate.split("T")[0] +
+                                  " - " +
+                                  item.reservationDate
+                                    .split("T")[1]
+                                    .split(".")[0];
+                                return date;
+                              })()
+                            }
+                          </Table.Cell>
+                          <Table.Cell>{item.quantity}</Table.Cell>
+                          <Table.Cell className="grid justify-items-center">
+                            <Button
+                              onClick={handleConfirm}
+                              disabled={selectedItem !== index}
+                              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]"
+                            >
+                              Xác nhận
+                            </Button>
+                          </Table.Cell>
+                        </Table.Row>
+                      )
+                  );
+                } else {
+                  // Handle the case where items is not an array (e.g., set a default value or render an error message)
+                  return null;
+                }
+              })()}
             </Table.Body>
           </Table>
         </div>
