@@ -342,6 +342,7 @@ export function Navbar({ mode = "logout" }) {
                     className="hover:underline transition"
                     onClick={() => {
                       localStorage.setItem("page", "home");
+                      localStorage.removeItem("type");
                       if (role === "admin") {
                         navigate("/admin");
                       } else {
