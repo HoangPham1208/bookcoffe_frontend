@@ -13,6 +13,7 @@ import Account from "./components/Customer/account";
 import OrderDrink from "./components/Staff/orderDrink";
 import AddDrink from "./components/Staff/addDrink";
 import OrderBook from "./components/Staff/orderBook";
+import OrderLocation from "./components/Staff/orderLocation";
 
 // Manager
 import HomeManager from "./components/Manager/homeManager";
@@ -44,6 +45,7 @@ function App() {
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />
           <Route path="/staff/order/books" element={<OrderBook />} />
+          <Route path="/staff/order/locations" element={<OrderLocation />} />
           {/* Manager */}
           <Route path="/manager" element={<HomeManager />} />
           <Route path="/manager/books" element={<Book />} />

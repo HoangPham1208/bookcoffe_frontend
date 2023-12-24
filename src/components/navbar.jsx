@@ -330,6 +330,21 @@ export function Navbar({ mode = "logout" }) {
                   </button>
                 </li>
                 <li>
+                  <button
+                    className="hover:underline transition"
+                    onClick={() => {
+                      localStorage.setItem("page", "location");
+                      navigate("/staff/order/locations");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "location" ? (
+                      <p className="font-bold">Đơn đặt chỗ</p>
+                    ) : (
+                      <p>Đơn đặt chỗ</p>
+                    )}
+                  </button>
+                </li>
+                <li>
                   <button className="hover:underline transition">
                     Lịch sử
                   </button>
