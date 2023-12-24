@@ -1,8 +1,9 @@
 import React from "react";
 import { Navbar } from "../navbar";
-import { Button, Label, TextInput, Textarea } from "flowbite-react";
+import { Button, Label, List, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import ListFunc from "../Utils/listFunc";
 
 const items2 = [
   {
@@ -31,50 +32,7 @@ export default function Voucher() {
     <div>
       <Navbar />
       <main>
-        <div>
-          <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
-            <li>
-              <button
-                onClick={() => navigate("/book")}
-                className="hover:underline"
-              >
-                Sách
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate("/table")}
-                className="hover:underline"
-              >
-                Bàn
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate("/order")}
-                className="hover:underline"
-              >
-                Đơn hàng
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate("/voucher")}
-                className="underline"
-              >
-                Voucher
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate("/staff")}
-                className="hover:underline"
-              >
-                Nhân viên
-              </button>
-            </li>
-          </ul>
-        </div>
+        <ListFunc />
         <div className="flex ml-36 gap-4">
           <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
             Thêm voucher
