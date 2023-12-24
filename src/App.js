@@ -25,6 +25,7 @@ import Staff from "./components/Manager/staff";
 
 // Admin
 import HomeAdmin from "./components/Admin/homeAdmin";
+import Branch from "./components/Admin/branch";
 import AddBook from "./components/Admin/addbook";
 import MyLocation from "./components/Admin/location";
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/manager/staff" element={<Staff />} />
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/admin/branch" element={<Branch />} />
           <Route path="/admin/books" element={<Book />} />
           <Route path="/admin/books/add" element={<AddBook />} />
           <Route path="/admin/locations" element={<MyLocation />} />

@@ -251,10 +251,10 @@ function Logout() {
         console.log(res.data);
         console.log("logout success");
         // cookie setup
-        cookie.remove("accessToken");
-        cookie.remove("refreshToken");
         cookie.remove("userName");
         cookie.remove("role");
+        cookie.remove("accessToken");
+        cookie.remove("refreshToken");
         localStorage.clear();
         navigate("/");
       })
@@ -363,7 +363,7 @@ export function Navbar({ mode = "logout" }) {
                     onClick={() => {
                       localStorage.setItem("page", "manage");
                       if (role === "admin") {
-                        navigate("/admin/books");
+                        navigate("/admin/branch");
                       } else {
                         navigate("/manager/books");
                       }
