@@ -55,10 +55,10 @@ function App() {
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
           <Route path="/admin/branch" element={<Branch />} />
-          <Route path="/admin/books" element={<Book />} />
-          <Route path="/admin/books/add" element={<AddBook />} />
-          <Route path="/admin/locations" element={<MyLocation />} />
-          <Route path="/admin/orders" element={<Order />} />
+          <Route path="/admin/branch/:id/books" element={<Book />} />
+          <Route path="/admin/branch/:id/books/add" element={<AddBook />} />
+          <Route path="/admin/branch/:id/locations" element={<MyLocation />} />
+          <Route path="/admin/branch/:id/orders" element={<Order />} />
           <Route path="/admin/vouchers" element={<Voucher />} />
           <Route path="/admin/staff" element={<Staff />} />
 
