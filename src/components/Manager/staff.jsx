@@ -4,24 +4,31 @@ import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import ListFunc from "../Utils/listFunc";
+import RefreshTokenAPI from "../Utils/token";
+import {useState, useEffect} from "react";
+import axios from "axios";
+import Cookies from "universal-cookie";
 
-const items2 = [
-  {
-    number: "1",
-    name: "Nguyễn Văn A",
-    timeStart: "10/10/2021",
-    salary: "1000000",
-  },
-  {
-    number: "1",
-    name: "Nguyễn Văn A",
-    timeStart: "10/10/2021",
-    salary: "1000000",
-  },
-];
 
 export default function Staff() {
   const navigate = useNavigate();
+  const [items2, setItems2] = useState([]);
+  const cookie = new Cookies();
+  useEffect(() => {
+    axios.get("http://localhost:4000/api/manager/showStaff", {
+      headers: {
+        Authorization: `Bearer ${cookie.get("accessToken")}`,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      setItems2(res.data);
+    }
+    )
+    .catch((err) => {
+      console.log(err);
+    });
+  }, []);
   return (
     <div>
       <Navbar />
@@ -46,27 +53,33 @@ export default function Staff() {
             class="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
-        <hr className="mt-10 ml-36 border-black" />
+        <hr className="mt-10 mx-36 border-black" />
         <div className="overflow-x-auto mx-36 py-10">
           <Table hoverable>
-            <Table.Head>
+            <Table.Head className="text-center">
               <Table.HeadCell className="p-4"></Table.HeadCell>
               <Table.HeadCell>ID</Table.HeadCell>
-              <Table.HeadCell>Tên</Table.HeadCell>
-              <Table.HeadCell>Bắt đầu làm</Table.HeadCell>
-              <Table.HeadCell>Lương</Table.HeadCell>
+              <Table.HeadCell>Email</Table.HeadCell>
+              <Table.HeadCell>Địa chỉ</Table.HeadCell>
+              <Table.HeadCell>Ngày bắt đầu làm việc</Table.HeadCell>
             </Table.Head>
-            <Table.Body className="divide-y">
+            <Table.Body className="divide-y text-center">
               {items2.map((item) => (
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="p-4">
                       <Checkbox />
                     </Table.Cell>
-                    <Table.Cell>{item.number}</Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{item.timeStart}</Table.Cell>
-                    <Table.Cell>{item.salary}</Table.Cell>
+                    <Table.Cell>{item.staffName}</Table.Cell>
+                    <Table.Cell>{item.email}</Table.Cell>
+                    <Table.Cell>{item.address}</Table.Cell>
+                    <Table.Cell>{
+                      new Date(item.workingDate).toLocaleDateString("en-GB", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })
+                    }</Table.Cell>
                   </Table.Row>
                 </>
               ))}
