@@ -44,12 +44,12 @@ export default function Voucher() {
             Chi tiết
           </Button>
         </div>
-        <div class="relative text-gray-600 mx-36 my-7">
+        <div className="relative text-gray-600 mx-36 my-7">
           <input
             type="search"
             name="serch"
             placeholder="Tìm kiếm"
-            class="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
         <hr className="mt-10 ml-36 border-black" />

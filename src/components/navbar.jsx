@@ -141,15 +141,11 @@ function SignUpDialog({ visible, onClose }) {
   };
   return (
     <>
-      <div
-        id="user-card-expanded"
-        className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
-      >
+      <div className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none ">
         <p className="text-left font-bold w-full">Đăng ký</p>
         <button
           onClick={handleOnClose}
           className="absolute right-5 top-0 cursor-pointer rounded-full transition-all hover:bg-[#d7e1e9] active:bg-[#b9cad8] dark:hover:bg-button-hover-dark dark:active:bg-button-active-dark"
-          id="user-card-expanded-close"
         >
           <svg
             className="dark:fill-dark-surface"
@@ -195,7 +191,7 @@ function SignUpDialog({ visible, onClose }) {
           className="w-80 select-none"
         />
         <div>
-          <div class="relative">
+          <div className="relative">
             <FloatingLabel
               type="password"
               onChange={(e) => {
@@ -214,9 +210,9 @@ function SignUpDialog({ visible, onClose }) {
           {wrongPassword && (
             <p
               id="filled_error_help"
-              class="mt-2 text-xs text-red-600 dark:text-red-400"
+              className="mt-2 text-xs text-red-600 dark:text-red-400"
             >
-              <span class="font-medium"> Mật khẩu không khớp </span>
+              <span className="font-medium"> Mật khẩu không khớp </span>
             </p>
           )}
         </div>
@@ -275,7 +271,6 @@ function Logout() {
     </button>
   );
 }
-
 
 export function Navbar({ mode = "logout" }) {
   const navigate = useNavigate();

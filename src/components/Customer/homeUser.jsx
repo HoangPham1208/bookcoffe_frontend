@@ -4,7 +4,7 @@ import { Navbar } from "../navbar";
 import Wrapper from "../Guest/wrapper";
 import BestBook from "../Guest/bestbook";
 import Category from "../Guest/category";
-import NewBlog from "../Guest//newblog";
+import NewBlog from "../Guest/newblog";
 
 export default function HomeUser() {
   return (

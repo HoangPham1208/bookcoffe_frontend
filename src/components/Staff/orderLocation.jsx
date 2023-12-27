@@ -133,14 +133,12 @@ export default function OrderLocation() {
       <Navbar />
       <main>
         <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt chỗ</div>
-
-        
-        <div class="relative text-gray-600 mx-36 my-7">
+        <div className="relative text-gray-600 mx-36 my-7">
           <input
             type="search"
             name="serch"
             placeholder="Tìm kiếm"
-            class="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
         <hr className="border-black mx-36 my-5" />
