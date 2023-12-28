@@ -541,12 +541,13 @@ export function Navbar({ mode = "logout" }) {
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
   return (
-    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full fixed z-50">
+    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full fixed z-50 min-w-[375px]">
       <FlowbiteNavbar.Brand href="localhost:3000">
-        <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="Logo" />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+        <img src="/logo.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
+        <img src="/logo-text.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
+        {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Book Cafe
-        </span>
+        </span> */}
       </FlowbiteNavbar.Brand>
       <div className="flex md:order-2">
         {(() => {
