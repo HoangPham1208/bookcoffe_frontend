@@ -333,11 +333,6 @@ export function Navbarlegacy({ mode = "logout" }) {
                     )}
                   </button>
                 </li>
-                <li>
-                  <button className="hover:underline transition">
-                    Lịch sử
-                  </button>
-                </li>
               </>
             );
           } else if (role === "admin" || role === "manager") {
