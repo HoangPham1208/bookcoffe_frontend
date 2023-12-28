@@ -570,7 +570,7 @@ export function Navbar({ mode = "logout" }) {
                   inline
                   label={
                     <Avatar alt="User settings" rounded>
-                      <div className="dark:text-white text-left max-lg:hidden truncate w-[120px]">
+                      <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
                         {localStorage.getItem("page") === "account" ? (
                           <p className="underline">{name}</p>
                         ) : (
@@ -583,6 +583,18 @@ export function Navbar({ mode = "logout" }) {
                     </Avatar>
                   }
                 >
+                  <Dropdown.Header>
+                    <span className="block text-sm font-bold">
+                      {localStorage.getItem("page") === "account" ? (
+                        <p className="underline">{name}</p>
+                      ) : (
+                        <p>{name}</p>
+                      )}
+                    </span>
+                    <span className="block truncate text-sm font-medium">
+                      {role}
+                    </span>
+                  </Dropdown.Header>
                   <Dropdown.Item href="/account">Trang cá nhân</Dropdown.Item>
                   <Dropdown.Divider />
                   <Logout />
@@ -601,7 +613,9 @@ export function Navbar({ mode = "logout" }) {
                 <FlowbiteNavbar.Link href="/staff/order/drinks" active>
                   Đơn nước
                 </FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/staff/order/books">Đơn đặt sách</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="/staff/order/books">
+                  Đơn đặt sách
+                </FlowbiteNavbar.Link>
               </>
             );
           } else if (role === "manager") {
@@ -628,9 +642,13 @@ export function Navbar({ mode = "logout" }) {
                   Trang chủ
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link href="/books">Sách</FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/locations">Chi nhánh</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="/locations">
+                  Chi nhánh
+                </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link href="/blogs">Blog</FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/contact">Liên hệ</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="/contact">
+                  Liên hệ
+                </FlowbiteNavbar.Link>
               </>
             );
           }
