@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FloatingLabel } from "flowbite-react";
+import { Avatar, Dropdown, FloatingLabel } from "flowbite-react";
+import { Navbar as FlowbiteNavbar } from "flowbite-react";
 import axios from "axios";
 import Cookie from "universal-cookie";
 import RefreshTokenAPI from "./Utils/token";
@@ -259,20 +260,13 @@ function Logout() {
       });
   };
   return (
-    <button onClick={handleLogOut} className="flex-none">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24"
-        width="24"
-        viewBox="0 0 512 512"
-      >
-        <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
-      </svg>
-    </button>
+    <Dropdown.Item onClick={handleLogOut} className="flex-none">
+      Đăng xuất
+    </Dropdown.Item>
   );
 }
 
-export function Navbar({ mode = "logout" }) {
+export function Navbarlegacy({ mode = "logout" }) {
   const navigate = useNavigate();
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showSignUpDialog, setShowSignUpDialog] = useState(false);
@@ -535,5 +529,121 @@ export function Navbar({ mode = "logout" }) {
       <LoginDialog visible={showLoginDialog} onClose={handleLoginOnClose} />
       <SignUpDialog visible={showSignUpDialog} onClose={handleSignUpOnClose} />
     </nav>
+  );
+}
+
+export function Navbar({ mode = "logout" }) {
+  const navigate = useNavigate();
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [showSignUpDialog, setShowSignUpDialog] = useState(false);
+  const handleLoginOnClose = () => setShowLoginDialog(false);
+  const handleSignUpOnClose = () => setShowSignUpDialog(false);
+  const role = new Cookie().get("role");
+  const name = new Cookie().get("userName");
+  return (
+    <FlowbiteNavbar fluid className="bg-[#f1cbaa] fixed w-full z-50">
+      <FlowbiteNavbar.Brand href="localhost:3000">
+        <img src="/favicon.svg" className="mr-3 h-6 sm:h-9" alt="Logo" />
+        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          Book Cafe
+        </span>
+      </FlowbiteNavbar.Brand>
+      <div className="flex md:order-2">
+        {(() => {
+          if (mode === "login")
+            return (
+              <div id="login" className="text-black font-bold ">
+                <button
+                  className="mx-4"
+                  onClick={() => setShowLoginDialog(true)}
+                >
+                  Đăng nhập
+                </button>
+                <button
+                  className="mx-4"
+                  onClick={() => setShowSignUpDialog(true)}
+                >
+                  Đăng ký
+                </button>
+              </div>
+            );
+          else {
+            return (
+              <>
+                <Dropdown
+                  arrowIcon={false}
+                  inline
+                  label={
+                    <Avatar alt="User settings" rounded>
+                      <div className="dark:text-white text-left max-lg:hidden truncate w-[120px]">
+                        {localStorage.getItem("page") === "account" ? (
+                          <p className="underline">{name}</p>
+                        ) : (
+                          <p>{name}</p>
+                        )}
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          {role}
+                        </div>
+                      </div>
+                    </Avatar>
+                  }
+                >
+                  <Dropdown.Item>Trang cá nhân</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Logout />
+                </Dropdown>
+                <FlowbiteNavbar.Toggle />
+              </>
+            );
+          }
+        })()}
+      </div>
+      <FlowbiteNavbar.Collapse>
+        {(() => {
+          if (role === "staff") {
+            return (
+              <>
+                <FlowbiteNavbar.Link href="#" active>
+                  Đơn nước
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Đơn đặt sách</FlowbiteNavbar.Link>
+              </>
+            );
+          } else if (role === "manager") {
+            return (
+              <>
+                <FlowbiteNavbar.Link href="#" active>
+                  Quản lí
+                </FlowbiteNavbar.Link>
+              </>
+            );
+          } else if (role === "admin") {
+            return (
+              <>
+                <FlowbiteNavbar.Link href="#" active>
+                  Chi nhánh
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Quản lí</FlowbiteNavbar.Link>
+              </>
+            );
+          } else {
+            return (
+              <>
+                <FlowbiteNavbar.Link href="#" active>
+                  Trang chủ
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Sách</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Chi nhánh</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Blog</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Trợ giúp</FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link href="#">Liên hệ</FlowbiteNavbar.Link>
+              </>
+            );
+          }
+        })()}
+      </FlowbiteNavbar.Collapse>
+      <LoginDialog visible={showLoginDialog} onClose={handleLoginOnClose} />
+      <SignUpDialog visible={showSignUpDialog} onClose={handleSignUpOnClose} />
+    </FlowbiteNavbar>
   );
 }
