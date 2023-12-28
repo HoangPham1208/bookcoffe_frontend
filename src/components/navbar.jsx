@@ -541,7 +541,7 @@ export function Navbar({ mode = "logout" }) {
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
   return (
-    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full z-50">
+    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full fixed z-50">
       <FlowbiteNavbar.Brand href="localhost:3000">
         <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="Logo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -574,8 +574,8 @@ export function Navbar({ mode = "logout" }) {
                   arrowIcon={false}
                   inline
                   label={
-                    <Avatar alt="User settings" rounded>
-                      <div>
+                    <Avatar img="/avatar.png" alt="User settings" rounded>
+                      <div className="flex flex-row ">
                         <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
                           {localStorage.getItem("page") === "account" ? (
                             <p className="underline">{name}</p>
@@ -584,18 +584,17 @@ export function Navbar({ mode = "logout" }) {
                           )}
                           <div className="text-sm text-gray-500 dark:text-gray-400 flex gap-3">
                             <div>{role}</div>
-                            <div>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                height="16"
-                                width="10"
-                                viewBox="0 0 320 512"
-                              >
-                                <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
-                              </svg>
-                            </div>
                           </div>
                         </div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="16"
+                          width="10"
+                          viewBox="0 0 320 512"
+                          className="self-center"
+                        >
+                          <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
+                        </svg>
                       </div>
                     </Avatar>
                   }
@@ -668,7 +667,8 @@ export function Navbar({ mode = "logout" }) {
                       <p className="font-bold">Đơn đặt sách</p>
                     ) : (
                       <p>Đơn đặt sách</p>
-                    )} FakeData
+                    )}{" "}
+                    FakeData
                   </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>
