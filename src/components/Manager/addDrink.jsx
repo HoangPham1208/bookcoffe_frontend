@@ -5,6 +5,7 @@ import { FloatingLabel } from "flowbite-react";
 import { Table } from "flowbite-react";
 import { Checkbox } from "flowbite-react";
 import ListFunc from "../Utils/listFunc";
+import { useNavigate } from "react-router-dom";
 
 const items = [
   {
@@ -20,6 +21,7 @@ const items = [
 ];
 
 export default function AddDrinkManager() {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -65,11 +67,12 @@ export default function AddDrinkManager() {
         </div>
         <div className="mx-36 my-5">Đã chọn: Blabla</div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
-         
           <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
             Hoàn tất
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button 
+          onClick={()=>navigate("/manager/order/drinks")}
+          className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
             Hủy
           </Button>
         </div>
