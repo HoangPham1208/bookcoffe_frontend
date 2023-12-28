@@ -536,7 +536,7 @@ export function Navbar({ mode = "logout" }) {
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
   return (
-    <FlowbiteNavbar fluid className="bg-[#f1cbaa] fixed w-full z-50">
+    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full z-50">
       <FlowbiteNavbar.Brand href="localhost:3000">
         <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="Logo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -570,14 +570,26 @@ export function Navbar({ mode = "logout" }) {
                   inline
                   label={
                     <Avatar alt="User settings" rounded>
-                      <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
-                        {localStorage.getItem("page") === "account" ? (
-                          <p className="underline">{name}</p>
-                        ) : (
-                          <p>{name}</p>
-                        )}
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {role}
+                      <div>
+                        <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
+                          {localStorage.getItem("page") === "account" ? (
+                            <p className="underline">{name}</p>
+                          ) : (
+                            <p>{name}</p>
+                          )}
+                          <div className="text-sm text-gray-500 dark:text-gray-400 flex gap-3">
+                            <div>{role}</div>
+                            <div>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="16"
+                                width="10"
+                                viewBox="0 0 320 512"
+                              >
+                                <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
+                              </svg>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </Avatar>
@@ -595,16 +607,22 @@ export function Navbar({ mode = "logout" }) {
                       {role}
                     </span>
                   </Dropdown.Header>
-                  <Dropdown.Item>
-                    <button
-                      onClick={() => {
-                        localStorage.setItem("page", "account");
-                        navigate("/account");
-                      }}
-                    >
-                      Trang cá nhân
-                    </button>
-                  </Dropdown.Item>
+                  {() => {
+                    if (role === "customer") {
+                      return (
+                        <Dropdown.Item>
+                          <button
+                            onClick={() => {
+                              localStorage.setItem("page", "account");
+                              navigate("/account");
+                            }}
+                          >
+                            Trang cá nhân
+                          </button>
+                        </Dropdown.Item>
+                      );
+                    }
+                  }}
                   <Dropdown.Divider />
                   <Logout />
                 </Dropdown>
@@ -619,11 +637,34 @@ export function Navbar({ mode = "logout" }) {
           if (role === "staff") {
             return (
               <>
-                <FlowbiteNavbar.Link href="/staff/order/drinks" active>
-                  Đơn nước
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "drink");
+                      navigate("/staff/order/drinks");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "drink" ||
+                    localStorage.getItem("page") === null ? (
+                      <p className="font-bold">Đơn nước</p>
+                    ) : (
+                      <p>Đơn nước</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/staff/order/books">
-                  Đơn đặt sách
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "books");
+                      navigate("/staff/order/books");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "books" ? (
+                      <p className="font-bold">Đơn đặt sách</p>
+                    ) : (
+                      <p>Đơn đặt sách</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
               </>
             );
