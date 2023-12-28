@@ -25,7 +25,11 @@ export default function AddCopy() {
               <TextInput type="number" id="copies" placeholder="Copies" className="w-full" />
             </div>
             <div className="flex place-content-end gap-10">
-              <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+              <Button 
+              onClick={
+                () => navigate("/manager/books")
+              }
+              className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
                 Hủy
               </Button>
               <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">

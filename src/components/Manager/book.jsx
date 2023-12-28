@@ -80,7 +80,18 @@ export default function Book() {
                     <Table.Cell>{item.quantity}</Table.Cell>
                     <Table.Cell>{item.price}</Table.Cell>
                     <Table.Cell>
-                      <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                      <Button 
+                      onClick={
+                        () => {
+                          if (role === "manager"){
+                            navigate("/manager/books/1");
+                          }
+                          else if ( role === "admin"){
+                            navigate("/admin/books/1");
+                          }
+                        }
+                      }
+                      className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
                         Chi tiết
                       </Button>
                     </Table.Cell>

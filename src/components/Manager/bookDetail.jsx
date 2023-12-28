@@ -11,7 +11,14 @@ export default function BookDetails() {
       <Navbar />
       <main>
         <ListFunc />
-        <div className="flex">
+        <div className="flex mx-36 gap-10">
+          <Button className=" text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+          onClick={() => navigate("/manager/books")}
+          >
+            Trở về
+          </Button>
+        </div>
+        <div className="flex my-7">
           <div className="w-2/12 ml-36 font-semibold text-lg">Chi tiết</div>
           <div className="w-full mr-36">
             {/* Bìa  */}
@@ -58,11 +65,6 @@ export default function BookDetails() {
             <div className="mb-5">
               <Label for="kho">Kho</Label>
               <TextInput id="kho" placeholder="Kho" className="w-full" />
-            </div>
-            <div className="flex place-content-end gap-10">
-              <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-                Quay lại
-              </Button>
             </div>
           </div>
         </div>
