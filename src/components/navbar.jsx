@@ -234,31 +234,36 @@ function SignUpDialog({ visible, onClose }) {
 
 function Logout() {
   const navigate = useNavigate();
-  const handleLogOut = () => {
+
+  const handleLogOut = async () => {
     const cookie = new Cookie();
-    // need to refresh token before call api
-    RefreshTokenAPI();
-    axios
-      .post("http://localhost:5000/logout", null, {
+
+    try {
+      // Wait for RefreshTokenAPI to complete
+      await RefreshTokenAPI();
+
+      // Now that refreshToken is done, proceed with logout
+      await axios.post("http://localhost:5000/logout", null, {
         headers: {
           Authorization: `Bearer ${cookie.get("accessToken")}`,
         },
-      })
-      .then((res) => {
-        console.log(res.data);
-        console.log("logout success");
-        // cookie setup
-        cookie.remove("userName");
-        cookie.remove("role");
-        cookie.remove("accessToken");
-        cookie.remove("refreshToken");
-        localStorage.clear();
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
       });
+
+      console.log("logout success");
+
+      // Remove cookies and clear localStorage
+      cookie.remove("userName");
+      cookie.remove("role");
+      cookie.remove("accessToken");
+      cookie.remove("refreshToken");
+      localStorage.clear();
+      // Navigate to the desired location
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <Dropdown.Item onClick={handleLogOut} className="flex-none">
       Đăng xuất
@@ -607,7 +612,7 @@ export function Navbar({ mode = "logout" }) {
                       {role}
                     </span>
                   </Dropdown.Header>
-                  {() => {
+                  {(() => {
                     if (role === "customer") {
                       return (
                         <Dropdown.Item>
@@ -622,7 +627,7 @@ export function Navbar({ mode = "logout" }) {
                         </Dropdown.Item>
                       );
                     }
-                  }}
+                  })()}
                   <Dropdown.Divider />
                   <Logout />
                 </Dropdown>
@@ -663,6 +668,20 @@ export function Navbar({ mode = "logout" }) {
                       <p className="font-bold">Đơn đặt sách</p>
                     ) : (
                       <p>Đơn đặt sách</p>
+                    )} FakeData
+                  </button>
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "location");
+                      navigate("/staff/order/locations");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "location" ? (
+                      <p className="font-bold">Đơn đặt chỗ</p>
+                    ) : (
+                      <p>Đơn đặt chỗ</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -671,8 +690,34 @@ export function Navbar({ mode = "logout" }) {
           } else if (role === "manager") {
             return (
               <>
-                <FlowbiteNavbar.Link href="#" active>
-                  Quản lí
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "home");
+                      navigate("/manager");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "home" ||
+                    localStorage.getItem("page") === null ? (
+                      <p className="font-bold">Trang chủ</p>
+                    ) : (
+                      <p>Trang chủ</p>
+                    )}
+                  </button>
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "manage");
+                      navigate("/manager/books");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "manage" ? (
+                      <p className="font-bold">Quản lí</p>
+                    ) : (
+                      <p>Quản lí</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
               </>
             );
