@@ -27,7 +27,21 @@ export default function ListFunc() {
             </button>
           </li>
           <li>
-            <button className="hover:underline">Bàn</button>
+            <button
+              onClick={() => {
+                localStorage.setItem("type", "drink");
+                if (role === "manager") {
+                  navigate("/manager/order/drinks");
+                }
+              }}
+              className="hover:underline"
+            >
+              {localStorage.getItem("type") === "drink" ? (
+                <p className="underline"> Đơn nước </p>
+              ) : (
+                <p> Đơn nước </p>
+              )}
+            </button>
           </li>
           <li>
             <button
@@ -40,9 +54,26 @@ export default function ListFunc() {
               className="hover:underline"
             >
               {localStorage.getItem("type") === "orders" ? (
-                <p className="underline"> Đơn hàng </p>
+                <p className="underline"> Đơn đặt sách </p>
               ) : (
-                <p> Đơn hàng </p>
+                <p> Đơn đặt sách </p>
+              )}
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => {
+                localStorage.setItem("type", "reservation");
+                if (role === "manager") {
+                  navigate("/manager/order/locations");
+                }
+              }}
+              className="hover:underline"
+            >
+              {localStorage.getItem("type") === "reservation" ? (
+                <p className="underline"> Đơn đặt chỗ </p>
+              ) : (
+                <p> Đơn đặt chỗ </p>
               )}
             </button>
           </li>
@@ -54,6 +85,7 @@ export default function ListFunc() {
                   navigate("/manager/vouchers");
                 }
               }}
+              disabled="true"
               className="hover:underline"
             >
               {localStorage.getItem("type") === "vouchers" ? (

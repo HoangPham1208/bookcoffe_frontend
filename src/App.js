@@ -24,7 +24,10 @@ import AddCopy from "./components/Manager/addCopy";
 import Order from "./components/Manager/order";
 import Voucher from "./components/Manager/voucher";
 import Staff from "./components/Manager/staff";
-
+import OrderDrinkManager from "./components/Manager/orderDrink";
+import AddDrinkManager from "./components/Manager/addDrink";
+import OrderLocationManager from "./components/Manager/orderLocation";
+import OrderLocationHistoryManager from "./components/Manager/historyLocation";
 // Admin
 import HomeAdmin from "./components/Admin/homeAdmin";
 import Branch from "./components/Admin/branch";
@@ -56,6 +59,10 @@ function App() {
           <Route path="/manager/orders" element={<Order />} />
           <Route path="/manager/vouchers" element={<Voucher />} />
           <Route path="/manager/staff" element={<Staff />} />
+          <Route path="/manager/order/drinks" element={<OrderDrinkManager />} />
+          <Route path="/manager/order/drinks/add" element={<AddDrinkManager />} />
+          <Route path="/manager/order/locations" element={<OrderLocationManager />} />
+          <Route path="/manager/order/locations/history" element={<OrderLocationHistoryManager />} />
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
           <Route path="/admin/branch" element={<Branch />} />
