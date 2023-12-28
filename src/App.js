@@ -40,7 +40,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           {/* Customer */}
           <Route path="/homeUser" element={<HomeUser />} />
-          <Route path="/cart" element={<Cart />} />
+          {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/account" element={<Account />} />
           {/* Staff */}
           <Route path="/staff/order/drinks" element={<OrderDrink />} />

@@ -6,17 +6,15 @@ export default function Account() {
   return (
     <>
       <Navbar />
-      <section>
+      <section className="mx-auto px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
         <div className="flex">
-          <div className="w-2/12 ml-36 mb-5 mt-10 font-bold text-4xl">
-            Account
-          </div>
+          <div className="w-full md:ml-36 font-bold text-3xl">Tài khoản</div>
           <div className="w-full"></div>
         </div>
         <main className="my-5">
-          <hr className="mx-36 border-black" />
-          <div className="flex my-5">
-            <div className="w-2/12 ml-36 font-semibold text-xl">
+          <hr className="md:mx-36 border-black" />
+          <div className="flex flex-col md:flex-row my-5 md:space-x-5 md:mx-36">
+            <div className="md:w-3/12 font-semibold text-xl max-md:pb-5">
               Ảnh đại diện
             </div>
             <div className="w-full">
@@ -24,21 +22,21 @@ export default function Account() {
                 <img
                   src="/avatar.png"
                   alt="avatar"
-                  className="rounded-full h-96"
+                  className="rounded-full h-40 pb-5"
                 />
-                <Button className="mt-5 ml-28 bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                <Button pill className="hover:shadow-3 transition ">
                   Change avatar
                 </Button>
                 {/* <Label for="avatar" className="ml-40">Avatar</Label> */}
               </div>
             </div>
           </div>
-          <hr className="mx-36 border-black" />
-          <div className="flex my-5">
-            <div className="w-2/12 ml-36 font-semibold text-xl">
+          <hr className="md:mx-36 border-black" />
+          <div className="flex flex-col md:flex-row my-5 md:space-x-5 md:mx-36">
+            <div className="md:w-3/12 font-semibold text-xl max-md:pb-5">
               Thông tin cá nhân
             </div>
-            <div className="w-full mr-36">
+            <div className="w-full">
               {/* Email  */}
               <div className="mb-5">
                 <Label for="email">Email</Label>
@@ -97,12 +95,14 @@ export default function Account() {
               </div>
             </div>
           </div>
-          <hr className="mx-36 border-black" />
-          <div className="flex my-5">
-            <div className="w-2/12 ml-36 font-semibold text-xl">Mật khẩu</div>
-            <div className="w-full mr-36">
+          <hr className="md:mx-36 border-black" />
+          <div className="flex flex-col md:flex-row my-5 md:space-x-5 md:mx-36">
+            <div className="md:w-3/12 font-semibold text-xl max-md:pb-5">
+              Mật khẩu
+            </div>
+            <div className="w-full md:mr-36">
               <div className="mb-5">
-                <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+                <Button pill className="hover:shadow-3 transition ">
                   Change password
                 </Button>
               </div>
@@ -125,19 +125,13 @@ export default function Account() {
             </div>
           </div>
           <div>
-            <div className="flex">
-              <div className="ml-36 grid grid-cols-2 gap-10">
-                <div className="place-self-center">
-                  <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-                    Save
-                  </Button>
-                </div>
-                <div className="place-self-center ">
-                  <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-                    Cancel
-                  </Button>
-                </div>
-              </div>
+            <div className="flex flex-row md:mx-36 space-x-3">
+              <Button pill className="hover:shadow-3 transition ">
+                Save
+              </Button>
+              <Button pill color="light" className="hover:shadow-3 transition">
+                Cancel
+              </Button>
               <div className="w-full"></div>
             </div>
           </div>
