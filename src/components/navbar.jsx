@@ -595,7 +595,16 @@ export function Navbar({ mode = "logout" }) {
                       {role}
                     </span>
                   </Dropdown.Header>
-                  <Dropdown.Item href="/account">Trang cá nhân</Dropdown.Item>
+                  <Dropdown.Item>
+                    <button
+                      onClick={() => {
+                        localStorage.setItem("page", "account");
+                        navigate("/account");
+                      }}
+                    >
+                      Trang cá nhân
+                    </button>
+                  </Dropdown.Item>
                   <Dropdown.Divider />
                   <Logout />
                 </Dropdown>
@@ -638,16 +647,31 @@ export function Navbar({ mode = "logout" }) {
           } else {
             return (
               <>
-                <FlowbiteNavbar.Link href="/" active>
-                  Trang chủ
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "home");
+                      navigate("/homeUser");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "home" ? (
+                      <p className="font-bold">Trang chủ</p>
+                    ) : (
+                      <p>Trang chủ</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/books">Sách</FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/locations">
-                  Chi nhánh
+                <FlowbiteNavbar.Link>
+                  <button>Sách</button>
                 </FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/blogs">Blog</FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="/contact">
-                  Liên hệ
+                <FlowbiteNavbar.Link>
+                  <button>Chi nhánh</button>
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link>
+                  <button>Blog</button>
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link>
+                  <button>Liên hệ</button>
                 </FlowbiteNavbar.Link>
               </>
             );
