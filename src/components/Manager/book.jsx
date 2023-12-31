@@ -25,7 +25,7 @@ export default function Book() {
   return (
     <div>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="flex ml-36 gap-4">
           <Button

@@ -1,28 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar } from "../navbar";
 import { Button } from "flowbite-react";
 import { FloatingLabel } from "flowbite-react";
 import { Table } from "flowbite-react";
 import { Checkbox } from "flowbite-react";
-
-const items = [
-  {
-    name: "Cà phê đen",
-    quantity: 1,
-    price: 20000,
-  },
-  {
-    name: "Cà phê đen",
-    quantity: 1,
-    price: 20000,
-  },
-];
+import { useState } from "react";
+import axios from "axios";
 
 export default function AddDrink() {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:4000/api/staff/showDrinks").then((res) => {
+      setItems(res.data);
+    }).catch((err) => {
+      console.log(err);
+    }
+    );
+  });
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="text-3xl font-semibold my-5 mx-36">Thêm đồ uống</div>
         <div className="relative text-gray-600 mx-36 my-7">
           <input
@@ -35,26 +33,26 @@ export default function AddDrink() {
         <hr className="border-black mx-36 my-5" />
         <div className="overflow-x-auto mx-36">
           <Table hoverable>
-            <Table.Head>
+            <Table.Head className="text-center">
               <Table.HeadCell className="p-4"></Table.HeadCell>
               <Table.HeadCell></Table.HeadCell>
+              <Table.HeadCell>ID</Table.HeadCell>
               <Table.HeadCell>Tên</Table.HeadCell>
-              <Table.HeadCell>Kho</Table.HeadCell>
               <Table.HeadCell>Giá</Table.HeadCell>
+              <Table.HeadCell>Size</Table.HeadCell>
             </Table.Head>
-            <Table.Body className="divide-y">
+            <Table.Body className="divide-y text-center">
               {items.map((item) => (
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="p-4">
                       <Checkbox />
                     </Table.Cell>
-                    <Table.Cell>
-                      <img src="/the-fault-in-our-stars.png" className="h-28" />
-                    </Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{item.quantity}</Table.Cell>
+                    <Table.Cell>{item.image}</Table.Cell>
+                    <Table.Cell>{item.drinksId}</Table.Cell>
+                    <Table.Cell>{item.drinksName}</Table.Cell>
                     <Table.Cell>{item.price}</Table.Cell>
+                    <Table.Cell>{item.size}</Table.Cell>
                   </Table.Row>
                 </>
               ))}

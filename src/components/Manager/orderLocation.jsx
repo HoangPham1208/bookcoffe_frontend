@@ -135,7 +135,7 @@ export default function OrderLocationManager() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto  flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="flex mx-36 gap-10">
           <button

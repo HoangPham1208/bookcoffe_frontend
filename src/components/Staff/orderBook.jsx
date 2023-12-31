@@ -83,16 +83,8 @@ export default function OrderBook() {
     setSuccess(false);
   };
   useEffect(() => {
-    RefreshTokenAPI();
     axios
-      .get("http://localhost:4000/api/staff/showReservation", {
-        headers: {
-          Authorization: `Bearer ${cookie.get("accessToken")}`,
-        },
-        params: {
-          role: cookie.get("role"),
-        },
-      })
+      .get("http://localhost:4000/api/customer/search?title=&address=")
       .then((res) => {
         console.log(res.data);
         setItems(res.data);
@@ -105,7 +97,7 @@ export default function OrderBook() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
@@ -152,7 +144,7 @@ export default function OrderBook() {
                           checked={selectedItem === index}
                           />
                         </Table.Cell>
-                        <Table.Cell>{item.reservationId}</Table.Cell>
+                        <Table.Cell>{item.authorName}</Table.Cell>
                         <Table.Cell>{item.userName}</Table.Cell>
                         <Table.Cell>{item.address}</Table.Cell>
                         <Table.Cell>

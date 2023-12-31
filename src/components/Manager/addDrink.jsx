@@ -25,7 +25,7 @@ export default function AddDrinkManager() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="text-3xl font-semibold my-5 mx-36">Thêm đồ uống</div>
         <div className="relative text-gray-600 mx-36 my-7">

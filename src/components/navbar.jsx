@@ -669,7 +669,6 @@ export function Navbar({ mode = "logout" }) {
                     ) : (
                       <p>Đơn đặt sách</p>
                     )}{" "}
-                    FakeData
                   </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>

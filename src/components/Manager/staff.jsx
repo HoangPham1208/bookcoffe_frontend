@@ -32,7 +32,7 @@ export default function Staff() {
   return (
     <div>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
        <ListFunc />
         <div className="flex ml-36 gap-4">
           <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">

@@ -23,7 +23,7 @@ export default function OrderDrinkManager() {
   return (
     <>
       <Navbar />
-      <main className="my-7">
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="mx-36 text-3xl font-semibold">Tạo đơn #128</div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
