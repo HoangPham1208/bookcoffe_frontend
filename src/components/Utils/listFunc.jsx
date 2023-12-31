@@ -77,7 +77,7 @@ export default function ListFunc() {
               )}
             </button>
           </li>
-          <li>
+          {/* <li>
             <button
               onClick={() => {
                 localStorage.setItem("type", "vouchers");
@@ -94,7 +94,7 @@ export default function ListFunc() {
                 <p> Voucher </p>
               )}
             </button>
-          </li>
+          </li> */}
           <li>
             <button
               onClick={() => {

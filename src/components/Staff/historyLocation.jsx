@@ -133,7 +133,7 @@ export default function OrderLocationHistory() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="flex mx-36 gap-10">
           <Button className="mt-10 text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
           onClick={() => navigate("/staff/order/locations")}

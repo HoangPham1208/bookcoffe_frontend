@@ -134,7 +134,7 @@ export default function OrderLocation() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="flex mx-36 gap-10">
           <button
             className="text-3xl font-semibold mt-10 flex text-end hover:underline"

@@ -9,7 +9,7 @@ export default function AddCopy() {
   return (
     <div>
       <Navbar />
-      <main>
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="flex">
           <div className="w-2/12 ml-36 font-semibold text-lg">Thêm copy</div>
