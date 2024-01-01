@@ -9,12 +9,10 @@ export default function AddCopyAdmin() {
   return (
     <div>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        
-        <ListFunc />
+      <main className="mx-auto flex flex-col max-w-screen-xl mx-36 py-32">
         <div className="flex">
-          <div className="w-2/12 ml-36 font-semibold text-lg">Thêm copy</div>
-          <div className="w-full mr-36">
+          <div className="w-2/12  font-semibold text-lg">Thêm copy</div>
+          <div className="w-full ">
             {/* Bìa  */}
             <div className="mb-5">
               <Label for="bia">Tên</Label>
