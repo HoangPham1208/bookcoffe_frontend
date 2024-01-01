@@ -13,6 +13,7 @@ import Account from "./components/Customer/account";
 import OrderDrink from "./components/Staff/orderDrink";
 import AddDrink from "./components/Staff/addDrink";
 import OrderBook from "./components/Staff/orderBook";
+import addBookOrder from "./components/Staff/addBookOrder";
 import OrderLocation from "./components/Staff/orderLocation";
 import OrderLocationHistory from "./components/Staff/historyLocation";
 
@@ -33,6 +34,7 @@ import HomeAdmin from "./components/Admin/homeAdmin";
 import Branch from "./components/Admin/branch";
 import AddBook from "./components/Admin/addbook";
 import MyLocation from "./components/Admin/location";
+import AddBookOrder from "./components/Staff/addBookOrder";
 
 function App() {
   return (
@@ -49,6 +51,7 @@ function App() {
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />
           <Route path="/staff/order/books" element={<OrderBook />} />
+          <Route path="/staff/order/books/add" element={<AddBookOrder />} />
           <Route path="/staff/order/locations" element={<OrderLocation />} />
           <Route path="/staff/order/locations/history" element={<OrderLocationHistory />} />
           {/* Manager */}

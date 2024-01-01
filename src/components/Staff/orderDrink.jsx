@@ -1,38 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar } from "../navbar";
 import { Button } from "flowbite-react";
 import { FloatingLabel } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const items = [
-  {
-    name: "Cà phê đen",
-    quantity: 1,
-    price: 20000,
-  },
-  {
-    name: "Cà phê đen",
-    quantity: 1,
-    price: 20000,
-  },
-];
 
 export default function OrderDrink() {
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
+  // const items = localStorage.getItem("drinks") ? JSON.parse(localStorage.getItem("drinks")) : [];
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    setItems(JSON.parse(localStorage.getItem("drinks")));
+  }, [refresh]);
   return (
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="mx-36 text-3xl font-semibold">Tạo đơn #128</div>
+        <div className="mx-36 text-3xl font-semibold my-5">Tạo đơn #128</div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
             onClick={() => navigate("/staff/order/drinks/add")}
             className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
           >
-            Thêm món
+            Tạo đơn mới
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-            Xóa món
+          <Button 
+          onClick={()=>{
+            localStorage.setItem("drinks", JSON.stringify([]));
+            setRefresh(!refresh);
+          }
+          }
+          className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+            Xóa đơn
           </Button>
         </div>
         <div className="grid grid-cols-2 my-5">
@@ -41,11 +42,23 @@ export default function OrderDrink() {
               <>
                 <div className="flex justify-between mx-36 my-5">
                   <div>
-                    <div className="my-1">{item.name}</div>
+                    <div className="my-1">{item.drinksImage}</div>
+                  </div>
+                  <div>
+                    <div className="my-1">{item.drinksName}</div>
                     <div className="my-1">Số lượng: {item.quantity}</div>
+                    <div className="my-1">Size: {item.size}</div>
                   </div>
                   <div className="grid justify-items-end">
-                    <div>{item.price}</div>
+                    <div>Giá: {
+                    // item.price
+                    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)
+                    }</div>
+                    <div>
+                      Tổng: {
+                        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price * item.quantity)
+                      }
+                    </div>
                     <div>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -65,16 +78,34 @@ export default function OrderDrink() {
           <div className="bg-[#F2F2F2] mx-36 h-fit">
             <div className="flex m-5">
               <div className="w-full">Tạm tính</div>
-              <div className="w-full text-end">29000d</div>
+              <div className="w-full text-end">{
+                (() => {
+                  let total = 0;
+                  for (let i = 0; i < items.length; i++) {
+                    total += items[i].price * items[i].quantity;
+                  }
+                  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
+                })()
+              }</div>
             </div>
             <div className="flex m-5">
               <div className="w-full">Phụ thu</div>
-              <div className="w-full text-end">29000d</div>
+              <div className="w-full text-end">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0)}</div>
             </div>
             <hr className="border-black m-5" />
             <div className="flex m-5">
               <div className="w-full">Tổng cộng</div>
-              <div className="w-full text-end">29000</div>
+              <div className="w-full text-end">
+                {
+                  (() => {
+                    let total = 0;
+                    for (let i = 0; i < items.length; i++) {
+                      total += items[i].price * items[i].quantity;
+                    }
+                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
+                  })()
+                }
+              </div>
             </div>
             <div className="grid place-items-end m-5">
               <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-[#9580dc]  ">

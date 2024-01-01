@@ -7,6 +7,7 @@ import { Radio } from "flowbite-react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
+import { useNavigate } from "react-router-dom";
 
 function Check({ visible, onAccept, onCancel }) {
   const handleSuccess = () => {
@@ -65,6 +66,7 @@ function Success({ visible, setVisible }) {
 }
 
 export default function OrderBook() {
+  const Navigate = useNavigate();
   const cookie = new Cookies();
   const [items, setItems] = React.useState([]);
   const [check, setCheck] = React.useState(false);
@@ -97,11 +99,13 @@ export default function OrderBook() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
+      <main className="mx-auto flex flex-col max-w-screen-xl py-20">
         <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button 
+          onClick={()=>Navigate("/staff/order/books/add")}
+          className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
             Thêm đơn
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
@@ -147,20 +151,6 @@ export default function OrderBook() {
                         <Table.Cell>{item.authorName}</Table.Cell>
                         <Table.Cell>{item.userName}</Table.Cell>
                         <Table.Cell>{item.address}</Table.Cell>
-                        <Table.Cell>
-                          {
-                            // item.reservationDate 2023-12-20T05:12:12.000Z
-                            (() => {
-                              let date =
-                                item.reservationDate.split("T")[0] +
-                                " - " +
-                                item.reservationDate
-                                  .split("T")[1]
-                                  .split(".")[0];
-                              return date;
-                            })()
-                          }
-                        </Table.Cell>
                         <Table.Cell>{item.quantity}</Table.Cell>
                         <Table.Cell className="grid justify-items-center">
                           <Button 
