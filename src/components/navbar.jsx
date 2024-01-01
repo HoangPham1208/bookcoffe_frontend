@@ -239,7 +239,8 @@ function Logout() {
   const handleLogOut = async () => {
     const cookie = new Cookie();
     try {
-      navigate("/");
+      await localStorage.clear();
+      await navigate("/");
       // Navigate to the desired location
       // Wait for RefreshTokenAPI to complete
       await RefreshTokenAPI();
@@ -249,13 +250,15 @@ function Logout() {
           Authorization: `Bearer ${cookie.get("accessToken")}`,
         },
       });
-      cookie.remove("userName");
-      cookie.remove("role");
-      cookie.remove("accessToken");
-      cookie.remove("refreshToken");
-      localStorage.clear();
+      await cookie.remove("userName");
+      await cookie.remove("role");
+      await cookie.remove("accessToken");
+      await cookie.remove("refreshToken");
       console.log("logout success");
       // Remove cookies and clear localStorage
+      // Reload the page
+      localStorage.setItem("page", "home");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
