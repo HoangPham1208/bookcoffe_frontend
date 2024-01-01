@@ -37,7 +37,9 @@ export default function OrderDrink() {
   // const items = localStorage.getItem("drinks") ? JSON.parse(localStorage.getItem("drinks")) : [];
   const [items, setItems] = useState([]);
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("drinks")));
+    if (localStorage.getItem("drinks")) {
+      setItems(JSON.parse(localStorage.getItem("drinks")));
+    }
   }, [refresh]);
   const handleConfirm = async () => {
     if (items.length === 0) {
@@ -94,7 +96,11 @@ export default function OrderDrink() {
               <>
                 <div className="flex justify-between mx-36 my-5">
                   <div>
-                    <div className="my-1">{item.drinksImage}</div>
+                    <img 
+                      src={`http://localhost:4000/api/staff/getDrinksImage/${item.drinksId}`}
+                      alt={item.image}
+                      className="w-16 h-16 rounded-full"
+                    />
                   </div>
                   <div>
                     <div className="my-1">{item.drinksName}</div>
