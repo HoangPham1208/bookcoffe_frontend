@@ -72,6 +72,7 @@ function App() {
           <Route path="/admin/branch/:id/books/:id" element={<BookDetailsAdmin />} />
           <Route path="/admin/branch/:id/books/:id/addcopy" element={<AddCopyAdmin />} />
 
+
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
