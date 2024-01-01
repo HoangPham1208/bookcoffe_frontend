@@ -31,10 +31,10 @@ import OrderLocationManager from "./components/Manager/orderLocation";
 import OrderLocationHistoryManager from "./components/Manager/historyLocation";
 // Admin
 import HomeAdmin from "./components/Admin/homeAdmin";
-import Branch from "./components/Admin/branch";
-import AddBook from "./components/Admin/addbook";
-import MyLocation from "./components/Admin/location";
 import AddBookOrder from "./components/Staff/addBookOrder";
+import BookAdmin from "./components/Admin/book";
+import BookDetailsAdmin from "./components/Admin/bookDetail";
+import AddCopyAdmin from "./components/Admin/addCopy";
 
 function App() {
   return (
@@ -68,13 +68,9 @@ function App() {
           <Route path="/manager/order/locations/history" element={<OrderLocationHistoryManager />} />
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
-          <Route path="/admin/branch" element={<Branch />} />
-          <Route path="/admin/branch/:id/books" element={<Book />} />
-          <Route path="/admin/branch/:id/books/add" element={<AddBook />} />
-          <Route path="/admin/branch/:id/locations" element={<MyLocation />} />
-          <Route path="/admin/branch/:id/orders" element={<Order />} />
-          <Route path="/admin/vouchers" element={<Voucher />} />
-          <Route path="/admin/staff" element={<Staff />} />
+          <Route path="/admin/branch/:id/books" element={<BookAdmin />} />
+          <Route path="/admin/branch/:id/books/:id" element={<BookDetailsAdmin />} />
+          <Route path="/admin/branch/:id/books/:id/addcopy" element={<AddCopyAdmin />} />
 
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

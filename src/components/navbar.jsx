@@ -25,6 +25,7 @@ function LoginDialog({ visible, onClose }) {
       .then((res) => {
         console.log(res.data);
         // cookie setup
+        // set new cookies
         cookie.set("accessToken", res.data.accessToken, { path: "/" });
         cookie.set("refreshToken", res.data.refreshToken, { path: "/" });
         cookie.set("userName", res.data.userName, { path: "/" });
@@ -237,28 +238,24 @@ function Logout() {
 
   const handleLogOut = async () => {
     const cookie = new Cookie();
-
     try {
+      navigate("/");
+      // Navigate to the desired location
       // Wait for RefreshTokenAPI to complete
       await RefreshTokenAPI();
-
       // Now that refreshToken is done, proceed with logout
       await axios.post("http://localhost:5000/logout", null, {
         headers: {
           Authorization: `Bearer ${cookie.get("accessToken")}`,
         },
       });
-
-      console.log("logout success");
-
-      // Remove cookies and clear localStorage
       cookie.remove("userName");
       cookie.remove("role");
       cookie.remove("accessToken");
       cookie.remove("refreshToken");
       localStorage.clear();
-      // Navigate to the desired location
-      navigate("/");
+      console.log("logout success");
+      // Remove cookies and clear localStorage
     } catch (err) {
       console.log(err);
     }
@@ -541,7 +538,10 @@ export function Navbar({ mode = "logout" }) {
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
   return (
-    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full fixed z-50 min-w-[375px]">
+    <FlowbiteNavbar
+      fluid
+      className="bg-[#f1cbaa] w-full fixed z-50 min-w-[375px]"
+    >
       <FlowbiteNavbar.Brand href="localhost:3000">
         <img src="/logo.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
         <img src="/logo-text.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
@@ -612,22 +612,17 @@ export function Navbar({ mode = "logout" }) {
                       {role}
                     </span>
                   </Dropdown.Header>
-                  {(() => {
-                    if (role === "customer") {
-                      return (
-                        <Dropdown.Item>
-                          <button
-                            onClick={() => {
-                              localStorage.setItem("page", "account");
-                              navigate("/account");
-                            }}
-                          >
-                            Trang cá nhân
-                          </button>
-                        </Dropdown.Item>
-                      );
-                    }
-                  })()}
+
+                  <Dropdown.Item>
+                    <button
+                      onClick={() => {
+                        localStorage.setItem("page", "account");
+                        navigate("/account");
+                      }}
+                    >
+                      Trang cá nhân
+                    </button>
+                  </Dropdown.Item>
                   <Dropdown.Divider />
                   <Logout />
                 </Dropdown>
