@@ -5,23 +5,26 @@ import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import ListFunc from "../Utils/listFunc";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import RefreshTokenAPI from "../Utils/token";
 
-const items = [
-  {
-    name: "The Fault in Our Stars",
-    quantity: 10,
-    price: 100000,
-  },
-  {
-    name: "The Fault in Our Stars",
-    quantity: 10,
-    price: 100000,
-  },
-];
-
-export default function Book() {
+export default function BookManager() {
   const navigate = useNavigate();
   const role = new Cookies().get("role");
+  const [items, setItems] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/customer/search?title=&address=")
+      .then((res) => {
+        console.log(res.data);
+        setItems(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [refresh]);
   return (
     <div>
       <Navbar />
@@ -30,10 +33,9 @@ export default function Book() {
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => {
-              if (role === "manager"){
+              if (role === "manager") {
                 navigate("/manager/books/1/addcopy");
-              }
-              else if ( role === "admin"){
+              } else if (role === "admin") {
                 navigate("/admin/books/1/addcopy");
               }
             }}
@@ -56,44 +58,30 @@ export default function Book() {
         <hr className="border-black mx-36 my-10" />
         <div className="overflow-x-auto mx-36">
           <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell className="p-4"></Table.HeadCell>
+            <Table.Head className="text-center">
               <Table.HeadCell></Table.HeadCell>
-              <Table.HeadCell>Tên</Table.HeadCell>
-              <Table.HeadCell>Kho</Table.HeadCell>
-              <Table.HeadCell>Giá</Table.HeadCell>
-              <Table.HeadCell>
-                <span className="sr-only">Edit</span>
-              </Table.HeadCell>
+              <Table.HeadCell>Tên tác giả</Table.HeadCell>
+              <Table.HeadCell>Chi nhánh</Table.HeadCell>
+              <Table.HeadCell>Tiêu đề</Table.HeadCell>
+              <Table.HeadCell>Thể loại</Table.HeadCell>
+              <Table.HeadCell>Năm xuất bản</Table.HeadCell>
+              {/* <Table.HeadCell>Giá bán</Table.HeadCell> */}
+              <Table.HeadCell className="p-4"></Table.HeadCell>
             </Table.Head>
-            <Table.Body className="divide-y">
-              {items.map((item) => (
+            <Table.Body className="divide-y text-center">
+              {items.map((item1, index1) => (
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                    <Table.Cell>//</Table.Cell>
+                    <Table.Cell>{item1.authorName}</Table.Cell>
+                    <Table.Cell>{item1.title}</Table.Cell>
+                    <Table.Cell>{item1.genre}</Table.Cell>
+                    <Table.Cell>{item1.publicationYear}</Table.Cell>
+                    {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
                     <Table.Cell className="p-4">
-                      <Checkbox />
-                    </Table.Cell>
-                    <Table.Cell>
-                      <img src="/the-fault-in-our-stars.png" className="h-28" />
-                    </Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{item.quantity}</Table.Cell>
-                    <Table.Cell>{item.price}</Table.Cell>
-                    <Table.Cell>
-                      <Button 
-                      onClick={
-                        () => {
-                          if (role === "manager"){
-                            navigate("/manager/books/1");
-                          }
-                          else if ( role === "admin"){
-                            navigate("/admin/books/1");
-                          }
-                        }
-                      }
-                      className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
-                        Chi tiết
-                      </Button>
+                      <Checkbox 
+                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                      />
                     </Table.Cell>
                   </Table.Row>
                 </>

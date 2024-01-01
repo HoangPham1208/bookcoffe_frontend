@@ -719,10 +719,52 @@ export function Navbar({ mode = "logout" }) {
           } else if (role === "admin") {
             return (
               <>
-                <FlowbiteNavbar.Link href="#" active>
-                  Chi nhánh
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "home");
+                      navigate("/admin");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "home" ||
+                    localStorage.getItem("page") === null ? (
+                      <p className="font-bold">Trang chủ</p>
+                    ) : (
+                      <p>Trang chủ</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="#">Quản lí</FlowbiteNavbar.Link>
+                {/* Drink */}
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "menuDrink");
+                      navigate("/admin/menuDrink");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "menuDrink" ? (
+                      <p className="font-bold">Menu nước</p>
+                    ) : (
+                      <p>Menu nước</p>
+                    )}
+                  </button>
+                </FlowbiteNavbar.Link>
+                {/* Book */}
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "bookList");
+                      navigate("/admin/bookList");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "bookList" ? (
+                      <p className="font-bold">Sách</p>
+                    ) : (
+                      <p>Sách</p>
+                    )}
+                  </button>
+                </FlowbiteNavbar.Link>
+                
               </>
             );
           } else {

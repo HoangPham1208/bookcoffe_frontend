@@ -121,7 +121,7 @@ export default function AddDrink() {
                           {/* search by id like this :
                           http://localhost:4000/api/staff/getDrinksImage/item.drinksId
                            */}
-                           <img 
+                          <img
                             src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
                             alt={item1.image}
                             className="w-16 h-16 rounded-full"
@@ -149,6 +149,7 @@ export default function AddDrink() {
                         </Table.Cell>
                         <Table.Cell className="p-4">
                           <Checkbox
+                            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
                             checked={selectedItems[index1]?.[index2]?.isChecked}
                             onChange={() =>
                               handleCheckboxChange(index1, index2)
@@ -163,12 +164,13 @@ export default function AddDrink() {
             </Table>
           </div>
           <div className="flex place-content-start gap-10 mx-36 my-5">
-            <Button 
-            onClick={()=>{
-              localStorage.setItem("drinks", JSON.stringify(drinks));
-              navigate("/staff/order/drinks");
-            }}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+            <Button
+              onClick={() => {
+                localStorage.setItem("drinks", JSON.stringify(drinks));
+                navigate("/staff/order/drinks");
+              }}
+              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            >
               Hoàn tất
             </Button>
             <Button
