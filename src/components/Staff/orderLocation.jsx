@@ -181,7 +181,7 @@ export default function OrderLocation() {
                             {/* checkbox only one choice */}
                             <Radio
                               name="checkbox"
-                              className="text-[#6750A4]"
+                              className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
                               onClick={() => {
                                 handleCheck();
                               }}

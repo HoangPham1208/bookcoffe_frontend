@@ -226,7 +226,9 @@ export default function Staff() {
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
                     <Table.Cell className="p-4">
-                      <Checkbox checked={selected === index} />
+                      <Checkbox 
+                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                      checked={selected === index} />
                     </Table.Cell>
                     <Table.Cell>{item.staffName}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>

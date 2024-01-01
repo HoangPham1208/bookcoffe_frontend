@@ -107,7 +107,9 @@ export default function AddBookOrder() {
                     <Table.Cell>{item1.publicationYear}</Table.Cell>
                     {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
                     <Table.Cell className="p-4">
-                      <Checkbox />
+                      <Checkbox 
+                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                      />
                     </Table.Cell>
                   </Table.Row>
                 </>

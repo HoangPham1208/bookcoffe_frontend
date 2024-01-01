@@ -4,16 +4,15 @@ import { Button, Label, List, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import ListFunc from "../Utils/listFunc";
 
-export default function BookDetailsAdmin() {
+export default function BookDetailsModify() {
   const navigate = useNavigate();
   return (
     <div>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <ListFunc />
         <div className="flex mx-36 gap-10">
           <Button className=" text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-          onClick={() => navigate("/admin/branch/:id/books")}
+          onClick={() => navigate("/admin/bookList")}
           >
             Trở về
           </Button>
@@ -61,11 +60,7 @@ export default function BookDetailsAdmin() {
               <Label for="gia">Giá</Label>
               <TextInput id="gia" placeholder="Giá" className="w-full" />
             </div>
-            {/* Kho */}
-            <div className="mb-5">
-              <Label for="kho">Kho</Label>
-              <TextInput id="kho" placeholder="Kho" className="w-full" />
-            </div>
+            
           </div>
         </div>
       </main>

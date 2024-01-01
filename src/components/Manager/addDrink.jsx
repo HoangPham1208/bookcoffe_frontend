@@ -149,6 +149,7 @@ export default function AddDrinkManager() {
                         </Table.Cell>
                         <Table.Cell className="p-4">
                           <Checkbox
+                          className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
                             checked={selectedItems[index1]?.[index2]?.isChecked}
                             onChange={() =>
                               handleCheckboxChange(index1, index2)

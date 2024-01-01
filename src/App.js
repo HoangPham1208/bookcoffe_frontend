@@ -6,7 +6,6 @@ import Home from "./components/Guest/home";
 import NewBlog from "./components/Guest/newblog";
 // Customer 
 import HomeUser from "./components/Customer/homeUser";
-import Cart from "./components/Customer/cart";
 import Account from "./components/Customer/account";
 
 // Staff
@@ -19,7 +18,7 @@ import OrderLocationHistory from "./components/Staff/historyLocation";
 
 // Manager
 import HomeManager from "./components/Manager/homeManager";
-import Book from "./components/Manager/book";
+import BookManager from "./components/Manager/book";
 import BookDetails from "./components/Manager/bookDetail";
 import AddCopy from "./components/Manager/addCopy";
 import Order from "./components/Manager/order";
@@ -31,9 +30,12 @@ import OrderLocationManager from "./components/Manager/orderLocation";
 import OrderLocationHistoryManager from "./components/Manager/historyLocation";
 // Admin
 import HomeAdmin from "./components/Admin/homeAdmin";
+import BookList from "./components/Admin/BookList";
+import AddBook from "./components/Admin/addBook";
+import BookDetailsModify from "./components/Admin/bookDetailModify";
+import MenuDrink from "./components/Admin/menuDrink";
 import AddBookOrder from "./components/Staff/addBookOrder";
 import BookAdmin from "./components/Admin/book";
-import BookDetailsAdmin from "./components/Admin/bookDetail";
 import AddCopyAdmin from "./components/Admin/addCopy";
 
 function App() {
@@ -56,7 +58,7 @@ function App() {
           <Route path="/staff/order/locations/history" element={<OrderLocationHistory />} />
           {/* Manager */}
           <Route path="/manager" element={<HomeManager />} />
-          <Route path="/manager/books" element={<Book />} />
+          <Route path="/manager/books" element={<BookManager />} />
           <Route path="/manager/books/:id" element={<BookDetails />} />
           <Route path="/manager/books/:id/addcopy" element={<AddCopy />} />
           <Route path="/manager/orders" element={<Order />} />
@@ -68,8 +70,11 @@ function App() {
           <Route path="/manager/order/locations/history" element={<OrderLocationHistoryManager />} />
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/admin/bookList" element={<BookList />} />
+          <Route path="/admin/bookList/AddBook" element={<AddBook />} />
+          <Route path="/admin/bookList/:id" element={<BookDetailsModify />} />
+          <Route path="/admin/menuDrink" element={<MenuDrink />} />
           <Route path="/admin/branch/:id/books" element={<BookAdmin />} />
-          <Route path="/admin/branch/:id/books/:id" element={<BookDetailsAdmin />} />
           <Route path="/admin/branch/:id/books/:id/addcopy" element={<AddCopyAdmin />} />
 
 
