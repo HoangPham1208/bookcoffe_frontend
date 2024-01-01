@@ -117,7 +117,16 @@ export default function AddDrink() {
                   items[index1].price.map((item2, index2) => (
                     <>
                       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell>{item1.image}</Table.Cell>
+                        <Table.Cell className="grid justify-center">
+                          {/* search by id like this :
+                          http://localhost:4000/api/staff/getDrinksImage/item.drinksId
+                           */}
+                           <img 
+                            src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
+                            alt={item1.image}
+                            className="w-16 h-16 rounded-full"
+                          />
+                        </Table.Cell>
                         {/* <Table.Cell>{item1.drinksId}</Table.Cell> */}
                         <Table.Cell>{item1.drinksName}</Table.Cell>
                         <Table.Cell>{item1.price[index2]}</Table.Cell>
