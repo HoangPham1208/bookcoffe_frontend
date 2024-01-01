@@ -48,7 +48,7 @@ function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
         id="user-card-expanded"
         className="absolute top-16 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
       >
-        <div>Bạn muốn xác nhận đơn đặt sách #1 chứ?</div>
+        <div>Bạn muốn xác nhận đơn đặt chỗ này chứ?</div>
         <div className="flex place-content-start gap-10 my-5">
           <Button
             onClick={handleSuccess}
@@ -114,22 +114,22 @@ export default function OrderLocationManager() {
   };
   useEffect(() => {
     RefreshTokenAPI();
-    // axios
-    //   .get("http://localhost:4000/api/staff/showReservation", {
-    //     headers: {
-    //       Authorization: `Bearer ${cookie.get("accessToken")}`,
-    //     },
-    //     params: {
-    //       role: cookie.get("role"),
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setItems(res.data);
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .get("http://localhost:4000/api/staff/showReservation", {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+        params: {
+          role: cookie.get("role"),
+        },
+      })
+      .then((res) => {
+        setItems(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [refresh]);
 
   return (
@@ -138,12 +138,12 @@ export default function OrderLocationManager() {
       <main className="mx-auto  flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="flex mx-36 gap-10">
-          <button
-            className="text-3xl font-semibold  flex text-end hover:underline"
+          <Button
             onClick={() => navigate("/manager/order/locations/history")}
+            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
           >
             Xem lịch sử
-          </button>
+          </Button>
         </div>
         <div className="relative text-gray-600 mx-36 my-7">
           <input
