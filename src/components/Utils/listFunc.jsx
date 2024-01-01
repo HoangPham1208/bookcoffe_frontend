@@ -8,6 +8,29 @@ export default function ListFunc() {
     <>
       <div>
         <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
+          {(() => {
+            if (role === "admin")
+              return (
+                <>
+                  <li>
+                    <button
+                      onClick={() => {
+                        if (role === "manager") {
+                          localStorage.setItem("type", "branchInfo");
+                        }
+                      }}
+                      className="hover:underline"
+                    >
+                      {localStorage.getItem("type") === "branchInfo" ? (
+                        <p className="underline"> Thông tin </p>
+                      ) : (
+                        <p> Thông tin </p>
+                      )}
+                    </button>
+                  </li>
+                </>
+              );
+          })()}
           <li>
             <button
               onClick={() => {
@@ -26,57 +49,59 @@ export default function ListFunc() {
               )}
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => {
-                localStorage.setItem("type", "drink");
-                if (role === "manager") {
-                  navigate("/manager/order/drinks");
-                }
-              }}
-              className="hover:underline"
-            >
-              {localStorage.getItem("type") === "drink" ? (
-                <p className="underline"> Đơn nước </p>
-              ) : (
-                <p> Đơn nước </p>
-              )}
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                localStorage.setItem("type", "orders");
-                if (role === "manager") {
-                  navigate("/manager/orders");
-                }
-              }}
-              className="hover:underline"
-            >
-              {localStorage.getItem("type") === "orders" ? (
-                <p className="underline"> Đơn đặt sách </p>
-              ) : (
-                <p> Đơn đặt sách </p>
-              )}
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                localStorage.setItem("type", "reservation");
-                if (role === "manager") {
-                  navigate("/manager/order/locations");
-                }
-              }}
-              className="hover:underline"
-            >
-              {localStorage.getItem("type") === "reservation" ? (
-                <p className="underline"> Đơn đặt chỗ </p>
-              ) : (
-                <p> Đơn đặt chỗ </p>
-              )}
-            </button>
-          </li>
+          {(() => {
+            if (role === "manager") {
+              return (
+                <>
+                  <li>
+                    <button
+                      onClick={() => {
+                        localStorage.setItem("type", "drink");
+                        navigate("/manager/order/drinks");
+                      }}
+                      className="hover:underline"
+                    >
+                      {localStorage.getItem("type") === "drink" ? (
+                        <p className="underline"> Đơn nước </p>
+                      ) : (
+                        <p> Đơn nước </p>
+                      )}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        localStorage.setItem("type", "orders");
+                        navigate("/manager/orders");
+                      }}
+                      className="hover:underline"
+                    >
+                      {localStorage.getItem("type") === "orders" ? (
+                        <p className="underline"> Đơn đặt sách </p>
+                      ) : (
+                        <p> Đơn đặt sách </p>
+                      )}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        localStorage.setItem("type", "reservation");
+                        navigate("/manager/order/locations");
+                      }}
+                      className="hover:underline"
+                    >
+                      {localStorage.getItem("type") === "reservation" ? (
+                        <p className="underline"> Đơn đặt chỗ </p>
+                      ) : (
+                        <p> Đơn đặt chỗ </p>
+                      )}
+                    </button>
+                  </li>
+                </>
+              );
+            }
+          })()}
           {/* <li>
             <button
               onClick={() => {
