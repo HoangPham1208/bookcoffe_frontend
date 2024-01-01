@@ -84,17 +84,19 @@ export default function OrderBook() {
   const handleSuccesCancle = () => {
     setSuccess(false);
   };
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/customer/search?title=&address=")
-      .then((res) => {
-        console.log(res.data);
-        setItems(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/api/customer/search?title=&address=")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setItems(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+  const [refresh, setRefresh] = useState(false);
+ 
   const [selectedItem, setSelectedItem] = useState(null);
   return (
     <>
@@ -103,9 +105,10 @@ export default function OrderBook() {
         <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button 
-          onClick={()=>Navigate("/staff/order/books/add")}
-          className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button
+            onClick={() => Navigate("/staff/order/books/add")}
+            className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+          >
             Thêm đơn
           </Button>
           <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
@@ -134,18 +137,21 @@ export default function OrderBook() {
             </Table.Head>
             <Table.Body className="divide-y text-center">
               {items.map(
-                (item,index) =>
+                (item, index) =>
                   item.isConfirm === 0 && (
                     <>
-                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      <Table.Row
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
                         onClick={() => {
                           setSelectedItem(index);
                         }}
                       >
                         <Table.Cell className="p-4">
                           {/* checkbox only one choice */}
-                          <Radio name="checkbox" className="text-[#6750A4]" 
-                          checked={selectedItem === index}
+                          <Radio
+                            name="checkbox"
+                            className="text-[#6750A4]"
+                            checked={selectedItem === index}
                           />
                         </Table.Cell>
                         <Table.Cell>{item.authorName}</Table.Cell>
@@ -153,9 +159,10 @@ export default function OrderBook() {
                         <Table.Cell>{item.address}</Table.Cell>
                         <Table.Cell>{item.quantity}</Table.Cell>
                         <Table.Cell className="grid justify-items-center">
-                          <Button 
-                          onClick={handleCheck}
-                          className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]  ">
+                          <Button
+                            onClick={handleCheck}
+                            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]  "
+                          >
                             Xác nhận
                           </Button>
                         </Table.Cell>

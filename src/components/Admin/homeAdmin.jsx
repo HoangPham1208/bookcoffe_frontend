@@ -6,9 +6,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
+import { useNavigate } from "react-router-dom";
 export default function HomeAdmin() {
+  const navigate = useNavigate();
   const cookie = new Cookies();
   const [data, setData] = useState([]);
+  const [staff, setStaff] = useState([]);
   useEffect(() => {
     RefreshTokenAPI();
     axios
@@ -20,6 +23,20 @@ export default function HomeAdmin() {
       .then((res) => {
         console.log(res.data);
         setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // localhost:3000/api/admin/showStaffandManager
+    axios
+      .get("http://localhost:4000/api/admin/showStaffandManager", {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setStaff(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -51,14 +68,36 @@ export default function HomeAdmin() {
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.address}
                 </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  <div>
-                    ID: {item.branchId} <br/>
-                    Manager id: {item.managerId} <br/>
-                    working time: {item.workingTime} <br/>
-                    createDate: {item.createDate}
+                <div className="font-normal text-gray-700 dark:text-gray-400">
+                  <div className="flex justify-between">
+                    <div><span className="font-semibold">Branch ID:</span> {item.branchId}</div>
+                    <div>
+                    <span className="font-semibold">Manager: </span>
+                      {(() => {
+                        for (let i = 0; i < staff.length; i++) {
+                          if (staff[i].staffId === item.managerId) {
+                            return staff[i].userName;
+                          }
+                        }
+                      })()}
+                    </div>
                   </div>
-                </p>
+                  <div>
+                  <span className="font-semibold">Working Time: </span> {item.workingTime} <br />
+                  <span className="font-semibold">Date created: </span> {item.createDate}
+                  </div>
+                  <div className="flex place-content-end gap-10 my-5">
+                    <Button 
+                    onClick={
+                      () => {
+                        navigate(`/admin/branch/${item.branchId}/books`);
+                      }
+                    }
+                    className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+                      Xem chi tiết
+                    </Button>
+                  </div>
+                </div>
               </Card>
             </div>
           ))}
