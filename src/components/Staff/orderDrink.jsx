@@ -4,9 +4,34 @@ import { Button } from "flowbite-react";
 import { FloatingLabel } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import RefreshTokenAPI from "../Utils/token";
+import axios from "axios";
+import Cookies from "universal-cookie";
 
+function Success({ visible, setVisible }) {
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setVisible();
+    }, 2000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [visible]);
+  if (visible === false) return null;
+  return (
+    <>
+      <div
+        id="user-card-expanded"
+        className="absolute top-20 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
+      >
+        <div>Xác nhận đơn hàng thành công</div>
+      </div>
+    </>
+  );
+}
 
 export default function OrderDrink() {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
   // const items = localStorage.getItem("drinks") ? JSON.parse(localStorage.getItem("drinks")) : [];
@@ -14,11 +39,38 @@ export default function OrderDrink() {
   useEffect(() => {
     setItems(JSON.parse(localStorage.getItem("drinks")));
   }, [refresh]);
+  const handleConfirm = async () => {
+    if (items.length === 0) {
+      alert("Đơn hàng rỗng");
+      return;
+    }
+    try {
+      await RefreshTokenAPI();
+      await axios.post("http://localhost:4000/api/staff/addBill", items, {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      }).then((res) => {
+        console.log(res.data);
+      }).catch((err) => {
+        console.log(err);
+      });
+      localStorage.setItem("drinks", JSON.stringify([]));
+      setRefresh(!refresh);
+      setSuccess(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const [success, setSuccess] = React.useState(false);
+  const handleSuccesCancle = () => {
+    setSuccess(false);
+  };
   return (
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="mx-36 text-3xl font-semibold my-5">Tạo đơn #128</div>
+        <div className="mx-36 text-3xl font-semibold my-5">Tạo đơn</div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
             onClick={() => navigate("/staff/order/drinks/add")}
@@ -26,13 +78,13 @@ export default function OrderDrink() {
           >
             Tạo đơn mới
           </Button>
-          <Button 
-          onClick={()=>{
-            localStorage.setItem("drinks", JSON.stringify([]));
-            setRefresh(!refresh);
-          }
-          }
-          className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button
+            onClick={() => {
+              localStorage.setItem("drinks", JSON.stringify([]));
+              setRefresh(!refresh);
+            }}
+            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+          >
             Xóa đơn
           </Button>
         </div>
@@ -50,16 +102,31 @@ export default function OrderDrink() {
                     <div className="my-1">Size: {item.size}</div>
                   </div>
                   <div className="grid justify-items-end">
-                    <div>Giá: {
-                    // item.price
-                    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)
-                    }</div>
                     <div>
-                      Tổng: {
-                        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price * item.quantity)
+                      Giá:{" "}
+                      {
+                        // item.price
+                        new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(item.price)
                       }
                     </div>
                     <div>
+                      Tổng:{" "}
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(item.price * item.quantity)}
+                    </div>
+                    <button
+                      onClick={() => {
+                        let temp = JSON.parse(localStorage.getItem("drinks"));
+                        temp.splice(index, 1);
+                        localStorage.setItem("drinks", JSON.stringify(temp));
+                        setRefresh(!refresh);
+                      }}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="16"
@@ -68,7 +135,7 @@ export default function OrderDrink() {
                       >
                         <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
                       </svg>
-                    </div>
+                    </button>
                   </div>
                 </div>
                 <hr className="border-black mx-36" />
@@ -78,37 +145,48 @@ export default function OrderDrink() {
           <div className="bg-[#F2F2F2] mx-36 h-fit">
             <div className="flex m-5">
               <div className="w-full">Tạm tính</div>
-              <div className="w-full text-end">{
-                (() => {
+              <div className="w-full text-end">
+                {(() => {
                   let total = 0;
                   for (let i = 0; i < items.length; i++) {
                     total += items[i].price * items[i].quantity;
                   }
-                  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
-                })()
-              }</div>
+                  return new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(total);
+                })()}
+              </div>
             </div>
             <div className="flex m-5">
               <div className="w-full">Phụ thu</div>
-              <div className="w-full text-end">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0)}</div>
+              <div className="w-full text-end">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(0)}
+              </div>
             </div>
             <hr className="border-black m-5" />
             <div className="flex m-5">
               <div className="w-full">Tổng cộng</div>
               <div className="w-full text-end">
-                {
-                  (() => {
-                    let total = 0;
-                    for (let i = 0; i < items.length; i++) {
-                      total += items[i].price * items[i].quantity;
-                    }
-                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
-                  })()
-                }
+                {(() => {
+                  let total = 0;
+                  for (let i = 0; i < items.length; i++) {
+                    total += items[i].price * items[i].quantity;
+                  }
+                  return new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(total);
+                })()}
               </div>
             </div>
             <div className="grid place-items-end m-5">
-              <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-[#9580dc]  ">
+              <Button 
+              onClick={handleConfirm}
+              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-[#9580dc]  ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="16"
@@ -146,6 +224,7 @@ export default function OrderDrink() {
             </div>
           </div>
         </div>
+        <Success visible={success} setVisible={handleSuccesCancle} />
       </main>
     </>
   );
