@@ -35,11 +35,13 @@ export default function BookManager() {
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => {
-                if (localStorage.getItem("title") === null) {
-                    alert("Vui lòng chọn sách");
-                    return;
-                }
-                navigate("/manager/books/"+ localStorage.getItem("title") + "/addcopy");
+              if (localStorage.getItem("title") === null) {
+                alert("Vui lòng chọn sách");
+                return;
+              }
+              navigate(
+                "/manager/books/" + localStorage.getItem("title") + "/addcopy"
+              );
             }}
             theme={customTheme}
             color="primary"
@@ -68,6 +70,7 @@ export default function BookManager() {
               <Table.HeadCell>Tên tác giả</Table.HeadCell>
               <Table.HeadCell>Tiêu đề</Table.HeadCell>
               <Table.HeadCell>Số lượng</Table.HeadCell>
+              <Table.HeadCell>Chi tiết</Table.HeadCell>
               {/* <Table.HeadCell>Thể loại</Table.HeadCell> */}
               {/* <Table.HeadCell>Năm xuất bản</Table.HeadCell> */}
               {/* <Table.HeadCell>Giá</Table.HeadCell> */}
@@ -91,8 +94,31 @@ export default function BookManager() {
                     <Table.Cell>//</Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
-                    <Table.Cell>{item1.copyId.length}</Table.Cell>
-
+                    <Table.Cell>{
+                      (()=>{
+                        let count = 0;
+                        for (let i = 0; i < item1.branch.length; i++) {
+                          if(item1.branch[i] === new Cookies().get("branchAddress")){
+                            count++;
+                          }
+                        }
+                        return count;
+                      })()
+                    }</Table.Cell>
+                    <Table.Cell>
+                      <div className="flex justify-center">
+                      <Button
+                        onClick={() => {
+                          navigate("/manager/books/" + item1.title);
+                        }}
+                        theme={customTheme}
+                        color="secondary"
+                        pill
+                      >
+                        Chi tiết
+                      </Button>
+                      </div>
+                    </Table.Cell>
                     {/* <Table.Cell>{item1.genre}</Table.Cell> */}
                     {/* <Table.Cell>{item1.publicationYear}</Table.Cell> */}
                     {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}

@@ -5,23 +5,29 @@ import { Checkbox, Table } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import ListFunc from "../Utils/listFunc";
-
-const items = [
-  {
-    name: "The Fault in Our Stars",
-    quantity: 10,
-    price: 100000,
-  },
-  {
-    name: "The Fault in Our Stars",
-    quantity: 10,
-    price: 100000,
-  },
-];
+import axios from "axios";
+import { useState, useEffect } from "react";
+import RefreshTokenAPI from "../Utils/token";
+import { customTheme } from "../Utils/myButton";
+import { useParams } from "react-router-dom";
 
 export default function BookAdmin() {
+  const { id: branchAddress } = useParams();
   const navigate = useNavigate();
-  const role = new Cookies().get("role");
+  const [items, setItems] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/customer/search?title=&address=")
+      .then((res) => {
+        console.log(res.data);
+        setItems(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [refresh]);
+  const [selected, setSelected] = useState(null);
   return (
     <div>
       <Navbar />
@@ -29,22 +35,55 @@ export default function BookAdmin() {
         <div className="flex place-content-start fixed mt-8 mx-5 ">
           <Button
             onClick={() => navigate("/admin")}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Trở về
           </Button>
         </div>
-        <ListFunc />
+        <div>
+          <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
+            <li>
+              <button className="hover:underline">
+                {localStorage.getItem("type") === "book" ||
+                localStorage.getItem("type") === null ? (
+                  <p className="underline"> Sách </p>
+                ) : (
+                  <p> Sách </p>
+                )}
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  localStorage.setItem("type", "staff");
+                  navigate("/admin/branch/:id/staff");
+                }}
+                className="hover:underline"
+              >
+                {/* staff */}
+                {localStorage.getItem("type") === "staff" ? (
+                  <p className="underline"> Nhân viên </p>
+                ) : (
+                  <p> Nhân viên </p>
+                )}
+              </button>
+            </li>
+          </ul>
+        </div>
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => {
               navigate("/admin/branch/:id/books/:id/addcopy");
             }}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Thêm copy
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button theme={customTheme} color="secondary" pill>
             Xóa sách
           </Button>
         </div>
@@ -59,39 +98,70 @@ export default function BookAdmin() {
         <hr className="border-black mx-36 my-10" />
         <div className="overflow-x-auto mx-36">
           <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell className="p-4"></Table.HeadCell>
+            <Table.Head className="text-center">
               <Table.HeadCell></Table.HeadCell>
-              <Table.HeadCell>Tên</Table.HeadCell>
-              <Table.HeadCell>Kho</Table.HeadCell>
-              <Table.HeadCell>Giá</Table.HeadCell>
-              <Table.HeadCell>
-                <span className="sr-only">Edit</span>
-              </Table.HeadCell>
+              <Table.HeadCell></Table.HeadCell>
+              <Table.HeadCell>Tên tác giả</Table.HeadCell>
+              <Table.HeadCell>Tiêu đề</Table.HeadCell>
+              <Table.HeadCell>Số lượng</Table.HeadCell>
+              <Table.HeadCell>Chi tiết</Table.HeadCell>
+              {/* <Table.HeadCell>Thể loại</Table.HeadCell> */}
+              {/* <Table.HeadCell>Năm xuất bản</Table.HeadCell> */}
+              {/* <Table.HeadCell>Giá</Table.HeadCell> */}
             </Table.Head>
-            <Table.Body className="divide-y">
-              {items.map((item) => (
+            <Table.Body className="divide-y text-center">
+              {items.map((item1, index) => (
                 <>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row
+                    onClick={() => {
+                      setSelected(index);
+                      localStorage.setItem("title", item1.title);
+                    }}
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                  >
                     <Table.Cell className="p-4">
-                      <Checkbox />
+                      <Checkbox
+                        checked={selected === index}
+                        className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                      />
+                    </Table.Cell>
+                    <Table.Cell>//</Table.Cell>
+                    <Table.Cell>{item1.authorName}</Table.Cell>
+                    <Table.Cell>{item1.title}</Table.Cell>
+                    <Table.Cell>
+                      {(() => {
+                        let count = 0;
+                        for (let i = 0; i < item1.branch.length; i++) {
+                          if (item1.branch[i] === branchAddress) {
+                            count++;
+                          }
+                        }
+                        return count;
+                      })()}
                     </Table.Cell>
                     <Table.Cell>
-                      <img src="/the-fault-in-our-stars.png" className="h-28" />
+                      <div className="flex justify-center">
+                        <Button
+                          onClick={() =>
+                            navigate(
+                              "/admin/branch/" +
+                                branchAddress +
+                                "/books/" +
+                                item1.title
+                            )
+                          }
+                          theme={customTheme}
+                          color="secondary"
+                          pill
+                        >
+                          Chi tiết
+                        </Button>
+                      </div>
                     </Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{item.quantity}</Table.Cell>
-                    <Table.Cell>{item.price}</Table.Cell>
-                    <Table.Cell>
-                      <Button
-                        onClick={() => {
-                          navigate("/admin/branch/:id/books/:id");
-                        }}
-                        className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
-                      >
-                        Chi tiết
-                      </Button>
-                    </Table.Cell>
+
+                    {/* <Table.Cell>{item1.genre}</Table.Cell> */}
+                    {/* <Table.Cell>{item1.publicationYear}</Table.Cell> */}
+                    {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
                   </Table.Row>
                 </>
               ))}

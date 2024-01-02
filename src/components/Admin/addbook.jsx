@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { customTheme } from "../Utils/myButton";
 
 export default function AddBook() {
   const navigate = useNavigate();
@@ -55,11 +56,11 @@ export default function AddBook() {
 
             <div className="flex place-content-end gap-10">
               <Button 
-              onClick={() => navigate("/admin/bookList/:id")}
-              className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+              onClick={() => navigate("/admin/bookList")}
+              theme={customTheme} color="secondary" pill>
                 Hủy
               </Button>
-              <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+              <Button theme={customTheme} color="primary" pill>
                 Hoàn tất
               </Button>
             </div>

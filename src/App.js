@@ -42,6 +42,7 @@ import AddBookOrder from "./components/Staff/addBookOrder";
 import BookAdmin from "./components/Admin/book";
 import AddCopyAdmin from "./components/Admin/addCopy";
 import BookDetailAdmin from "./components/Admin/bookDetailAdmin";
+import StaffAdmin from "./components/Admin/staff";
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
           <Route path="/admin/branch/:id/books" element={<BookAdmin />} />
           <Route path="/admin/branch/:id/books/:id/addcopy" element={<AddCopyAdmin />} />
           <Route path="/admin/branch/:id/books/:id" element={<BookDetailAdmin />} />
+          <Route path="/admin/branch/:id/staff" element={<StaffAdmin />} />
 
 
         </Route>

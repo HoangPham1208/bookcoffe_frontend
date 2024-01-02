@@ -8,6 +8,7 @@ import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
 import { Table } from "flowbite-react";
 import { Checkbox } from "flowbite-react";
+import { customTheme } from "../Utils/myButton";
 
 export default function MenuDrink() {
   const [items, setItems] = useState([]);
@@ -27,6 +28,7 @@ export default function MenuDrink() {
     };
     fetchData();
   }, [refresh]);
+  const [selected, setSelected] = useState(null);
   return (
     <>
       <Navbar />
@@ -35,11 +37,8 @@ export default function MenuDrink() {
           <button>Menu</button>
         </div>
         <div className="flex place-content-start gap-10 my-5">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button theme={customTheme} color="primary" pill>
             Thêm nước
-          </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
-            Xóa
           </Button>
         </div>
         <div className="relative text-gray-600 my-7">
@@ -57,8 +56,8 @@ export default function MenuDrink() {
               {/* <Table.HeadCell>ID</Table.HeadCell> */}
 
               <Table.HeadCell>Tên</Table.HeadCell>
-              <Table.HeadCell>Giá</Table.HeadCell>
               <Table.HeadCell>Size</Table.HeadCell>
+              <Table.HeadCell>Giá</Table.HeadCell>
               <Table.HeadCell className="p-4"></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
@@ -78,14 +77,8 @@ export default function MenuDrink() {
                       </Table.Cell>
                       {/* <Table.Cell>{item1.drinksId}</Table.Cell> */}
                       <Table.Cell>{item1.drinksName}</Table.Cell>
-                      <Table.Cell>{item1.price[index2]}</Table.Cell>
                       <Table.Cell>{item1.size[index2]}</Table.Cell>
-
-                      <Table.Cell className="p-4">
-                        <Checkbox 
-                        className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-                        />
-                      </Table.Cell>
+                      <Table.Cell>{item1.price[index2]}</Table.Cell>
                     </Table.Row>
                   </>
                 ))

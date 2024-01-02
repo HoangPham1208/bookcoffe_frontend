@@ -2,23 +2,51 @@ import React from "react";
 import { Navbar } from "../navbar";
 import { Button, Label, List, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import ListFunc from "../Utils/listFunc";
+import { customTheme } from "../Utils/myButton";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import RefreshTokenAPI from "../Utils/token";
+import { useParams } from "react-router-dom";
 
 export default function BookDetailsModify() {
+  const { id: title } = useParams();
+  const [items, setItems] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get(
+          "http://localhost:4000/api/customer/search?title=" +
+            title +
+            "&address="
+        )
+        .then((res) => {
+          console.log(res.data[0]);
+          setItems(res.data[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+  }, [refresh]);
   const navigate = useNavigate();
   return (
     <div>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="flex mx-36 gap-10">
-          <Button className=" text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-          onClick={() => navigate("/admin/bookList")}
+          <Button
+            theme={customTheme}
+            color="secondary"
+            pill
+            onClick={() => navigate("/admin/bookList")}
           >
             Trở về
           </Button>
         </div>
         <div className="flex my-7">
-          <div className="w-2/12 ml-36 font-semibold text-lg">Chi tiết</div>
+          <div className="w-2/12 ml-36 font-semibold text-lg">Chỉnh sửa </div>
           <div className="w-full mr-36">
             {/* Bìa  */}
             <div className="mb-5">
@@ -28,7 +56,12 @@ export default function BookDetailsModify() {
             {/* Tên */}
             <div className="mb-5">
               <Label for="ten">Tên</Label>
-              <TextInput id="ten" placeholder="Tên" className="w-full" />
+              <TextInput
+                id="ten"
+                placeholder="Tên"
+                className="w-full"
+                value={items.title}
+              />
             </div>
             {/* Thể loại */}
             <div className="mb-5">
@@ -37,12 +70,18 @@ export default function BookDetailsModify() {
                 id="theloai"
                 placeholder="Thể loại"
                 className="w-full"
+                value={items.genre}
               />
             </div>
             {/* Tác giả */}
             <div className="mb-5">
               <Label for="tacgia">Tác giả</Label>
-              <TextInput id="tacgia" placeholder="Tác giả" className="w-full" />
+              <TextInput
+                id="tacgia"
+                placeholder="Tác giả"
+                className="w-full"
+                value={items.authorName}
+              />
             </div>
             {/* Mô tả */}
             <div className="mb-5">
@@ -58,9 +97,16 @@ export default function BookDetailsModify() {
             {/* Giá */}
             <div className="mb-5">
               <Label for="gia">Giá</Label>
-              <TextInput id="gia" placeholder="Giá" className="w-full" />
+              <TextInput
+                id="gia"
+                placeholder="Giá"
+                className="w-full"
+                value={new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(items.salePrice)}
+              />
             </div>
-            
           </div>
         </div>
       </main>

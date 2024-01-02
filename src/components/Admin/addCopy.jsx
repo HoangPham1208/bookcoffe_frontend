@@ -3,6 +3,7 @@ import { Navbar } from "../navbar";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import ListFunc from "../Utils/listFunc";
+import { customTheme } from "../Utils/myButton";
 
 export default function AddCopyAdmin() {
   const navigate = useNavigate();
@@ -16,7 +17,9 @@ export default function AddCopyAdmin() {
             {/* Bìa  */}
             <div className="mb-5">
               <Label for="bia">Tên</Label>
-              <TextInput id="ten" placeholder="Tên" className="w-full" />
+              <TextInput id="ten" placeholder="Tên" className="w-full" 
+              value={localStorage.getItem("title")}
+              />
             </div>
             {/* Tên */}
             <div className="mb-5">
@@ -26,12 +29,16 @@ export default function AddCopyAdmin() {
             <div className="flex place-content-end gap-10">
               <Button 
               onClick={
-                () => navigate("/admin/branch/:id/books")
+                () => {
+                  navigate("/admin/branch/:id/books")
+                  localStorage.removeItem("title")
+                }
               }
-              className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+              theme={customTheme} color="secondary" pill>
+
                 Hủy
               </Button>
-              <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+              <Button theme={customTheme} color="primary" pill>
                 Hoàn tất
               </Button>
             </div>

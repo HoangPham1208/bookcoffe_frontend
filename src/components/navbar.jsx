@@ -5,6 +5,8 @@ import axios from "axios";
 import Cookie from "universal-cookie";
 import RefreshTokenAPI from "./Utils/token";
 import { useNavigate } from "react-router-dom";
+import { Button } from "flowbite-react";
+import { customTheme } from "./Utils/myButton";
 
 function LoginDialog({ visible, onClose }) {
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ function LoginDialog({ visible, onClose }) {
     <>
       <div
         id="user-card-expanded"
-        className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
+        className="absolute top-0 right-5 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
       >
         <p className="text-left font-bold w-full">Đăng nhập</p>
         <button
@@ -91,14 +93,16 @@ function LoginDialog({ visible, onClose }) {
           className="w-80 select-none"
         />
         <div className="flex w-full flex-row justify-center px-2">
-          <button
+          <Button
             onClick={handleLogin}
             id="edit-account"
             type="button"
-            className="items inline-flex gap-x-3 rounded-full bg-button-primary px-6 py-2.5 text-center text-white shadow-1 transition ease-out hover:bg-button-primary-hover hover:shadow-3 active:bg-button-primary-active dark:bg-button-primary-dark dark:hover:bg-button-primary-hover-dark dark:active:bg-button-primary-active-dark"
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Đăng nhập
-          </button>
+          </Button>
         </div>
       </div>
     </>
@@ -145,7 +149,7 @@ function SignUpDialog({ visible, onClose }) {
   };
   return (
     <>
-      <div className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none ">
+      <div className="absolute top-0 right-5 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none ">
         <p className="text-left font-bold w-full">Đăng ký</p>
         <button
           onClick={handleOnClose}
@@ -221,14 +225,16 @@ function SignUpDialog({ visible, onClose }) {
           )}
         </div>
         <div className="flex w-full flex-row justify-center px-2">
-          <button
+          <Button
             onClick={handleRegister}
             id="edit-account"
             type="button"
-            className="items inline-flex gap-x-3 rounded-full bg-button-primary px-6 py-2.5 text-center text-white shadow-1 transition ease-out hover:bg-button-primary-hover hover:shadow-3 active:bg-button-primary-active dark:bg-button-primary-dark dark:hover:bg-button-primary-hover-dark dark:active:bg-button-primary-active-dark"
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Đăng ký
-          </button>
+          </Button>
         </div>
       </div>
     </>
@@ -553,6 +559,15 @@ export function Navbar({ mode = "logout" }) {
       <FlowbiteNavbar.Brand href="localhost:3000">
         <img src="/logo.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
         <img src="/logo-text.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
+        {(()=>{
+          if (role === "staff" || role === "manager" ){
+            return (
+              <div className="fixed ml-48">
+                Chi nhánh: <span className="font-semibold">{new Cookie().get("branchAddress")}</span>
+              </div>
+            )
+          }
+        })()}
         {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Book Cafe
         </span> */}
@@ -748,6 +763,7 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "menuDrink");
+                      localStorage.removeItem("type");
                       navigate("/admin/menuDrink");
                     }}
                   >
@@ -763,6 +779,7 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "bookList");
+                      localStorage.removeItem("type");
                       navigate("/admin/bookList");
                     }}
                   >

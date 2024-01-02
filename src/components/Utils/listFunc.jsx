@@ -12,22 +12,6 @@ export default function ListFunc() {
             if (role === "admin")
               return (
                 <>
-                  <li>
-                    <button
-                      onClick={() => {
-                        if (role === "manager") {
-                          localStorage.setItem("type", "branchInfo");
-                        }
-                      }}
-                      className="hover:underline"
-                    >
-                      {localStorage.getItem("type") === "branchInfo" ? (
-                        <p className="underline"> Thông tin </p>
-                      ) : (
-                        <p> Thông tin </p>
-                      )}
-                    </button>
-                  </li>
                 </>
               );
           })()}
