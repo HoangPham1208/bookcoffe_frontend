@@ -8,6 +8,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
+import { customTheme } from "../Utils/myButton";
 
 function Check({ visible, onAccept, onCancel }) {
   const handleSuccess = () => {
@@ -27,13 +28,17 @@ function Check({ visible, onAccept, onCancel }) {
         <div className="flex place-content-start gap-10 my-5">
           <Button
             onClick={handleSuccess}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Hoàn tất
           </Button>
           <Button
             onClick={handleCancel}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Hủy
           </Button>
@@ -96,7 +101,7 @@ export default function OrderBook() {
   //     });
   // }, []);
   const [refresh, setRefresh] = useState(false);
- 
+
   const [selectedItem, setSelectedItem] = useState(null);
   return (
     <>
@@ -107,11 +112,13 @@ export default function OrderBook() {
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
             onClick={() => Navigate("/staff/order/books/add")}
-            className="bg-[#7c61c6] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Thêm đơn
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button theme={customTheme} color="secondary" pill>
             Xóa đơn
           </Button>
         </div>

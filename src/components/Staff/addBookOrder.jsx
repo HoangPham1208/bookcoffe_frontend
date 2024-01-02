@@ -6,19 +6,24 @@ import { Table } from "flowbite-react";
 import { Checkbox } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
+import RefreshTokenAPI from "../Utils/token";
+import { useNavigate } from "react-router-dom";
+import { customTheme } from "../Utils/myButton";
 
 export default function AddBookOrder() {
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
-    axios.get("http://localhost:4000/api/customer/search?title=&address=").then((res) => {
-      console.log(res.data);
-      setItems(res.data);
-      
-    }).catch((err) => {
-      console.log(err);
-    }
-    );
+    axios
+      .get("http://localhost:4000/api/customer/search?title=&address=")
+      .then((res) => {
+        console.log(res.data);
+        setItems(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [refresh]);
   const [books, setBooks] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -53,7 +58,7 @@ export default function AddBookOrder() {
       setBooks([...books, temp]);
     }
     setSelectedItems(updatedSelectedItems);
-  }
+  };
 
   const handleInputChange = (e, index1, index2) => {
     const updatedSelectedItems = [...selectedItems];
@@ -66,13 +71,15 @@ export default function AddBookOrder() {
       inputValue: e.target.value,
     };
     setSelectedItems(updatedSelectedItems);
-  }
+  };
 
   return (
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="text-3xl font-semibold my-5 mx-36">Tạo phiếu mượn sách</div>
+        <div className="text-3xl font-semibold my-5 mx-36">
+          Tạo phiếu mượn sách
+        </div>
         <div className="relative text-gray-600 mx-36 my-7">
           <input
             type="search"
@@ -96,32 +103,31 @@ export default function AddBookOrder() {
             </Table.Head>
             <Table.Body className="divide-y text-center">
               {items.map((item1, index1) =>
-                  items[index1].branch.map((item2, index2) => (
-                <>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>//</Table.Cell>
-                    <Table.Cell>{item1.authorName}</Table.Cell>
-                    <Table.Cell>{item2}</Table.Cell>
-                    <Table.Cell>{item1.title}</Table.Cell>
-                    <Table.Cell>{item1.genre}</Table.Cell>
-                    <Table.Cell>{item1.publicationYear}</Table.Cell>
-                    {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
-                    <Table.Cell className="p-4">
-                      <Checkbox 
-                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                </>
-              )))}
+                items[index1].branch.map((item2, index2) => (
+                  <>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                      <Table.Cell>//</Table.Cell>
+                      <Table.Cell>{item1.authorName}</Table.Cell>
+                      <Table.Cell>{item2}</Table.Cell>
+                      <Table.Cell>{item1.title}</Table.Cell>
+                      <Table.Cell>{item1.genre}</Table.Cell>
+                      <Table.Cell>{item1.publicationYear}</Table.Cell>
+                      {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
+                      <Table.Cell className="p-4">
+                        <Checkbox className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white" />
+                      </Table.Cell>
+                    </Table.Row>
+                  </>
+                ))
+              )}
             </Table.Body>
           </Table>
         </div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+          <Button theme={customTheme} color="primary" pill>
             Hoàn tất
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button theme={customTheme} color="secondary" pill>
             Hủy
           </Button>
         </div>

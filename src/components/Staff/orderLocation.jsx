@@ -8,6 +8,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import RefreshTokenAPI from "../Utils/token";
+import { customTheme } from "../Utils/myButton";
 
 function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
   const cookie = new Cookies();
@@ -135,13 +136,16 @@ export default function OrderLocation() {
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="flex mx-36 gap-10">
-          <button
-            className="text-3xl font-semibold mt-10 flex text-end hover:underline"
+        <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt chỗ</div>
+        <div className="flex mx-36 gap-10 my-5 ">
+          <Button
+            theme={customTheme}
+            color="primary"
+            pill
             onClick={() => navigate("/staff/order/locations/history")}
           >
             Xem lịch sử
-          </button>
+          </Button>
         </div>
         <div className="relative text-gray-600 mx-36 my-7">
           <input
@@ -181,7 +185,7 @@ export default function OrderLocation() {
                             {/* checkbox only one choice */}
                             <Radio
                               name="checkbox"
-                              className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                              className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
                               onClick={() => {
                                 handleCheck();
                               }}
@@ -210,7 +214,9 @@ export default function OrderLocation() {
                             <Button
                               onClick={handleCheck}
                               disabled={selectedItem !== index}
-                              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]"
+                              theme={customTheme}
+                              color="primary"
+                              pill
                             >
                               Xác nhận
                             </Button>

@@ -8,6 +8,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
+import { customTheme } from "../Utils/myButton";
 
 function Check({ visible, onAccept, onCancel }) {
   const handleSuccess = () => {
@@ -134,8 +135,11 @@ export default function OrderLocationHistory() {
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="flex mx-36 gap-10">
-          <Button className="mt-10 text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+      <div className="text-3xl font-semibold my-5 mx-36">Lịch sử đặt chỗ</div>
+        <div className="flex mx-36 gap-10 my-5">
+          <Button theme={customTheme}
+            color="secondary"
+            pill
           onClick={() => navigate("/staff/order/locations")}
           >
             Trở về
