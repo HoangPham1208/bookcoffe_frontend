@@ -9,6 +9,7 @@ import RefreshTokenAPI from "../Utils/token";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useEffect } from "react";
+import { customTheme } from "../Utils/myButton";
 
 function Success({ visible, setVisible }) {
   useEffect(() => {
@@ -50,15 +51,18 @@ export default function OrderDrinkManager() {
     }
     try {
       await RefreshTokenAPI();
-      await axios.post("http://localhost:4000/api/staff/addBill", items, {
-        headers: {
-          Authorization: `Bearer ${cookie.get("accessToken")}`,
-        },
-      }).then((res) => {
-        console.log(res.data);
-      }).catch((err) => {
-        console.log(err);
-      });
+      await axios
+        .post("http://localhost:4000/api/staff/addBill", items, {
+          headers: {
+            Authorization: `Bearer ${cookie.get("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       localStorage.setItem("drinks", JSON.stringify([]));
       setRefresh(!refresh);
       setSuccess(true);
@@ -78,8 +82,10 @@ export default function OrderDrinkManager() {
         <div className="mx-36 text-3xl font-semibold">Tạo đơn</div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
+            theme={customTheme}
+            color="primary"
+            pill
             onClick={() => navigate("/manager/order/drinks/add")}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
           >
             Tạo đơn mới
           </Button>
@@ -88,7 +94,9 @@ export default function OrderDrinkManager() {
               localStorage.setItem("drinks", JSON.stringify([]));
               setRefresh(!refresh);
             }}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Xóa đơn
           </Button>
@@ -99,7 +107,7 @@ export default function OrderDrinkManager() {
               <>
                 <div className="flex justify-between mx-36 my-5">
                   <div>
-                    <img 
+                    <img
                       src={`http://localhost:4000/api/staff/getDrinksImage/${item.drinksId}`}
                       alt={item.image}
                       className="w-16 h-16 rounded-full"
@@ -193,9 +201,12 @@ export default function OrderDrinkManager() {
               </div>
             </div>
             <div className="grid place-items-end m-5">
-              <Button 
-              onClick={handleConfirm}
-              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-[#9580dc]  ">
+              <Button
+                onClick={handleConfirm}
+                theme={customTheme}
+                color="primary"
+                pill
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="16"
@@ -224,7 +235,7 @@ export default function OrderDrinkManager() {
                     />
                   </div>
                   <div className="w-full grid place-items-end">
-                    <Button className="bg-[#F2F2F2] rounded-full border-[#6750A4] enabled:hover:bg-white text-[#6750A4] ">
+                    <Button theme={customTheme} color="secondary" pill>
                       Áp dụng
                     </Button>
                   </div>

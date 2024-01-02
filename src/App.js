@@ -23,7 +23,7 @@ import HomeManager from "./components/Manager/homeManager";
 import BookManager from "./components/Manager/book";
 import BookDetails from "./components/Manager/bookDetail";
 import AddCopy from "./components/Manager/addCopy";
-import Order from "./components/Manager/order";
+import OrderBookManager from "./components/Manager/orderBook";
 import Voucher from "./components/Manager/voucher";
 import Staff from "./components/Manager/staff";
 import OrderDrinkManager from "./components/Manager/orderDrink";
@@ -66,7 +66,7 @@ function App() {
           <Route path="/manager/books" element={<BookManager />} />
           <Route path="/manager/books/:id" element={<BookDetails />} />
           <Route path="/manager/books/:id/addcopy" element={<AddCopy />} />
-          <Route path="/manager/orders" element={<Order />} />
+          <Route path="/manager/order/books" element={<OrderBookManager />} />
           <Route path="/manager/vouchers" element={<Voucher />} />
           <Route path="/manager/staff" element={<Staff />} />
           <Route path="/manager/order/drinks" element={<OrderDrinkManager />} />

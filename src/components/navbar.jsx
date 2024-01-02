@@ -372,6 +372,7 @@ export function Navbarlegacy({ mode = "logout" }) {
                     className="hover:underline transition"
                     onClick={() => {
                       localStorage.setItem("page", "manage");
+                      localStorage.removeItem("type");
                       if (role === "admin") {
                         navigate("/admin/branch");
                       } else {
@@ -711,6 +712,7 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "manage");
+                      localStorage.removeItem("type");
                       navigate("/manager/books");
                     }}
                   >
