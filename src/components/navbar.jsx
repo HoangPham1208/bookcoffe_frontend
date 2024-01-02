@@ -30,6 +30,8 @@ function LoginDialog({ visible, onClose }) {
         cookie.set("refreshToken", res.data.refreshToken, { path: "/" });
         cookie.set("userName", res.data.userName, { path: "/" });
         cookie.set("role", res.data.role, { path: "/" });
+        cookie.set("branchId", res.data.branchId, { path: "/" });
+        cookie.set("branchAddress", res.data.branchAddress, { path: "/" });
         // navigate("/homeUser");
         if (res.data.role === "customer") {
           localStorage.setItem("page", "home");
@@ -254,6 +256,8 @@ function Logout() {
       await cookie.remove("role");
       await cookie.remove("accessToken");
       await cookie.remove("refreshToken");
+      await cookie.remove("branchId");
+      await cookie.remove("branchAddress");
       console.log("logout success");
       // Remove cookies and clear localStorage
       // Reload the page
