@@ -14,7 +14,6 @@ import ListFunc from "../Utils/listFunc";
 export default function OrderBookManager() {
   const navigate = useNavigate();
   const cookie = new Cookies();
-  const [items, setItems] = React.useState([]);
   return (
     <>
       <Navbar />
@@ -24,7 +23,7 @@ export default function OrderBookManager() {
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
-            onClick={() => navigate("/staff/order/books/add")}
+            onClick={() => navigate("/manager/order/books/add")}
             theme={customTheme}
             color="primary"
             pill
@@ -33,7 +32,7 @@ export default function OrderBookManager() {
           </Button>
           <Button
             onClick={async () => {
-              navigate("/staff/order/books/branch")
+              navigate("/manager/order/books/branch")
             }}
             theme={customTheme}
             color="secondary"
@@ -43,7 +42,7 @@ export default function OrderBookManager() {
           </Button>
           <Button
             onClick={async () => {
-              navigate("/staff/order/books/home")
+              navigate("/manager/order/books/home")
             }}
             theme={customTheme}
             color="secondary"

@@ -8,6 +8,7 @@ import ListFunc from "../Utils/listFunc";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import RefreshTokenAPI from "../Utils/token";
+import { customTheme } from "../Utils/myButton";
 
 export default function BookManager() {
   const navigate = useNavigate();
@@ -34,17 +35,19 @@ export default function BookManager() {
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => {
-              if (role === "manager") {
-                navigate("/manager/books/1/addcopy");
-              } else if (role === "admin") {
-                navigate("/admin/books/1/addcopy");
-              }
+                if (localStorage.getItem("title") === null) {
+                    alert("Vui lòng chọn sách");
+                    return;
+                }
+                navigate("/manager/books/"+ localStorage.getItem("title") + "/addcopy");
             }}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Thêm copy
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button theme={customTheme} color="secondary" pill>
             Xóa sách
           </Button>
         </div>
@@ -61,13 +64,13 @@ export default function BookManager() {
           <Table hoverable>
             <Table.Head className="text-center">
               <Table.HeadCell></Table.HeadCell>
-              <Table.HeadCell className="p-4"></Table.HeadCell>
+              <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Tên tác giả</Table.HeadCell>
-              <Table.HeadCell>Chi nhánh</Table.HeadCell>
               <Table.HeadCell>Tiêu đề</Table.HeadCell>
+              <Table.HeadCell>Số lượng</Table.HeadCell>
               {/* <Table.HeadCell>Thể loại</Table.HeadCell> */}
               {/* <Table.HeadCell>Năm xuất bản</Table.HeadCell> */}
-              <Table.HeadCell>Giá</Table.HeadCell>
+              {/* <Table.HeadCell>Giá</Table.HeadCell> */}
             </Table.Head>
             <Table.Body className="divide-y text-center">
               {items.map((item1, index) => (
@@ -75,21 +78,24 @@ export default function BookManager() {
                   <Table.Row
                     onClick={() => {
                       setSelected(index);
+                      localStorage.setItem("title", item1.title);
                     }}
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
                     <Table.Cell className="p-4">
-                      <Checkbox 
-                      checked={selected === index}
-                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white" />
+                      <Checkbox
+                        checked={selected === index}
+                        className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                      />
                     </Table.Cell>
                     <Table.Cell>//</Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
-                    <Table.Cell>{item1.genre}</Table.Cell>
-                    <Table.Cell>{item1.publicationYear}</Table.Cell>
+                    <Table.Cell>{item1.copyId.length}</Table.Cell>
+
+                    {/* <Table.Cell>{item1.genre}</Table.Cell> */}
+                    {/* <Table.Cell>{item1.publicationYear}</Table.Cell> */}
                     {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
-                    
                   </Table.Row>
                 </>
               ))}

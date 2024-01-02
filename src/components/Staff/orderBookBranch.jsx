@@ -9,7 +9,7 @@ import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
 import { customTheme } from "../Utils/myButton";
 
-export default function OrderBookBranch() {
+export default function OrderBookBranchManager() {
   const Navigate = useNavigate();
   const cookie = new Cookies();
   const [items, setItems] = React.useState([]);
