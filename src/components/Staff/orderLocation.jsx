@@ -46,19 +46,23 @@ function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
     <>
       <div
         id="user-card-expanded"
-        className="absolute top-16 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
+        className="absolute top-24 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
       >
         <div>Bạn muốn xác nhận đơn đặt sách #1 chứ?</div>
         <div className="flex place-content-start gap-10 my-5">
           <Button
             onClick={handleSuccess}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Hoàn tất
           </Button>
           <Button
             onClick={handleCancel}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Hủy
           </Button>
