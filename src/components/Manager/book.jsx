@@ -25,6 +25,7 @@ export default function BookManager() {
         console.log(err);
       });
   }, [refresh]);
+  const [selected, setSelected] = useState(null);
   return (
     <div>
       <Navbar />
@@ -60,29 +61,35 @@ export default function BookManager() {
           <Table hoverable>
             <Table.Head className="text-center">
               <Table.HeadCell></Table.HeadCell>
+              <Table.HeadCell className="p-4"></Table.HeadCell>
               <Table.HeadCell>Tên tác giả</Table.HeadCell>
               <Table.HeadCell>Chi nhánh</Table.HeadCell>
               <Table.HeadCell>Tiêu đề</Table.HeadCell>
-              <Table.HeadCell>Thể loại</Table.HeadCell>
-              <Table.HeadCell>Năm xuất bản</Table.HeadCell>
-              {/* <Table.HeadCell>Giá bán</Table.HeadCell> */}
-              <Table.HeadCell className="p-4"></Table.HeadCell>
+              {/* <Table.HeadCell>Thể loại</Table.HeadCell> */}
+              {/* <Table.HeadCell>Năm xuất bản</Table.HeadCell> */}
+              <Table.HeadCell>Giá</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {items.map((item1, index1) => (
+              {items.map((item1, index) => (
                 <>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row
+                    onClick={() => {
+                      setSelected(index);
+                    }}
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    <Table.Cell className="p-4">
+                      <Checkbox 
+                      checked={selected === index}
+                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white" />
+                    </Table.Cell>
                     <Table.Cell>//</Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
                     <Table.Cell>{item1.genre}</Table.Cell>
                     <Table.Cell>{item1.publicationYear}</Table.Cell>
                     {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}
-                    <Table.Cell className="p-4">
-                      <Checkbox 
-                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-                      />
-                    </Table.Cell>
+                    
                   </Table.Row>
                 </>
               ))}

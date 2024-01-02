@@ -121,7 +121,7 @@ export default function AddDrinkManager() {
                           {/* search by id like this :
                           http://localhost:4000/api/staff/getDrinksImage/item.drinksId
                            */}
-                           <img 
+                          <img
                             src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
                             alt={item1.image}
                             className="w-16 h-16 rounded-full"
@@ -132,24 +132,74 @@ export default function AddDrinkManager() {
                         <Table.Cell>{item1.price[index2]}</Table.Cell>
                         <Table.Cell>{item1.size[index2]}</Table.Cell>
                         <Table.Cell>
-                          <input
-                            type="number"
-                            className="w-16 h-8 rounded-md border-1"
-                            min="1"
-                            value={
-                              selectedItems[index1]?.[index2]?.inputValue || 1
-                            }
-                            onChange={(e) =>
-                              handleInputChange(index1, index2, e.target.value)
-                            }
-                            disabled={
-                              selectedItems[index1]?.[index2]?.isChecked
-                            }
-                          />
+                          <div className="flex justify-center gap-5">
+                            <button
+                              onClick={() => {
+                                if (selectedItems[index1]?.[index2]?.inputValue)
+                                  handleInputChange(
+                                    index1,
+                                    index2,
+                                    selectedItems[index1]?.[index2]
+                                      ?.inputValue - 1
+                                  );
+                                else handleInputChange(index1, index2, 1);
+                              }}
+                              disabled={
+                                selectedItems[index1]?.[index2]?.isChecked
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="20"
+                                width="20"
+                                viewBox="0 0 512 512"
+                              >
+                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
+                              </svg>
+                            </button>
+                            <div>
+                              <input
+                                type="text"
+                                data-input-counter
+                                class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center"
+                                value={
+                                  selectedItems[index1]?.[index2]?.inputValue
+                                    ? selectedItems[index1]?.[index2]
+                                        ?.inputValue
+                                    : 1
+                                }
+                                required
+                              />
+                            </div>
+                            <button
+                              onClick={() => {
+                                if (selectedItems[index1]?.[index2]?.inputValue)
+                                  handleInputChange(
+                                    index1,
+                                    index2,
+                                    selectedItems[index1]?.[index2]
+                                      ?.inputValue + 1
+                                  );
+                                else handleInputChange(index1, index2, 1);
+                              }}
+                              disabled={
+                                selectedItems[index1]?.[index2]?.isChecked
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="20"
+                                width="20"
+                                viewBox="0 0 512 512"
+                              >
+                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                              </svg>
+                            </button>
+                          </div>
                         </Table.Cell>
                         <Table.Cell className="p-4">
                           <Checkbox
-                          className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
                             checked={selectedItems[index1]?.[index2]?.isChecked}
                             onChange={() =>
                               handleCheckboxChange(index1, index2)
@@ -164,12 +214,13 @@ export default function AddDrinkManager() {
             </Table>
           </div>
           <div className="flex place-content-start gap-10 mx-36 my-5">
-            <Button 
-            onClick={()=>{
-              localStorage.setItem("drinks", JSON.stringify(drinks));
-              navigate("/manager/order/drinks");
-            }}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
+            <Button
+              onClick={() => {
+                localStorage.setItem("drinks", JSON.stringify(drinks));
+                navigate("/manager/order/drinks");
+              }}
+              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            >
               Hoàn tất
             </Button>
             <Button

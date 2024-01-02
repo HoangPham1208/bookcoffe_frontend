@@ -60,7 +60,7 @@ export default function BookList() {
               <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Tên tác giả</Table.HeadCell>
               <Table.HeadCell>Tiêu đề</Table.HeadCell>
-              <Table.HeadCell>Giá bán</Table.HeadCell>
+              <Table.HeadCell>Giá</Table.HeadCell>
               <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell></Table.HeadCell>
             </Table.Head>

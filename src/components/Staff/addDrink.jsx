@@ -84,12 +84,13 @@ export default function AddDrink() {
       };
     }
     setSelectedItems(updatedSelectedItems);
+    console.log(selectedItems);
   };
 
   return (
     <>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
+      <main className="mx-auto flex flex-col max-w-screen-xl py-20">
         <div className="text-3xl font-semibold my-5 mx-36">Chọn đồ uống</div>
         <div>
           <div className="relative text-gray-600 mx-36 my-7">
@@ -132,20 +133,55 @@ export default function AddDrink() {
                         <Table.Cell>{item1.price[index2]}</Table.Cell>
                         <Table.Cell>{item1.size[index2]}</Table.Cell>
                         <Table.Cell>
-                          <input
-                            type="number"
-                            className="w-16 h-8 rounded-md border-1"
-                            min="1"
-                            value={
-                              selectedItems[index1]?.[index2]?.inputValue || 1
-                            }
-                            onChange={(e) =>
-                              handleInputChange(index1, index2, e.target.value)
-                            }
-                            disabled={
-                              selectedItems[index1]?.[index2]?.isChecked
-                            }
-                          />
+                          <div className="flex justify-center gap-5">
+                            <button
+                            onClick={()=>{
+                              if (selectedItems[index1]?.[index2]?.inputValue )
+                                handleInputChange(index1, index2, selectedItems[index1]?.[index2]?.inputValue - 1)
+                              else 
+                                handleInputChange(index1, index2, 1)
+                            }}
+                            disabled={selectedItems[index1]?.[index2]?.isChecked}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="20"
+                                width="20"
+                                viewBox="0 0 512 512"
+                              >
+                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
+                              </svg>
+                            </button>
+                            <div>
+                              <input
+                                type="text"
+                                data-input-counter
+                                class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center"
+                                value={
+                                  selectedItems[index1]?.[index2]?.inputValue?selectedItems[index1]?.[index2]?.inputValue:1
+                                }
+                                required
+                              />
+                            </div>
+                            <button
+                            onClick={()=>{
+                              if (selectedItems[index1]?.[index2]?.inputValue )
+                                handleInputChange(index1, index2, selectedItems[index1]?.[index2]?.inputValue + 1)
+                              else 
+                                handleInputChange(index1, index2, 1)
+                            }}
+                            disabled={selectedItems[index1]?.[index2]?.isChecked}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="20"
+                                width="20"
+                                viewBox="0 0 512 512"
+                              >
+                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                              </svg>
+                            </button>
+                          </div>
                         </Table.Cell>
                         <Table.Cell className="p-4">
                           <Checkbox
