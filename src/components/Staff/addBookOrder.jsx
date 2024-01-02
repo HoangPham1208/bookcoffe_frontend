@@ -72,7 +72,9 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
         })
         .catch((err) => {
           console.log(err);
-          alert("Tạo phiếu mượn thất bại! Vui lòng nhập đầy đủ thông tin và thử lại!");
+          alert(
+            "Tạo phiếu mượn thất bại! Vui lòng nhập đầy đủ thông tin và thử lại!"
+          );
         });
     };
     const borrowBookToGo = async () => {
@@ -103,7 +105,6 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
     if (radio === 2) {
       borrowBookToGo();
     }
-
   };
   return (
     <>
@@ -286,17 +287,22 @@ export default function AddBookOrder() {
                       <Table.Cell>{item1.title}</Table.Cell>
                       <Table.Cell>{item1.publicationYear}</Table.Cell>
                       <Table.Cell>
-                        {item1.isBorrowed[index2] === true ? (
+                        {item1.isBorrowed[index2] === 1 ? (
                           <p className="text-red-500">Đã mượn</p>
                         ) : (
                           <p className="text-green-500">Có sẵn</p>
                         )}
                       </Table.Cell>
                       <Table.Cell className="p-4">
-                        <Checkbox
-                          checked={select === item1.copyId[index2]}
-                          className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                        />
+                        {(() => {
+                          if (item1.isBorrowed[index2] === 0)
+                            return (
+                              <Checkbox
+                                checked={select === item1.copyId[index2]}
+                                className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                              />
+                            );
+                        })()}
                       </Table.Cell>
                     </Table.Row>
                   </>
@@ -307,7 +313,14 @@ export default function AddBookOrder() {
         </div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
-            onClick={handleOrder}
+            onClick={()=>{
+              if (select === null) {
+                alert("Vui lòng chọn sách!");
+              }
+              else {
+                handleOrder();
+              }
+            }}
             theme={customTheme}
             color="primary"
             pill
