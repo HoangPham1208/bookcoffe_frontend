@@ -71,7 +71,7 @@ export default function OrderBookHomeManager() {
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
-            onClick={() => Navigate("/staff/order/books")}
+            onClick={() => Navigate("/manager/order/books")}
             theme={customTheme}
             color="secondary"
             pill

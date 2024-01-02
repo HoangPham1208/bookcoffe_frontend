@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { FloatingLabel } from "flowbite-react";
+import { customTheme } from "../Utils/myButton";
 
 function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
   const [userName, setUserName] = useState("");
@@ -104,14 +105,16 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
           className="w-80 select-none"
         />
         <div className="flex w-full flex-row justify-center px-2">
-          <button
+          <Button
             onClick={handleRegister}
             id="edit-account"
             type="button"
-            className="items inline-flex gap-x-3 rounded-full bg-button-primary px-6 py-2.5 text-center text-white shadow-1 transition ease-out hover:bg-button-primary-hover hover:shadow-3 active:bg-button-primary-active dark:bg-button-primary-dark dark:hover:bg-button-primary-hover-dark dark:active:bg-button-primary-active-dark"
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Tạo tài khoản
-          </button>
+          </Button>
         </div>
       </div>
     </>
@@ -179,7 +182,9 @@ export default function Staff() {
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => setShowDialog(true)}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Thêm nhân viên
           </Button>
@@ -191,7 +196,9 @@ export default function Staff() {
           />
           <Button
             onClick={handleUpdateStats}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Cập nhật trạng thái
           </Button>
@@ -227,7 +234,7 @@ export default function Staff() {
                   >
                     <Table.Cell className="p-4">
                       <Checkbox 
-                      className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                      className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
                       checked={selected === index} />
                     </Table.Cell>
                     <Table.Cell>{item.staffName}</Table.Cell>

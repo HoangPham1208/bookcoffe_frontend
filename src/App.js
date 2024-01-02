@@ -14,7 +14,6 @@ import AddDrink from "./components/Staff/addDrink";
 import OrderBook from "./components/Staff/orderBook";
 import OrderBookBranch from "./components/Staff/orderBookBranch";
 import OrderBookHome from "./components/Staff/orderBookHome";
-import addBookOrder from "./components/Staff/addBookOrder";
 import OrderLocation from "./components/Staff/orderLocation";
 import OrderLocationHistory from "./components/Staff/historyLocation";
 
@@ -24,6 +23,9 @@ import BookManager from "./components/Manager/book";
 import BookDetails from "./components/Manager/bookDetail";
 import AddCopy from "./components/Manager/addCopy";
 import OrderBookManager from "./components/Manager/orderBook";
+import AddBookOrderManager from "./components/Manager/addBookOrder";
+import OrderBookBranchManager from "./components/Manager/orderBookBranch";
+import OrderBookHomeManager from "./components/Manager/orderBookHome";
 import Voucher from "./components/Manager/voucher";
 import Staff from "./components/Manager/staff";
 import OrderDrinkManager from "./components/Manager/orderDrink";
@@ -67,6 +69,9 @@ function App() {
           <Route path="/manager/books/:id" element={<BookDetails />} />
           <Route path="/manager/books/:id/addcopy" element={<AddCopy />} />
           <Route path="/manager/order/books" element={<OrderBookManager />} />
+          <Route path="/manager/order/books/add" element={<AddBookOrderManager />} />
+          <Route path="/manager/order/books/branch" element={<OrderBookBranchManager />} />
+          <Route path="/manager/order/books/home" element={<OrderBookHomeManager />} />
           <Route path="/manager/vouchers" element={<Voucher />} />
           <Route path="/manager/staff" element={<Staff />} />
           <Route path="/manager/order/drinks" element={<OrderDrinkManager />} />
