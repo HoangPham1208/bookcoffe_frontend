@@ -8,6 +8,7 @@ import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
 import { Table } from "flowbite-react";
 import { Checkbox } from "flowbite-react";
+import { customTheme } from "../Utils/myButton";
 
 export default function BookList() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function BookList() {
   useEffect(() => {
     const fetchData = async () => {
       await RefreshTokenAPI();
-      axios
+      await axios
         .get("http://localhost:4000/api/customer/search?title=&address=")
         .then((res) => {
           console.log(res.data);
@@ -28,6 +29,7 @@ export default function BookList() {
     };
     fetchData();
   }, [refresh]);
+  const [selected, setSelected] = useState(null);
   return (
     <>
       <Navbar />
@@ -38,11 +40,13 @@ export default function BookList() {
         <div className="flex place-content-start gap-10 my-5">
           <Button
             onClick={() => navigate("/admin/bookList/addBook")}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Thêm sách
           </Button>
-          <Button className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white">
+          <Button theme={customTheme} color="secondary" pill>
             Xóa
           </Button>
         </div>
@@ -67,24 +71,32 @@ export default function BookList() {
             <Table.Body className="divide-y text-center">
               {items.map((item1, index1) => (
                 <>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    onClick={() => setSelected(item1.bookId)}
+                  >
+                    <Table.Cell>
+                      <Checkbox
+                        checked={selected === item1.bookId}
+                        className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                        label="Chọn"
+                      />
+                    </Table.Cell>
                     <Table.Cell>ThisIsImage</Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
                     <Table.Cell>{item1.salePrice}</Table.Cell>
                     <Table.Cell>
                       <Button
-                        onClick={() => navigate("/admin/bookList/:id")}
-                        className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                        onClick={() =>
+                          navigate("/admin/bookList/" + item1.title)
+                        }
+                        theme={customTheme}
+                        color="secondary"
+                        pill
                       >
-                        Chi tiết
+                        Chỉnh sửa
                       </Button>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Checkbox
-                        className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-                        label="Chọn"
-                      />
                     </Table.Cell>
                   </Table.Row>
                 </>

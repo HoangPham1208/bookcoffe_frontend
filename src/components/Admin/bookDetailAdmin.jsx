@@ -3,16 +3,44 @@ import { Navbar } from "../navbar";
 import { Button, Label, List, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import ListFunc from "../Utils/listFunc";
+import { customTheme } from "../Utils/myButton";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import RefreshTokenAPI from "../Utils/token";
+import axios from "axios";
 
 export default function BookDetailAdmin() {
+  const { id: title } = useParams();
+  const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get(
+          "http://localhost:4000/api/customer/search?title=" +
+            title +
+            "&address="
+        )
+        .then((res) => {
+          console.log(res.data[0]);
+          setItems(res.data[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-24">
         <div className="flex mx-36">
-          <Button className=" text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-          onClick={() => navigate("/admin/branch/1/books")}
+          <Button
+            theme={customTheme}
+            color="secondary"
+            pill
+            onClick={() => navigate("/admin/branch/1/books")}
           >
             Trở về
           </Button>
@@ -28,7 +56,12 @@ export default function BookDetailAdmin() {
             {/* Tên */}
             <div className="mb-5">
               <Label for="ten">Tên</Label>
-              <TextInput id="ten" placeholder="Tên" className="w-full" />
+              <TextInput
+                id="ten"
+                placeholder="Tên"
+                className="w-full"
+                value={items.title}
+              />
             </div>
             {/* Thể loại */}
             <div className="mb-5">
@@ -37,12 +70,18 @@ export default function BookDetailAdmin() {
                 id="theloai"
                 placeholder="Thể loại"
                 className="w-full"
+                value={items.genre}
               />
             </div>
             {/* Tác giả */}
             <div className="mb-5">
               <Label for="tacgia">Tác giả</Label>
-              <TextInput id="tacgia" placeholder="Tác giả" className="w-full" />
+              <TextInput
+                id="tacgia"
+                placeholder="Tác giả"
+                className="w-full"
+                value={items.authorName}
+              />
             </div>
             {/* Mô tả */}
             <div className="mb-5">
@@ -58,9 +97,16 @@ export default function BookDetailAdmin() {
             {/* Giá */}
             <div className="mb-5">
               <Label for="gia">Giá</Label>
-              <TextInput id="gia" placeholder="Giá" className="w-full" />
+              <TextInput
+                id="gia"
+                placeholder="Giá"
+                className="w-full"
+                value={new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(items.salePrice)}
+              />
             </div>
-            
           </div>
         </div>
       </main>
