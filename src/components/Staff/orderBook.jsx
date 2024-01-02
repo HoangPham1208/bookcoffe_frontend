@@ -193,9 +193,7 @@ export default function OrderBook() {
         </div>
         <hr className="border-black mx-36 my-5" />
         <div className="overflow-x-auto mx-36">
-          {visibleBranch && (
-            <BookAtBranch visible={visibleBranch} items={items} />
-          )}
+          {visibleBranch && <BookAtBranch visible={visibleBranch} items={items} />}
           {visibleHome && <BookAtHome visible={visibleHome} items={items} />}
         </div>
       </main>

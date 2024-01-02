@@ -49,7 +49,7 @@ export default function OrderDrink() {
     }
     try {
       await RefreshTokenAPI();
-      axios
+      await axios
         .post("http://localhost:4000/api/staff/addBill", items, {
           headers: {
             Authorization: `Bearer ${cookie.get("accessToken")}`,
@@ -57,13 +57,13 @@ export default function OrderDrink() {
         })
         .then((res) => {
           console.log(res.data);
+          localStorage.setItem("drinks", JSON.stringify([]));
+          setRefresh(!refresh);
+          setSuccess(true);
         })
         .catch((err) => {
           console.log(err);
         });
-      localStorage.setItem("drinks", JSON.stringify([]));
-      setRefresh(!refresh);
-      setSuccess(true);
     } catch (err) {
       console.log(err);
     }
