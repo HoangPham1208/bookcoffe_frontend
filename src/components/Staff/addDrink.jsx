@@ -7,6 +7,7 @@ import { Checkbox } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { customTheme } from "../Utils/myButton";
 
 export default function AddDrink() {
   const navigate = useNavigate();
@@ -93,14 +94,6 @@ export default function AddDrink() {
       <main className="mx-auto flex flex-col max-w-screen-xl py-20">
         <div className="text-3xl font-semibold my-5 mx-36">Chọn đồ uống</div>
         <div>
-          <div className="relative text-gray-600 mx-36 my-7">
-            <input
-              type="search"
-              name="serch"
-              placeholder="Tìm kiếm"
-              className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
-            />
-          </div>
           <hr className="border-black mx-36 my-5" />
           <div className="overflow-x-auto mx-36">
             <Table hoverable>
@@ -115,7 +108,7 @@ export default function AddDrink() {
               </Table.Head>
               <Table.Body className="divide-y text-center">
                 {items.map((item1, index1) =>
-                  items[index1].price.map((item2, index2) => (
+                  item1.price.map((item2, index2) => (
                     <>
                       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="grid justify-center">
@@ -135,13 +128,24 @@ export default function AddDrink() {
                         <Table.Cell>
                           <div className="flex justify-center gap-5">
                             <button
-                            onClick={()=>{
-                              if (selectedItems[index1]?.[index2]?.inputValue )
-                                handleInputChange(index1, index2, selectedItems[index1]?.[index2]?.inputValue - 1)
-                              else 
-                                handleInputChange(index1, index2, 1)
-                            }}
-                            disabled={selectedItems[index1]?.[index2]?.isChecked}
+                              onClick={() => {
+                                if (
+                                  selectedItems[item1.drinksId]?.[index2]
+                                    ?.inputValue
+                                )
+                                  handleInputChange(
+                                    item1.drinksId,
+                                    index2,
+                                    selectedItems[item1.drinksId]?.[index2]
+                                      ?.inputValue - 1
+                                  );
+                                else
+                                  handleInputChange(item1.drinksId, index2, 1);
+                              }}
+                              disabled={
+                                selectedItems[item1.drinksId]?.[index2]
+                                  ?.isChecked
+                              }
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -158,19 +162,34 @@ export default function AddDrink() {
                                 data-input-counter
                                 class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center"
                                 value={
-                                  selectedItems[index1]?.[index2]?.inputValue?selectedItems[index1]?.[index2]?.inputValue:1
+                                  selectedItems[item1.drinksId]?.[index2]
+                                    ?.inputValue
+                                    ? selectedItems[item1.drinksId]?.[index2]
+                                        ?.inputValue
+                                    : 1
                                 }
                                 required
                               />
                             </div>
                             <button
-                            onClick={()=>{
-                              if (selectedItems[index1]?.[index2]?.inputValue )
-                                handleInputChange(index1, index2, selectedItems[index1]?.[index2]?.inputValue + 1)
-                              else 
-                                handleInputChange(index1, index2, 1)
-                            }}
-                            disabled={selectedItems[index1]?.[index2]?.isChecked}
+                              onClick={() => {
+                                if (
+                                  selectedItems[item1.drinksId]?.[index2]
+                                    ?.inputValue
+                                )
+                                  handleInputChange(
+                                    item1.drinksId,
+                                    index2,
+                                    selectedItems[item1.drinksId]?.[index2]
+                                      ?.inputValue + 1
+                                  );
+                                else
+                                  handleInputChange(item1.drinksId, index2, 1);
+                              }}
+                              disabled={
+                                selectedItems[item1.drinksId]?.[index2]
+                                  ?.isChecked
+                              }
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -183,12 +202,14 @@ export default function AddDrink() {
                             </button>
                           </div>
                         </Table.Cell>
-                        <Table.Cell className="p-4">
+                        <Table.Cell>
                           <Checkbox
-                            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-                            checked={selectedItems[index1]?.[index2]?.isChecked}
+                            className=" flex justify-center w-6 h-6 text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                            checked={
+                              selectedItems[item1.drinksId]?.[index2]?.isChecked
+                            }
                             onChange={() =>
-                              handleCheckboxChange(index1, index2)
+                              handleCheckboxChange(item1.drinksId, index2)
                             }
                           />
                         </Table.Cell>
@@ -205,13 +226,17 @@ export default function AddDrink() {
                 localStorage.setItem("drinks", JSON.stringify(drinks));
                 navigate("/staff/order/drinks");
               }}
-              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+              theme={customTheme}
+              color="primary"
+              pill
             >
               Hoàn tất
             </Button>
             <Button
               onClick={() => navigate("/staff/order/drinks")}
-              className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+              theme={customTheme}
+              color="secondary"
+              pill
             >
               Hủy
             </Button>

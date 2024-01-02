@@ -92,14 +92,6 @@ export default function AddDrinkManager() {
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="text-3xl font-semibold my-5 mx-36">Chọn đồ uống</div>
         <div>
-          <div className="relative text-gray-600 mx-36 my-7">
-            <input
-              type="search"
-              name="serch"
-              placeholder="Tìm kiếm"
-              className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
-            />
-          </div>
           <hr className="border-black mx-36 my-5" />
           <div className="overflow-x-auto mx-36">
             <Table hoverable>

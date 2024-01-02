@@ -90,7 +90,7 @@ export default function HomeAdmin() {
                     <Button 
                     onClick={
                       () => {
-                        navigate(`/admin/branch/${item.branchId}/books`);
+                        navigate(`/admin/branch/${item.address}/books`);
                       }
                     }
                     className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] ">
