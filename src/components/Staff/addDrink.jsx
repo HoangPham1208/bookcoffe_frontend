@@ -134,7 +134,7 @@ export default function AddDrink() {
                                     ?.inputValue
                                 )
                                   handleInputChange(
-                                    item1.drinksId,
+                                    index1,
                                     index2,
                                     selectedItems[index1]?.[index2]
                                       ?.inputValue - 1
@@ -178,7 +178,7 @@ export default function AddDrink() {
                                     ?.inputValue
                                 )
                                   handleInputChange(
-                                    item1.drinksId,
+                                    index1,
                                     index2,
                                     selectedItems[index1]?.[index2]
                                       ?.inputValue + 1
