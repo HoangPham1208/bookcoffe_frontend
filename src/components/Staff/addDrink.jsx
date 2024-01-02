@@ -130,20 +130,20 @@ export default function AddDrink() {
                             <button
                               onClick={() => {
                                 if (
-                                  selectedItems[item1.drinksId]?.[index2]
+                                  selectedItems[index1]?.[index2]
                                     ?.inputValue
                                 )
                                   handleInputChange(
                                     item1.drinksId,
                                     index2,
-                                    selectedItems[item1.drinksId]?.[index2]
+                                    selectedItems[index1]?.[index2]
                                       ?.inputValue - 1
                                   );
                                 else
-                                  handleInputChange(item1.drinksId, index2, 1);
+                                  handleInputChange(index1, index2, 1);
                               }}
                               disabled={
-                                selectedItems[item1.drinksId]?.[index2]
+                                selectedItems[index1]?.[index2]
                                   ?.isChecked
                               }
                             >
@@ -162,9 +162,9 @@ export default function AddDrink() {
                                 data-input-counter
                                 class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center"
                                 value={
-                                  selectedItems[item1.drinksId]?.[index2]
+                                  selectedItems[index1]?.[index2]
                                     ?.inputValue
-                                    ? selectedItems[item1.drinksId]?.[index2]
+                                    ? selectedItems[index1]?.[index2]
                                         ?.inputValue
                                     : 1
                                 }
@@ -174,20 +174,20 @@ export default function AddDrink() {
                             <button
                               onClick={() => {
                                 if (
-                                  selectedItems[item1.drinksId]?.[index2]
+                                  selectedItems[index1]?.[index2]
                                     ?.inputValue
                                 )
                                   handleInputChange(
                                     item1.drinksId,
                                     index2,
-                                    selectedItems[item1.drinksId]?.[index2]
+                                    selectedItems[index1]?.[index2]
                                       ?.inputValue + 1
                                   );
                                 else
-                                  handleInputChange(item1.drinksId, index2, 1);
+                                  handleInputChange(index1, index2, 1);
                               }}
                               disabled={
-                                selectedItems[item1.drinksId]?.[index2]
+                                selectedItems[index1]?.[index2]
                                   ?.isChecked
                               }
                             >
@@ -206,10 +206,10 @@ export default function AddDrink() {
                           <Checkbox
                             className=" flex justify-center w-6 h-6 text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
                             checked={
-                              selectedItems[item1.drinksId]?.[index2]?.isChecked
+                              selectedItems[index1]?.[index2]?.isChecked
                             }
                             onChange={() =>
-                              handleCheckboxChange(item1.drinksId, index2)
+                              handleCheckboxChange(index1, index2)
                             }
                           />
                         </Table.Cell>

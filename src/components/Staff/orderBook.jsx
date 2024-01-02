@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Navbar } from "../navbar";
 import { Button } from "flowbite-react";
 import { Table } from "flowbite-react";
-import { Checkbox } from "flowbite-react";
 import { Radio } from "flowbite-react";
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -10,99 +9,142 @@ import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
 import { customTheme } from "../Utils/myButton";
 
-function Check({ visible, onAccept, onCancel }) {
-  const handleSuccess = () => {
-    onAccept();
-  };
-  const handleCancel = () => {
-    onCancel();
-  };
-  if (visible === false) return null;
+const BookAtBranch = (visible, items) => {
+  if (!items || !Array.isArray(items)) {
+    console.log(items)
+    console.error("Invalid 'items' prop:", items);
+    return null;
+  }
+  if (!visible) return null;
   return (
-    <>
-      <div
-        id="user-card-expanded"
-        className="absolute top-16 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
-      >
-        <div>Bạn muốn xác nhận đơn đặt sách #1 chứ?</div>
-        <div className="flex place-content-start gap-10 my-5">
-          <Button
-            onClick={handleSuccess}
-            theme={customTheme}
-            color="primary"
-            pill
-          >
-            Hoàn tất
-          </Button>
-          <Button
-            onClick={handleCancel}
-            theme={customTheme}
-            color="secondary"
-            pill
-          >
-            Hủy
-          </Button>
-        </div>
-      </div>
-    </>
+    <Table hoverable>
+      <Table.Head className="text-center">
+        <Table.HeadCell className="p-4"></Table.HeadCell>
+        <Table.HeadCell>ID</Table.HeadCell>
+        <Table.HeadCell>Tên người đặt</Table.HeadCell>
+        <Table.HeadCell>Địa điểm</Table.HeadCell>
+        <Table.HeadCell>Ngày đặt</Table.HeadCell>
+        <Table.HeadCell>Số lượng</Table.HeadCell>
+        <Table.HeadCell></Table.HeadCell>
+      </Table.Head>
+      <Table.Body className="divide-y text-center">
+        {items.map(
+          (item, index) =>
+            item.isConfirm === 0 && (
+              <>
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="p-4">
+                    {/* checkbox only one choice */}
+                  </Table.Cell>
+                  <Table.Cell>{item.authorName}</Table.Cell>
+                  <Table.Cell>{item.userName}</Table.Cell>
+                  <Table.Cell>{item.address}</Table.Cell>
+                  <Table.Cell>{item.quantity}</Table.Cell>
+                  <Table.Cell className="grid justify-items-center"></Table.Cell>
+                </Table.Row>
+              </>
+            )
+        )}
+      </Table.Body>
+    </Table>
   );
-}
+};
 
-function Success({ visible, setVisible }) {
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setVisible();
-    }, 2000);
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [visible]);
-  if (visible === false) return null;
+const BookAtHome = (visible, items) => {
+  if (!items || !Array.isArray(items)) {
+    console.error("Invalid 'items' prop:", items);
+    return null;
+  }
+  if (!visible) return null;
   return (
-    <>
-      <div
-        id="user-card-expanded"
-        className="absolute top-16 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
-      >
-        <div>Xác nhận đơn hàng #1 thành công</div>
-      </div>
-    </>
+    <Table hoverable>
+      <Table.Head className="text-center">
+        <Table.HeadCell className="p-4"></Table.HeadCell>
+        <Table.HeadCell>ID</Table.HeadCell>
+        <Table.HeadCell>Tên người đặt</Table.HeadCell>
+        <Table.HeadCell>Địa điểm</Table.HeadCell>
+        <Table.HeadCell>Ngày đặt</Table.HeadCell>
+        <Table.HeadCell>Số lượng</Table.HeadCell>
+        <Table.HeadCell></Table.HeadCell>
+      </Table.Head>
+      <Table.Body className="divide-y text-center">
+        {items.map(
+          (item, index) =>
+            item.isConfirm === 0 && (
+              <>
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="p-4">
+                    {/* checkbox only one choice */}
+                  </Table.Cell>
+                  <Table.Cell>{item.authorName}</Table.Cell>
+                  <Table.Cell>{item.userName}</Table.Cell>
+                  <Table.Cell>{item.address}</Table.Cell>
+                  <Table.Cell>{item.quantity}</Table.Cell>
+                  <Table.Cell className="grid justify-items-center"></Table.Cell>
+                </Table.Row>
+              </>
+            )
+        )}
+      </Table.Body>
+    </Table>
   );
-}
+};
 
 export default function OrderBook() {
   const Navigate = useNavigate();
   const cookie = new Cookies();
   const [items, setItems] = React.useState([]);
-  const [check, setCheck] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const handleCheck = () => {
-    setCheck(true);
+  const [visibleBranch, setVisibleBranch] = useState(false);
+  const [visibleHome, setVisibleHome] = useState(false);
+  const handleVisibleBranch = () => {
+    setVisibleBranch(true);
+    setVisibleHome(false);
   };
-  const handleCheckSuccess = () => {
-    setSuccess(true);
-    setCheck(false);
+  const handleVisibleHome = () => {
+    setVisibleBranch(false);
+    setVisibleHome(true);
   };
-  const handleCheckCancel = () => {
-    setCheck(false);
+  const handleBorrowAtBranch = async () => {
+    try {
+      await RefreshTokenAPI();
+      await axios
+        .get("http://localhost:4000/api/staff/showBorrowBookAtBranch", {
+          headers: {
+            Authorization: `Bearer ${cookie.get("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setItems(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const handleSuccesCancle = () => {
-    setSuccess(false);
+  const handleBorrowAtHome = async () => {
+    try {
+      await RefreshTokenAPI();
+      await axios
+        .get("http://localhost:4000/api/staff/showBorrowBookToGo?userName=", {
+          headers: {
+            Authorization: `Bearer ${cookie.get("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setItems(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/customer/search?title=&address=")
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setItems(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-  const [refresh, setRefresh] = useState(false);
 
-  const [selectedItem, setSelectedItem] = useState(null);
   return (
     <>
       <Navbar />
@@ -118,8 +160,27 @@ export default function OrderBook() {
           >
             Thêm đơn
           </Button>
-          <Button theme={customTheme} color="secondary" pill>
-            Xóa đơn
+          <Button
+            onClick={async () => {
+              await handleBorrowAtBranch();
+              handleVisibleBranch(); // Remove await from this line
+            }}
+            theme={customTheme}
+            color="secondary"
+            pill
+          >
+            Đơn tại quán
+          </Button>
+          <Button
+            onClick={async () => {
+              await handleBorrowAtHome();
+              handleVisibleHome(); // Remove await from this line
+            }}
+            theme={customTheme}
+            color="secondary"
+            pill
+          >
+            Đơn mượn về
           </Button>
         </div>
         <div className="relative text-gray-600 mx-36 my-7">
@@ -132,61 +193,12 @@ export default function OrderBook() {
         </div>
         <hr className="border-black mx-36 my-5" />
         <div className="overflow-x-auto mx-36">
-          <Table hoverable>
-            <Table.Head className="text-center">
-              <Table.HeadCell className="p-4"></Table.HeadCell>
-              <Table.HeadCell>ID</Table.HeadCell>
-              <Table.HeadCell>Tên người đặt</Table.HeadCell>
-              <Table.HeadCell>Địa điểm</Table.HeadCell>
-              <Table.HeadCell>Ngày đặt</Table.HeadCell>
-              <Table.HeadCell>Số lượng</Table.HeadCell>
-              <Table.HeadCell></Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y text-center">
-              {items.map(
-                (item, index) =>
-                  item.isConfirm === 0 && (
-                    <>
-                      <Table.Row
-                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                        onClick={() => {
-                          setSelectedItem(index);
-                        }}
-                      >
-                        <Table.Cell className="p-4">
-                          {/* checkbox only one choice */}
-                          <Radio
-                            name="checkbox"
-                            className="text-[#6750A4]"
-                            checked={selectedItem === index}
-                          />
-                        </Table.Cell>
-                        <Table.Cell>{item.authorName}</Table.Cell>
-                        <Table.Cell>{item.userName}</Table.Cell>
-                        <Table.Cell>{item.address}</Table.Cell>
-                        <Table.Cell>{item.quantity}</Table.Cell>
-                        <Table.Cell className="grid justify-items-center">
-                          <Button
-                            onClick={handleCheck}
-                            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]  "
-                          >
-                            Xác nhận
-                          </Button>
-                        </Table.Cell>
-                      </Table.Row>
-                    </>
-                  )
-              )}
-            </Table.Body>
-          </Table>
+          {visibleBranch && (
+            <BookAtBranch visible={visibleBranch} items={items} />
+          )}
+          {visibleHome && <BookAtHome visible={visibleHome} items={items} />}
         </div>
       </main>
-      <Check
-        visible={check}
-        onAccept={handleCheckSuccess}
-        onCancel={handleCheckCancel}
-      />
-      <Success visible={success} setVisible={handleSuccesCancle} />
     </>
   );
 }
