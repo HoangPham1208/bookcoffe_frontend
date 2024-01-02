@@ -12,6 +12,8 @@ import Account from "./components/Customer/account";
 import OrderDrink from "./components/Staff/orderDrink";
 import AddDrink from "./components/Staff/addDrink";
 import OrderBook from "./components/Staff/orderBook";
+import OrderBookBranch from "./components/Staff/orderBookBranch";
+import OrderBookHome from "./components/Staff/orderBookHome";
 import addBookOrder from "./components/Staff/addBookOrder";
 import OrderLocation from "./components/Staff/orderLocation";
 import OrderLocationHistory from "./components/Staff/historyLocation";
@@ -54,6 +56,8 @@ function App() {
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />
           <Route path="/staff/order/books" element={<OrderBook />} />
+          <Route path="/staff/order/books/branch" element={<OrderBookBranch />} />  
+          <Route path="/staff/order/books/home" element={<OrderBookHome />} />
           <Route path="/staff/order/books/add" element={<AddBookOrder />} />
           <Route path="/staff/order/locations" element={<OrderLocation />} />
           <Route path="/staff/order/locations/history" element={<OrderLocationHistory />} />
