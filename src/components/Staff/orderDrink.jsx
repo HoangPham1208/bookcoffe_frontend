@@ -49,7 +49,7 @@ export default function OrderDrink() {
     }
     try {
       await RefreshTokenAPI();
-      await axios
+      axios
         .post("http://localhost:4000/api/staff/addBill", items, {
           headers: {
             Authorization: `Bearer ${cookie.get("accessToken")}`,
