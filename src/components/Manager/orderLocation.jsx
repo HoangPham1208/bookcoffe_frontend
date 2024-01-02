@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import RefreshTokenAPI from "../Utils/token";
 import ListFunc from "../Utils/listFunc";
+import { customTheme } from "../Utils/myButton";
 
 function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
   const cookie = new Cookies();
@@ -52,13 +53,17 @@ function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
         <div className="flex place-content-start gap-10 my-5">
           <Button
             onClick={handleSuccess}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Hoàn tất
           </Button>
           <Button
             onClick={handleCancel}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Hủy
           </Button>
@@ -140,7 +145,9 @@ export default function OrderLocationManager() {
         <div className="flex mx-36 gap-10">
           <Button
             onClick={() => navigate("/manager/order/locations/history")}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Xem lịch sử
           </Button>
@@ -183,7 +190,7 @@ export default function OrderLocationManager() {
                             {/* checkbox only one choice */}
                             <Radio
                               name="checkbox"
-                              className="text-[#6750A4]"
+                              className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
                               onClick={() => {
                                 handleCheck();
                               }}
@@ -212,7 +219,9 @@ export default function OrderLocationManager() {
                             <Button
                               onClick={handleCheck}
                               disabled={selectedItem !== index}
-                              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]"
+                              theme={customTheme}
+                              color="primary"
+                              pill
                             >
                               Xác nhận
                             </Button>

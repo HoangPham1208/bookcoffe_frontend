@@ -204,7 +204,7 @@ export default function AddDrink() {
                         </Table.Cell>
                         <Table.Cell>
                           <Checkbox
-                            className=" flex justify-center w-6 h-6 text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+                            className="w-5 h-5 text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
                             checked={
                               selectedItems[index1]?.[index2]?.isChecked
                             }
@@ -223,6 +223,10 @@ export default function AddDrink() {
           <div className="flex place-content-start gap-10 mx-36 my-5">
             <Button
               onClick={() => {
+                if (drinks.length === 0) {
+                  alert("Hãy chọn đồ uống");
+                  return;
+                }
                 localStorage.setItem("drinks", JSON.stringify(drinks));
                 navigate("/staff/order/drinks");
               }}

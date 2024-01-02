@@ -58,6 +58,7 @@ export default function OrderBookBranch() {
         .catch((err) => {
           console.log(err);
         });
+      setRefresh(!refresh);
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +67,9 @@ export default function OrderBookBranch() {
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl py-20">
-        <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
+        <div className="text-3xl font-semibold my-5 mx-36">
+          Đơn đặt tại quán
+        </div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
@@ -146,7 +149,6 @@ export default function OrderBookBranch() {
                           <Button
                             onClick={() => {
                               handleReturnBook(item.borrowingId);
-                              setRefresh(!refresh);
                             }}
                             className="text-white bg-red-500 hover:bg-red-600"
                             color="primary"

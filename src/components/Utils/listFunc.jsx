@@ -72,7 +72,7 @@ export default function ListFunc() {
                     <button
                       onClick={() => {
                         localStorage.setItem("type", "orders");
-                        navigate("/manager/orders");
+                        navigate("/manager/order/books");
                       }}
                       className="hover:underline"
                     >

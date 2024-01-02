@@ -67,7 +67,7 @@ export default function OrderBookHome() {
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl py-20">
-        <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
+        <div className="text-3xl font-semibold my-5 mx-36">Đơn mượn về nhà</div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
