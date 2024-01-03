@@ -6,52 +6,6 @@ import { useEffect } from "react";
 
 export default function BestBook() {
   const navigate = useNavigate();
-  // Array of book entries
-  // const bookEntries = [
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     imageSrc: "/the-fault-in-our-stars.png",
-  //     title: "The Fault in Our Stars",
-  //     author: "John Green",
-  //     rating: "4.95",
-  //   },
-  //   // Add more entries as needed
-  // ];
   const [bookEntries, setBookEntries] = useState([]);
   useEffect(() => {
     axios
@@ -59,7 +13,9 @@ export default function BestBook() {
       .then((res) => {
         console.log(res.data);
         // random this res.data and got max 10
-        let randomData = res.data.sort(() => Math.random() - Math.random()).slice(0, 10);
+        let randomData = res.data
+          .sort(() => Math.random() - Math.random())
+          .slice(0, 10);
         setBookEntries(randomData);
       })
       .catch((err) => {
@@ -85,7 +41,13 @@ export default function BestBook() {
               navigate("/books/1");
             }}
           >
-            <img src={entry.imageSrc} alt={`book-${index + 1}`} />
+            <img
+              src={
+                "http://localhost:4000/api/customer/getBookImage/" +
+                entry.bookId
+              }
+              alt={`book-${index + 1}`}
+            />
             <div className="flex flex-col space-y-1 p-2" id="book-card-details">
               <p className="font-bookTitle text-lg font-bold line-clamp-2">
                 {entry.title}

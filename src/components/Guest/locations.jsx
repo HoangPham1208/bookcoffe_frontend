@@ -45,7 +45,7 @@ export default function Locations() {
                   " branch"
                 }
                 imgSrc={
-                  "http://localhost:4000/api/admin/getImage/" + item.branchImage
+                  "http://localhost:4000/api/customer/getBranchImage/" + item.branchId
                 }
               >
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
