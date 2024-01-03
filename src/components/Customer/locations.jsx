@@ -9,9 +9,11 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { Card } from "flowbite-react";
 import { FloatingLabel } from "flowbite-react";
+import { Table } from "flowbite-react";
 
 function Order({ data, visible, onClose, refresh, setRefresh }) {
   const cookie = new Cookies();
+  // current day
   const [dateTime, setDateTime] = useState("");
   const [quantity, setQuantity] = useState("");
   const handleOnClose = () => {
@@ -28,6 +30,40 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
       alert("Vui lòng nhập đầy đủ thông tin");
       return;
     }
+    if (quantity < 1) {
+      alert("Số lượng phải lớn hơn 0");
+      return;
+    }
+    if (dateTime < new Date().toISOString().split(".")[0]) {
+      alert("Ngày đặt phải lớn hơn ngày hiện tại");
+      return;
+    }
+    // check hour future  
+    let date = new Date();
+    let hourNow = date.getHours();
+    let minuteNow = date.getMinutes();
+    let hourOrder = dateTime.split("T")[1].split(":")[0];
+    let minuteOrder = dateTime.split("T")[1].split(":")[1];
+    if (hourOrder - hourNow < 0) {
+      alert("Vui lòng đặt vào tương lai");
+      return;
+    }
+    // check hour - must be 8-22 and sooner than 2 hours
+    let hour = dateTime.split("T")[1].split(":")[0];
+    if (hour < 8 || hour > 22) {
+      alert("Giờ đặt phải từ 8h đến 22h");
+      return;
+    }
+    if (hourOrder - hourNow < 2) {
+      alert("Vui lòng đặt trước ít nhất 2 tiếng");
+      return;
+    }
+    if (hourOrder - hourNow === 2) {
+      if (minuteOrder - minuteNow < 0) {
+        alert("Vui lòng đặt trước ít nhất 2 tiếng");
+        return;
+      }
+    }
     axios
       .post("http://localhost:4000/api/customer/reservation", userData, {
         headers: {
@@ -40,6 +76,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
         setDateTime("");
         setQuantity("");
         onClose();
+        setRefresh(!refresh);
       })
       .catch((err) => {
         console.log(err);
@@ -107,7 +144,9 @@ export default function Locations() {
   const cookie = new Cookies();
   const [data, setData] = useState([]);
   const [staff, setStaff] = useState([]);
+  const [reservation, setReservation] = useState([]); // [false, true
   const [address, setAddress] = useState("");
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -134,13 +173,24 @@ export default function Locations() {
         );
         console.log(staffResponse.data);
         setStaff(staffResponse.data);
+
+        const showReservation = await axios.get(
+          "http://localhost:4000/api/customer/showReservation",
+          {
+            headers: {
+              Authorization: `Bearer ${cookie.get("accessToken")}`,
+            },
+          }
+        );
+        console.log(showReservation.data);
+        setReservation(showReservation.data);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <>
@@ -202,10 +252,59 @@ export default function Locations() {
           data={address}
           visible={visible}
           onClose={() => setVisible(false)}
+          refresh = {refresh}
+          setRefresh = {setRefresh}
         />
         <div className="my-5 font-semibold text-3xl">
           <hr className="border-black mt-10 mb-5" />
           <div>Đơn đặt chỗ</div>
+        </div>
+        <div className="overflow-x-auto mx-36 mb-20">
+          <Table hoverable>
+            <Table.Head className="text-center">
+              <Table.HeadCell>Địa điểm</Table.HeadCell>
+              <Table.HeadCell>Ngày đặt</Table.HeadCell>
+              <Table.HeadCell>Số lượng</Table.HeadCell>
+              <Table.HeadCell>Trạng thái</Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y text-center">
+              {(() => {
+                if (Array.isArray(reservation)) {
+                  return reservation.map((item, index) => (
+                    <Table.Row
+                      key={index}
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    >
+                      <Table.Cell>{item.address}</Table.Cell>
+                      <Table.Cell>
+                        {
+                          // item.reservationDate 2023-12-20T05:12:12.000Z
+                          (() => {
+                            let date =
+                              item.reservationDate.split("T")[0] +
+                              " " +
+                              item.reservationDate.split("T")[1].split(".")[0];
+                            return date;
+                          })()
+                        }
+                      </Table.Cell>
+                      <Table.Cell>{item.quantity}</Table.Cell>
+                      <Table.Cell>
+                        {item.isConfirm === 0 ? (
+                          <div className="text-red-500 font-semibold">Chưa xác nhận</div>
+                        ) : (
+                          <div className="text-green-500 font-semibold">Đã xác nhận</div>
+                        )}
+                      </Table.Cell>
+                    </Table.Row>
+                  ));
+                } else {
+                  // Handle the case where items is not an array (e.g., set a default value or render an error message)
+                  return null;
+                }
+              })()}
+            </Table.Body>
+          </Table>
         </div>
       </main>
     </>
