@@ -46,8 +46,8 @@ function LoginDialog({ visible, onClose }) {
           localStorage.setItem("page", "drink");
           navigate("/staff/order/drinks");
         } else if (res.data.role === "manager") {
-          localStorage.setItem("page", "home");
-          navigate("/manager");
+          localStorage.setItem("page", "manage");
+          navigate("/manager/books");
         } else if (res.data.role === "admin") {
           localStorage.setItem("page", "home");
           navigate("/admin");
@@ -762,7 +762,7 @@ export function Navbar({ mode = "logout" }) {
           } else if (role === "manager") {
             return (
               <>
-                <FlowbiteNavbar.Link>
+                {/* <FlowbiteNavbar.Link>
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "home");
@@ -776,7 +776,7 @@ export function Navbar({ mode = "logout" }) {
                       <p>Trang chủ</p>
                     )}
                   </button>
-                </FlowbiteNavbar.Link>
+                </FlowbiteNavbar.Link> */}
                 <FlowbiteNavbar.Link>
                   <button
                     onClick={() => {
