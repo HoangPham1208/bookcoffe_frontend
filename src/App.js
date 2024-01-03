@@ -38,7 +38,7 @@ import OrderLocationHistoryManager from "./components/Manager/historyLocation";
 // Admin
 import HomeAdmin from "./components/Admin/homeAdmin";
 import BookList from "./components/Admin/BookList";
-import AddBook from "./components/Admin/addBook";
+import AddBook from "./components/Admin/addbook";
 import BookDetailsModify from "./components/Admin/bookDetailModify";
 import MenuDrink from "./components/Admin/menuDrink";
 import AddBookOrder from "./components/Staff/addBookOrder";

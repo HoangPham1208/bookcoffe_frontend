@@ -6,6 +6,7 @@ import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import axios from "axios";
+import { useState, useEffect } from "react";
 import type { CustomFlowbiteTheme } from "flowbite-react";
 
 const customTheme: CustomFlowbiteTheme["button"] = {
@@ -46,60 +47,63 @@ function AllBook() {
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     {
       imageSrc: "/the-fault-in-our-stars.png",
       title: "The Fault in Our Stars",
-      author: "John Green",
+      authorName: "John Green",
       rating: "4.95",
     },
     // Add more entries as needed
   ];
-  const bookData = axios
-    .get("http://localhost:4000/api/customer/search")
-    .then(function (response) {
-      // handle success
-      return response;
-    })
-    .catch(function (error) {
-      // handle error
-      // console.log(error);
-    });
-
-  // const bookData = await getBookData();
-  console.log(bookData);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:4000/api/customer/search"
+        );
+        // console.log(res);
+        setData(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+  console.log(data);
   return (
     <>
       <h2 className="text-black text-2xl not-italic font-bold mb-5">
@@ -109,13 +113,13 @@ function AllBook() {
         className="flex flex-wrap pb-2 gap-5 overflow-auto px-2"
         id="list-all-books"
       >
-        {bookEntries.map((entry, index) => (
+        {data.map((entry, index) => (
           <button
             key={index}
             className="flex flex-col shadow-2 hover:shadow-4 h-[300px] sm:h-96 w-40 sm:w-44` rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
             id="book-card"
             onClick={() => {
-              navigate("/books/1");
+              navigate("/books/" + entry.bookId);
             }}
           >
             <img src={entry.imageSrc} alt={`book-${index + 1}`} />
@@ -123,7 +127,7 @@ function AllBook() {
               <p className="font-bookTitle text-lg font-bold line-clamp-2">
                 {entry.title}
               </p>
-              <p className="font-bookTitle line-clamp-2">{entry.author}</p>
+              <p className="font-bookTitle line-clamp-2">{entry.authorName}</p>
               <div className="flex items-center">
                 <svg
                   className="w-4 h-4 text-yellow-300 me-1"
@@ -184,7 +188,7 @@ export function BookDetail() {
             <HiOutlineArrowLeft className="h-5 w-5 mr-3" />
             Quay lại
           </Button>
-          <div className="flex flex-col md:flex-row gap-x-8 max-md:gap-y-5 bg-gray-100">
+          <div className="flex flex-col md:flex-row gap-x-8 max-md:gap-y-5">
             <div className="shrink-0 h-full w-1/2 sm:w-1/3" id="book-cover">
               <img
                 src={bookInfo.imageSrc}
