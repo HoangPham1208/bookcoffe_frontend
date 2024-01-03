@@ -37,19 +37,16 @@ export default function Wrapper() {
   ];
 
   return (
-    <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+    <div className="h-[400px] sm:h-[600px] md:h-80 2xl:h-96">
       <Carousel slide={true} className="">
         {carouselItems.map((item, index) => (
           <div
             key={index}
-            className="duration-700 ease-in-out w-full h-full justify-center items-center mb-5 flex flex-row"
+            className="duration-700 ease-in-out w-full h-full justify-center items-center mb-5 flex flex-col md:flex-row"
             data-carousel-item
           >
-            <img className="w-[769px] h-[400px]" src={item.imageSrc} />
-            <div className="w-[511px] h-[400px] bg-gray-600 p-10 space-y-5 flex flex-col text-left">
-              <div className="text-[white] text-sm font-normal leading-[21px]">
-                {item.title}
-              </div>
+            <img className="object-cover h-2/3 w-full md:w-2/3 md:h-full aspect-auto" src={item.imageSrc} alt="wrapper item" />
+            <div className="h-1/3 w-full md:w-1/3 md:h-full bg-gray-600 p-4 md:p-10 space-y-5 flex flex-col text-left">
               <div className="text-white text-2xl font-bold leading-9">
                 {item.title}
               </div>

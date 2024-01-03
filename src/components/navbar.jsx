@@ -281,12 +281,12 @@ export function Navbarlegacy({ mode = "logout" }) {
   const name = new Cookie().get("userName");
   return (
     <nav className="flex bg-[#A9C7F4] w-full h-[60px] px-[50px] justify-between items-center shrink-0 select-none">
-      <a
+      <button
         className="flex flex-row items-center h-1/2 space-x-2 select-none"
         href="#"
       >
         <p className="font-bold">Book Cafe</p>
-      </a>
+      </button>
       <ul className="flex justify-between items-center gap-[30px]">
         {(() => {
           if (role === "staff") {
@@ -541,8 +541,11 @@ export function Navbar({ mode = "logout" }) {
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
   return (
-    <FlowbiteNavbar fluid className="bg-[#f1cbaa] w-full fixed z-50 min-w-[375px]">
-      <FlowbiteNavbar.Brand href="localhost:3000">
+    <FlowbiteNavbar
+      fluid
+      className="bg-[#f1cbaa] w-full fixed z-50 min-w-[375px]"
+    >
+      <FlowbiteNavbar.Brand>
         <img src="/logo.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
         <img src="/logo-text.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
         {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -749,16 +752,60 @@ export function Navbar({ mode = "logout" }) {
                   </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>
-                  <button>Sách</button>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "books");
+                      navigate("/books");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "books" ? (
+                      <p className="font-bold">Sách</p>
+                    ) : (
+                      <p>Sách</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>
-                  <button>Chi nhánh</button>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "locations");
+                      navigate("/locations");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "locations" ? (
+                      <p className="font-bold">Chi nhánh</p>
+                    ) : (
+                      <p>Chi nhánh</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>
-                  <button>Blog</button>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "blog");
+                      navigate("/blogs");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "blog" ? (
+                      <p className="font-bold">Blog</p>
+                    ) : (
+                      <p>Blog</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>
-                  <button>Liên hệ</button>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "contact");
+                      navigate("/contact");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "contact" ? (
+                      <p className="font-bold">Liên hệ</p>
+                    ) : (
+                      <p>Liên hệ</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
               </>
             );

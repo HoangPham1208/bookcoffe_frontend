@@ -3,11 +3,14 @@ import PrivateRoutes from "./components/Utils/protected";
 import { Navigate } from "react-router-dom";
 
 import Home from "./components/Guest/home";
-import NewBlog from "./components/Guest/newblog";
-// Customer 
+import { BlogDetails, BlogPage } from "./components/Guest/newblog";
+import Locations from "./components/Guest/locations";
+import Contact from "./components/Guest/contact";
+// Customer
 import HomeUser from "./components/Customer/homeUser";
-import Cart from "./components/Customer/cart";
+// import Cart from "./components/Customer/cart";
 import Account from "./components/Customer/account";
+import ListBook, { BookDetail } from "./components/Guest/listBook";
 
 // Staff
 import OrderDrink from "./components/Staff/orderDrink";
@@ -39,7 +42,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/newBlog" element={<NewBlog />} />
+        <Route path="/books" element={<ListBook />} />
+        <Route path="/books/:id" element={<BookDetail />} />
+        <Route path="/locations" element={<Locations />} />
+        <Route path="/blogs" element={<BlogPage />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/contact" element={<Contact />} />
         <Route element={<PrivateRoutes />}>
           {/* Customer */}
           <Route path="/homeUser" element={<HomeUser />} />
@@ -50,7 +58,10 @@ function App() {
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />
           <Route path="/staff/order/books" element={<OrderBook />} />
           <Route path="/staff/order/locations" element={<OrderLocation />} />
-          <Route path="/staff/order/locations/history" element={<OrderLocationHistory />} />
+          <Route
+            path="/staff/order/locations/history"
+            element={<OrderLocationHistory />}
+          />
           {/* Manager */}
           <Route path="/manager" element={<HomeManager />} />
           <Route path="/manager/books" element={<Book />} />
@@ -60,9 +71,18 @@ function App() {
           <Route path="/manager/vouchers" element={<Voucher />} />
           <Route path="/manager/staff" element={<Staff />} />
           <Route path="/manager/order/drinks" element={<OrderDrinkManager />} />
-          <Route path="/manager/order/drinks/add" element={<AddDrinkManager />} />
-          <Route path="/manager/order/locations" element={<OrderLocationManager />} />
-          <Route path="/manager/order/locations/history" element={<OrderLocationHistoryManager />} />
+          <Route
+            path="/manager/order/drinks/add"
+            element={<AddDrinkManager />}
+          />
+          <Route
+            path="/manager/order/locations"
+            element={<OrderLocationManager />}
+          />
+          <Route
+            path="/manager/order/locations/history"
+            element={<OrderLocationHistoryManager />}
+          />
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
           <Route path="/admin/branch" element={<Branch />} />
@@ -72,7 +92,6 @@ function App() {
           <Route path="/admin/branch/:id/orders" element={<Order />} />
           <Route path="/admin/vouchers" element={<Voucher />} />
           <Route path="/admin/staff" element={<Staff />} />
-
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

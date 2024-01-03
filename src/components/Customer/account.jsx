@@ -1,19 +1,33 @@
 import { Navbar } from "../navbar";
 import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
+import type { CustomFlowbiteTheme } from "flowbite-react";
+
+const customTheme: CustomFlowbiteTheme["button"] = {
+  color: {
+    primary:
+      "bg-[#916239] hover:bg-[#7a5330] text-white p-1 hover:shadow-3 transition",
+    secondary:
+      "text-dark p-1 hover:shadow-3 transition bg-gray-200 hover:bg-gray-100",
+  },
+  pill: {
+    off: "rounded-lg",
+    on: "rounded-full",
+  },
+  disabled: "cursor-not-allowed opacity-50 hover:shadow-0",
+  isProcessing: "cursor-wait",
+  spinnerSlot: "absolute h-full top-0 flex items-center animate-fade-in",
+};
 
 export default function Account() {
   return (
     <>
       <Navbar />
       <section className="mx-auto px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
-        <div className="flex">
-          <div className="w-full md:ml-36 font-bold text-3xl">Tài khoản</div>
-          <div className="w-full"></div>
-        </div>
-        <main className="my-5">
-          <hr className="md:mx-36 border-black" />
-          <div className="flex flex-col md:flex-row my-5 md:space-x-5 md:mx-36">
+        <main className="my-5 space-y-5">
+          <div className="w-full font-bold text-3xl">Tài khoản</div>
+          <hr className="border-black" />
+          <div className="flex flex-col md:flex-row my-5 md:space-x-5 ">
             <div className="md:w-3/12 font-semibold text-xl max-md:pb-5">
               Ảnh đại diện
             </div>
@@ -24,15 +38,15 @@ export default function Account() {
                   alt="avatar"
                   className="rounded-full h-40 pb-5"
                 />
-                <Button pill className="hover:shadow-3 transition ">
+                <Button theme={customTheme} color="primary" pill>
                   Change avatar
                 </Button>
                 {/* <Label for="avatar" className="ml-40">Avatar</Label> */}
               </div>
             </div>
           </div>
-          <hr className="md:mx-36 border-black" />
-          <div className="flex flex-col md:flex-row my-5 md:space-x-5 md:mx-36">
+          <hr className=" border-black" />
+          <div className="flex flex-col md:flex-row my-5 md:space-x-5 ">
             <div className="md:w-3/12 font-semibold text-xl max-md:pb-5">
               Thông tin cá nhân
             </div>
@@ -95,14 +109,14 @@ export default function Account() {
               </div>
             </div>
           </div>
-          <hr className="md:mx-36 border-black" />
-          <div className="flex flex-col md:flex-row my-5 md:space-x-5 md:mx-36">
+          <hr className=" border-black" />
+          <div className="flex flex-col md:flex-row my-5 md:space-x-5 ">
             <div className="md:w-3/12 font-semibold text-xl max-md:pb-5">
               Mật khẩu
             </div>
             <div className="w-full md:mr-36">
               <div className="mb-5">
-                <Button pill className="hover:shadow-3 transition ">
+                <Button theme={customTheme} color="primary" pill>
                   Change password
                 </Button>
               </div>
@@ -125,11 +139,11 @@ export default function Account() {
             </div>
           </div>
           <div>
-            <div className="flex flex-row md:mx-36 space-x-3">
-              <Button pill className="hover:shadow-3 transition ">
+            <div className="flex flex-row  space-x-3">
+              <Button theme={customTheme} color="primary" pill>
                 Save
               </Button>
-              <Button pill color="light" className="hover:shadow-3 transition">
+              <Button theme={customTheme} color="secondary" pill>
                 Cancel
               </Button>
               <div className="w-full"></div>
