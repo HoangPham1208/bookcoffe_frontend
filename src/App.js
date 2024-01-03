@@ -6,10 +6,15 @@ import Home from "./components/Guest/home";
 import { BlogDetails, BlogPage } from "./components/Guest/newblog";
 import Locations from "./components/Guest/locations";
 import Contact from "./components/Guest/contact";
+import ListBook, { BookDetail } from "./components/Guest/listBook";
+
 // Customer
 import HomeUser from "./components/Customer/homeUser";
 import Account from "./components/Customer/account";
-import ListBook, { BookDetail } from "./components/Guest/listBook";
+import { BLogDetailsCustomer, BlogPageCustomer } from "./components/Customer/newblog";
+import LocatonsCustomer from "./components/Customer/locations";
+import ContactCustomer from "./components/Customer/contact";
+import ListBookCustomer, { BookDetailCustomer } from "./components/Customer/listBook";
 
 // Staff
 import OrderDrink from "./components/Staff/orderDrink";
@@ -61,8 +66,13 @@ function App() {
         <Route element={<PrivateRoutes />}>
           {/* Customer */}
           <Route path="/homeUser" element={<HomeUser />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/account" element={<Account />} />
+          <Route path="/blogsCustomer" element={<BlogPageCustomer />} />
+          <Route path="/blogsCustomer/:id" element={<BLogDetailsCustomer />} />
+          <Route path="/locationsCustomer" element={<LocatonsCustomer />} />
+          <Route path="/contactCustomer" element={<ContactCustomer />} />
+          <Route path="/booksCustomer" element={<ListBookCustomer />} />
+          <Route path="/booksCustomer/:id" element={<BookDetailCustomer />} />
           {/* Staff */}
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />

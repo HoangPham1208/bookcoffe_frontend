@@ -287,8 +287,6 @@ function Logout() {
   );
 }
 
-
-
 export function Navbarlegacy({ mode = "logout" }) {
   const navigate = useNavigate();
   const [showLoginDialog, setShowLoginDialog] = useState(false);
@@ -569,7 +567,7 @@ export function Navbar({ mode = "logout" }) {
           headers: {
             Authorization: `Bearer ${new Cookie().get("accessToken")}`,
           },
-          responseType: 'blob',
+          responseType: "blob",
         })
         .then((res) => {
           // console.log(res.data);
@@ -835,7 +833,9 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "home");
-                      navigate("/homeUser");
+                      if (role === "customer") {
+                        navigate("/homeUser");
+                      } else navigate("/homeUser");
                     }}
                   >
                     {localStorage.getItem("page") === "home" ? (
@@ -849,7 +849,9 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "books");
-                      navigate("/books");
+                      if (role === "customer") {
+                        navigate("/booksCustomer");
+                      } else navigate("/books");
                     }}
                   >
                     {localStorage.getItem("page") === "books" ? (
@@ -863,7 +865,9 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "locations");
-                      navigate("/locations");
+                      if (role === "customer") {
+                        navigate("/locationsCustomer");
+                      } else navigate("/locations");
                     }}
                   >
                     {localStorage.getItem("page") === "locations" ? (
@@ -877,7 +881,9 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "blog");
-                      navigate("/blogs");
+                      if (role === "customer") {
+                        navigate("/blogsCustomer");
+                      } else navigate("/blogs");
                     }}
                   >
                     {localStorage.getItem("page") === "blog" ? (
@@ -891,7 +897,9 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "contact");
-                      navigate("/contact");
+                      if (role === "customer") {
+                        navigate("/contactCustomer");
+                      } else navigate("/contact");
                     }}
                   >
                     {localStorage.getItem("page") === "contact" ? (

@@ -97,8 +97,6 @@ export default function HomeAdmin() {
                   <div>
                     <span className="font-semibold">Working Time: </span>{" "}
                     {item.workingTime} <br />
-                    <span className="font-semibold">Date created: </span>{" "}
-                    {item.createDate}
                   </div>
                   <div className="flex place-content-end gap-10 my-5">
                     <Button
