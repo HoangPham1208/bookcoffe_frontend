@@ -13,6 +13,7 @@ import { customTheme } from "../Utils/myButton";
 export default function MenuDrink() {
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [result, setResult] = useState([]); // result of search
   useEffect(() => {
     const fetchData = async () => {
       // await RefreshTokenAPI();
@@ -21,6 +22,7 @@ export default function MenuDrink() {
         .then((res) => {
           console.log(res.data);
           setItems(res.data);
+          setResult(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -28,25 +30,44 @@ export default function MenuDrink() {
     };
     fetchData();
   }, [refresh]);
+  const handleSearch = (searchQuery) => {
+    if (searchQuery === "") {
+      setResult(items);
+      return;
+    }
+    let temp = items.filter((item) => {
+      if (item.drinksName.includes(searchQuery)) return true;
+      return false;
+    });
+    setResult(temp);
+  };
   const [selected, setSelected] = useState(null);
   return (
     <>
       <Navbar />
       <main className="mx-autoflex flex-col max-w-screen-xl py-20 mx-36">
-        <div className="my-5 font-semibold text-3xl">
+        <div className="my-5 font-semibold text-3xl mx-36">
           <button>Menu</button>
         </div>
-        <div className="flex place-content-start gap-10 my-5">
+        <div className="flex place-content-start gap-10 my-5 mx-36">
           <Button theme={customTheme} color="primary" pill>
             Thêm nước
           </Button>
         </div>
-        <div className="relative text-gray-600 my-7">
+        <div className="relative text-gray-600 my-7 mx-36">
           <input
             type="search"
             name="serch"
-            placeholder="Tìm kiếm"
+            placeholder="Tìm kiếm với tên nước"
             className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={(e) => {
+              if (e.target.value === "") setResult(items);
+            }}
           />
         </div>
         <div className="overflow-x-auto mx-36">
@@ -61,28 +82,34 @@ export default function MenuDrink() {
               <Table.HeadCell className="p-4"></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {items.map((item1, index1) =>
-                items[index1].price.map((item2, index2) => (
-                  <>
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="grid justify-center">
-                        {/* search by id like this :
+              {result &&
+                result.map((item1, index1) =>
+                  items[index1].price.map((item2, index2) => (
+                    <>
+                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="grid justify-center">
+                          {/* search by id like this :
                           http://localhost:4000/api/staff/getDrinksImage/item.drinksId
                            */}
-                        <img
-                          src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
-                          alt={item1.image}
-                          className="w-16 h-16 rounded-full"
-                        />
-                      </Table.Cell>
-                      {/* <Table.Cell>{item1.drinksId}</Table.Cell> */}
-                      <Table.Cell>{item1.drinksName}</Table.Cell>
-                      <Table.Cell>{item1.size[index2]}</Table.Cell>
-                      <Table.Cell>{item1.price[index2]}</Table.Cell>
-                    </Table.Row>
-                  </>
-                ))
-              )}
+                          <img
+                            src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
+                            alt={item1.image}
+                            className="w-16 h-16 rounded-full"
+                          />
+                        </Table.Cell>
+                        {/* <Table.Cell>{item1.drinksId}</Table.Cell> */}
+                        <Table.Cell>{item1.drinksName}</Table.Cell>
+                        <Table.Cell>{item1.size[index2]}</Table.Cell>
+                        <Table.Cell>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(item1.price[index2])}
+                        </Table.Cell>
+                      </Table.Row>
+                    </>
+                  ))
+                )}
             </Table.Body>
           </Table>
         </div>

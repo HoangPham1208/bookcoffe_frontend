@@ -56,6 +56,10 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
       address: address,
       copyId: data.copyId,
     };
+    if (userName === "") {
+      alert("Vui lòng nhập tên khách hàng!");
+      return;
+    }
     const borrowBookAtBranch = async () => {
       // await RefreshTokenAPI();
       axios
@@ -92,7 +96,6 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
           setRefresh(!refresh);
           onClose();
           alert("Tạo phiếu thành công!");
-          
         })
         .catch((err) => {
           console.log(err);
@@ -107,7 +110,8 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
     if (radio === 2) {
       borrowBookToGo();
     }
-    navigate("/staff/order/books");
+    setRadio(1);
+    // navigate("/staff/order/books");
   };
   return (
     <>
@@ -124,6 +128,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
               onClick={() => {
                 setRadio(1);
               }}
+              checked = {radio === 1}
             />
             Mượn tại quán
           </div>
@@ -137,6 +142,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
               onClick={() => {
                 setRadio(2);
               }}
+              checked = {radio === 2}
             />
             Mượn về nhà
           </div>
@@ -214,6 +220,7 @@ export default function AddBookOrder() {
   const cookie = new Cookies();
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [result, setResult] = useState([]);
   useEffect(() => {
     axios
       .get(
@@ -223,11 +230,25 @@ export default function AddBookOrder() {
       .then((res) => {
         console.log(res.data);
         setItems(res.data);
+        setResult(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [refresh]);
+  const handleSearch = (searchQuery) => {
+    if (searchQuery === "") {
+      setResult(items);
+      return;
+    }
+    let temp = items.filter((item) => {
+      if (item.authorName.includes(searchQuery)) return true;
+      if (item.title.includes(searchQuery)) return true;
+      return false;
+    });
+    setResult(temp);
+  };
+
   const [visible, setVisible] = useState(false);
   const [infoData, setInfoData] = useState({});
   const handleOrder = () => {
@@ -249,8 +270,16 @@ export default function AddBookOrder() {
           <input
             type="search"
             name="serch"
-            placeholder="Tìm kiếm"
+            placeholder="Tìm kiếm với tên sách hoặc tên tác giả"
             className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={(e) => {
+              if (e.target.value === "") setResult(items);
+            }}
           />
         </div>
         <hr className="border-black mx-36 my-5" />
@@ -267,7 +296,7 @@ export default function AddBookOrder() {
               <Table.HeadCell className="p-4"></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {items.map((item1, index1) =>
+              {result && result.map((item1, index1) =>
                 item1.branch.map((item2, index2) => (
                   <>
                     <Table.Row
@@ -283,7 +312,17 @@ export default function AddBookOrder() {
                       }}
                       className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
-                      <Table.Cell>//</Table.Cell>
+                      <Table.Cell>
+                        {
+                          <img
+                            className="h-20 w-20"
+                            src={
+                              "http://localhost:4000/api/customer/getBookImage/" +
+                              item1.bookId
+                            }
+                          />
+                        }
+                      </Table.Cell>
                       <Table.Cell>{item1.copyId[index2]}</Table.Cell>
                       <Table.Cell>{item2}</Table.Cell>
                       <Table.Cell>{item1.authorName}</Table.Cell>
@@ -316,11 +355,10 @@ export default function AddBookOrder() {
         </div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
-            onClick={()=>{
+            onClick={() => {
               if (select === null) {
                 alert("Vui lòng chọn sách!");
-              }
-              else {
+              } else {
                 handleOrder();
               }
             }}

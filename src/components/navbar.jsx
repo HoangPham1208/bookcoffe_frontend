@@ -58,6 +58,10 @@ function LoginDialog({ visible, onClose }) {
           alert("Sai tài khoản hoặc mật khẩu!");
           return;
         }
+        else if (err.response.status === 403) {
+          alert("Tài khoản của bạn đã bị khóa!");
+          return;
+        }
         alert("Lỗi hệ thống");
         console.log(err);
       });
@@ -158,6 +162,10 @@ function SignUpDialog({ visible, onClose }) {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.status === 409) {
+          alert("Tài khoản đã tồn tại!");
+          return;
+        }
         alert("Đăng ký thất bại!");
       });
   };
