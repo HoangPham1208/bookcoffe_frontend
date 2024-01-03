@@ -48,7 +48,10 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
         })
         .catch((err) => {
           console.log(err);
-          alert("Tên tài khoản đã tồn tại!");
+          if (err.response.status === 409) {
+            alert("Tài khoản đã tồn tại!");
+            return ;
+          } else alert("Đăng ký thất bại!");
         });
     };
     fetchData();
@@ -233,9 +236,10 @@ export default function Staff() {
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
                     <Table.Cell className="p-4">
-                      <Checkbox 
-                      className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                      checked={selected === index} />
+                      <Checkbox
+                        className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                        checked={selected === index}
+                      />
                     </Table.Cell>
                     <Table.Cell>{item.staffName}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>

@@ -14,6 +14,7 @@ export default function OrderBookHomeManager() {
   const cookie = new Cookies();
   const [items, setItems] = React.useState([]);
   const [refresh, setRefresh] = React.useState(false);
+  const [result, setResult] = React.useState([]); // result of search
   const handleBorrowAtHome = async () => {
     try {
       // await RefreshTokenAPI();
@@ -26,6 +27,7 @@ export default function OrderBookHomeManager() {
         .then((res) => {
           console.log(res.data);
           setItems(res.data);
+          setResult(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -33,6 +35,18 @@ export default function OrderBookHomeManager() {
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleSearch = (searchQuery) => {
+    if (searchQuery === "") {
+      setResult(items);
+      return;
+    }
+    let temp = items.filter((item) => {
+      if (item.title.includes(searchQuery)) return true;
+      if (item.userName.includes(searchQuery)) return true;
+      return false;
+    });
+    setResult(temp);
   };
   useEffect(() => {
     handleBorrowAtHome();
@@ -83,8 +97,16 @@ export default function OrderBookHomeManager() {
           <input
             type="search"
             name="serch"
-            placeholder="Tìm kiếm"
+            placeholder="Tìm kiếm với tên sách hoặc tên khách hàng"
             className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={(e) => {
+              if (e.target.value === "") setResult(items);
+            }}
           />
         </div>
         <hr className="border-black mx-36 my-5" />
@@ -99,7 +121,7 @@ export default function OrderBookHomeManager() {
               <Table.HeadCell>Trạng thái</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {items.map((item, index) => (
+              {result && result.map((item, index) => (
                 <>
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell>{item.borrowingId}</Table.Cell>
@@ -108,17 +130,7 @@ export default function OrderBookHomeManager() {
                     <Table.Cell>
                       {(() => {
                         let date = new Date(item.borrowDate);
-                        return (
-                          date.getDate() +
-                          "/" +
-                          (date.getMonth() + 1) +
-                          "/" +
-                          date.getFullYear() +
-                          " " +
-                          date.getHours() +
-                          ":" +
-                          date.getMinutes()
-                        );
+                        return date.toLocaleDateString();
                       })()}
                     </Table.Cell>
                     <Table.Cell>

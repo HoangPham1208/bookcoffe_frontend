@@ -55,6 +55,10 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
       address: address,
       copyId: data.copyId,
     };
+    if (userName === "") {
+      alert("Vui lòng nhập tên!");
+      return;
+    }
     const borrowBookAtBranch = async () => {
       // await RefreshTokenAPI();
       axios
@@ -105,6 +109,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
     if (radio === 2) {
       borrowBookToGo();
     }
+    setRadio(1);
   };
   return (
     <>
@@ -121,6 +126,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
               onClick={() => {
                 setRadio(1);
               }}
+              checked = {radio === 1}
             />
             Mượn tại quán
           </div>
@@ -134,6 +140,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
               onClick={() => {
                 setRadio(2);
               }}
+              checked = {radio === 2}
             />
             Mượn về nhà
           </div>
@@ -211,6 +218,22 @@ export default function AddBookOrderManager() {
   const cookie = new Cookies();
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [result, setResult] = useState([]);
+  const handleSearch = (searchQuery) => {
+    // search by authorName and title and publicationYear
+    if (searchQuery === "") {
+      setResult(items);
+      return;
+    }
+    let temp = items.filter((item) => {
+      if (item.authorName.includes(searchQuery)) return true;
+      if (item.title.includes(searchQuery)) return true;
+      if (item.publicationYear.includes(searchQuery)) return true;
+      // the copyId is an array so we need to check each element
+      return false;
+    });
+    setResult(temp);
+  };
   useEffect(() => {
     axios
       .get(
@@ -220,6 +243,7 @@ export default function AddBookOrderManager() {
       .then((res) => {
         console.log(res.data);
         setItems(res.data);
+        setResult(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -245,9 +269,17 @@ export default function AddBookOrderManager() {
         <div className="relative text-gray-600 mx-36 my-7">
           <input
             type="search"
-            name="serch"
-            placeholder="Tìm kiếm"
+            name="search"
+            placeholder="Tìm kiếm với tên tác giả, tiêu đề, năm xuất bản"
             className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={(e) => {
+              if (e.target.value === "") setResult(items);
+            }}
           />
         </div>
         <hr className="border-black mx-36 my-5" />
@@ -256,7 +288,6 @@ export default function AddBookOrderManager() {
             <Table.Head className="text-center">
               <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Copy Id</Table.HeadCell>
-              <Table.HeadCell>Chi nhánh</Table.HeadCell>
               <Table.HeadCell>Tên tác giả</Table.HeadCell>
               <Table.HeadCell>Tiêu đề</Table.HeadCell>
               <Table.HeadCell>Năm xuất bản</Table.HeadCell>
@@ -264,60 +295,69 @@ export default function AddBookOrderManager() {
               <Table.HeadCell className="p-4"></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {items.map((item1, index1) =>
-                item1.branch.map((item2, index2) => (
-                  <>
-                    <Table.Row
-                      onClick={() => {
-                        setSelect(item1.copyId[index2]);
-                        setInfoData({
-                          copyId: item1.copyId[index2],
-                          authorName: item1.authorName,
-                          title: item1.title,
-                          publicationYear: item1.publicationYear,
-                          branch: item2,
-                        });
-                      }}
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                    >
-                      <Table.Cell>//</Table.Cell>
-                      <Table.Cell>{item1.copyId[index2]}</Table.Cell>
-                      <Table.Cell>{item2}</Table.Cell>
-                      <Table.Cell>{item1.authorName}</Table.Cell>
-                      <Table.Cell>{item1.title}</Table.Cell>
-                      <Table.Cell>{item1.publicationYear}</Table.Cell>
-                      <Table.Cell>
-                        {item1.isBorrowed[index2] === 1 ? (
-                          <p className="text-red-500">Đã mượn</p>
-                        ) : (
-                          <p className="text-green-500">Có sẵn</p>
-                        )}
-                      </Table.Cell>
-                      <Table.Cell className="p-4">
-                        {(() => {
-                          if (item1.isBorrowed[index2] === 0)
-                            return (
-                              <Checkbox
-                                checked={select === item1.copyId[index2]}
-                                className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                              />
-                            );
-                        })()}
-                      </Table.Cell>
-                    </Table.Row>
-                  </>
-                ))
-              )}
+              {result &&
+                result.map((item1, index1) =>
+                  item1.branch.map((item2, index2) => (
+                    <>
+                      <Table.Row
+                        onClick={() => {
+                          setSelect(item1.copyId[index2]);
+                          setInfoData({
+                            copyId: item1.copyId[index2],
+                            authorName: item1.authorName,
+                            title: item1.title,
+                            publicationYear: item1.publicationYear,
+                            branch: item2,
+                          });
+                        }}
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      >
+                        <Table.Cell>
+                          {
+                            <img
+                              className="h-20 w-20"
+                              src={
+                                "http://localhost:4000/api/customer/getBookImage/" +
+                                item1.bookId
+                              }
+                            />
+                          }
+                        </Table.Cell>
+                        <Table.Cell>{item1.copyId[index2]}</Table.Cell>
+                        <Table.Cell>{item1.authorName}</Table.Cell>
+                        <Table.Cell>{item1.title}</Table.Cell>
+                        <Table.Cell>{item1.publicationYear}</Table.Cell>
+                        <Table.Cell>
+                          {item1.isBorrowed[index2] === 1 ? (
+                            <p className="text-red-500">Đã mượn</p>
+                          ) : (
+                            <p className="text-green-500">Có sẵn</p>
+                          )}
+                        </Table.Cell>
+                        <Table.Cell className="p-4">
+                          {(() => {
+                            if (item1.isBorrowed[index2] === 0)
+                              return (
+                                <Checkbox
+                                  checked={select === item1.copyId[index2]}
+                                  className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                                />
+                              );
+                          })()}
+                        </Table.Cell>
+                      </Table.Row>
+                    </>
+                  ))
+                )}
             </Table.Body>
           </Table>
         </div>
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
-            onClick={()=>{
+            onClick={() => {
               if (select === null) {
                 alert("Vui lòng chọn sách!");
-              }
-              else {
+              } else {
                 handleOrder();
               }
             }}
