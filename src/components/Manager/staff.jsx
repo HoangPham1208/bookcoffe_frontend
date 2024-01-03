@@ -32,7 +32,7 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
       password: password,
     };
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .post("http://localhost:4000/api/manager/addStaff", userData, {
           headers: {
@@ -130,7 +130,7 @@ export default function Staff() {
   // need sync the RefreshTokenAPI first then excute the axios
   useEffect(() => {
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .get("http://localhost:4000/api/manager/showStaff", {
           headers: {
@@ -151,7 +151,7 @@ export default function Staff() {
   const [staffData, setStaffData] = useState([]); // [1, 2, 3
   const handleUpdateStats = () => {
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .put(
           "http://localhost:4000/api/manager/updateStaff",
