@@ -250,7 +250,7 @@ function Logout() {
       // Use Promise.all to ensure all asynchronous operations complete before moving on
       await Promise.all([
         localStorage.clear(),
-        await RefreshTokenAPI(),
+        // await RefreshTokenAPI(),
         axios.post("http://localhost:5000/logout", null, {
           headers: {
             Authorization: `Bearer ${cookie.get("accessToken")}`,
@@ -562,7 +562,7 @@ export function Navbar({ mode = "logout" }) {
   const [items, setItems] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .get("http://localhost:4000/api/customer/getAvatar", {
           headers: {

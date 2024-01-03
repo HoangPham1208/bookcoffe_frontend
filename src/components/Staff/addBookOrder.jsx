@@ -38,6 +38,7 @@ function BookOrder({ data, visible }) {
   );
 }
 function Order({ data, visible, onClose, refresh, setRefresh }) {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [idCard, setIdCard] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -56,7 +57,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
       copyId: data.copyId,
     };
     const borrowBookAtBranch = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .post("http://localhost:4000/api/staff/borrowBookAtBranch", userData, {
           headers: {
@@ -91,6 +92,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
           setRefresh(!refresh);
           onClose();
           alert("Tạo phiếu thành công!");
+          
         })
         .catch((err) => {
           console.log(err);
@@ -105,6 +107,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
     if (radio === 2) {
       borrowBookToGo();
     }
+    navigate("/staff/order/books");
   };
   return (
     <>

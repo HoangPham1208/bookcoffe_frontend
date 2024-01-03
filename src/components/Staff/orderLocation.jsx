@@ -136,8 +136,7 @@ export default function OrderLocation() {
         if (error.response && error.response.status === 403) {
           try {
             // Attempt to refresh the token
-            await RefreshTokenAPI();
-
+            // await RefreshTokenAPI();
             // If the token refresh is successful, retry the axios request
             const res = await axios.get('http://localhost:4000/api/staff/showReservation', {
               headers: {
@@ -183,7 +182,7 @@ export default function OrderLocation() {
             type="search"
             name="serch"
             placeholder="Tìm kiếm"
-            className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
         <hr className="border-black mx-36 my-5" />
@@ -217,9 +216,6 @@ export default function OrderLocation() {
                             <Radio
                               name="checkbox"
                               className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                              onClick={() => {
-                                handleCheck();
-                              }}
                               checked={selectedItem === index}
                             />
                           </Table.Cell>
