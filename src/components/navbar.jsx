@@ -559,6 +559,7 @@ export function Navbar({ mode = "logout" }) {
   const name = new Cookie().get("userName");
   const [refresh, setRefresh] = useState(false);
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       // await RefreshTokenAPI();
@@ -567,12 +568,14 @@ export function Navbar({ mode = "logout" }) {
           headers: {
             Authorization: `Bearer ${new Cookie().get("accessToken")}`,
           },
-          responseType: "blob",
+          responseType: "arraybuffer",
         })
         .then((res) => {
           // console.log(res.data);
-          const imageUrl = URL.createObjectURL(res.data);
+          const blob = new Blob([res.data], { type: "image/*" });
+          const imageUrl = URL.createObjectURL(blob);
           setItems(imageUrl);
+          setLoading(true);
         })
         .catch((err) => {
           console.log(err);
@@ -581,7 +584,7 @@ export function Navbar({ mode = "logout" }) {
     if (mode === "logout") {
       fetchData();
     }
-  }, [refresh]);
+  }, [refresh, loading]);
   return (
     <FlowbiteNavbar
       fluid
@@ -627,64 +630,67 @@ export function Navbar({ mode = "logout" }) {
             );
           else {
             return (
-              <>
-                <Dropdown
-                  arrowIcon={false}
-                  inline
-                  label={
-                    <Avatar src={items} alt="User settings" rounded>
-                      <div className="flex flex-row ">
-                        <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
-                          {localStorage.getItem("page") === "account" ? (
-                            <p className="underline">{name}</p>
-                          ) : (
-                            <p>{name}</p>
-                          )}
-                          <div className="text-sm text-gray-500 dark:text-gray-400 flex gap-3">
-                            <div>{role}</div>
+              { loading } && (
+                <>
+                  <Dropdown
+                    arrowIcon={false}
+                    inline
+                    label={
+                      <div className="flex gap-5">
+                        <img src={items} alt="avatar" className="h-10 w-10 rounded-full " />
+                        <div className="flex flex-row ">
+                          <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
+                            {localStorage.getItem("page") === "account" ? (
+                              <p className="underline">{name}</p>
+                            ) : (
+                              <p>{name}</p>
+                            )}
+                            <div className="text-sm text-gray-500 dark:text-gray-400 flex gap-3">
+                              <div>{role}</div>
+                            </div>
                           </div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="16"
+                            width="10"
+                            viewBox="0 0 320 512"
+                            className="self-center"
+                          >
+                            <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
+                          </svg>
                         </div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="16"
-                          width="10"
-                          viewBox="0 0 320 512"
-                          className="self-center"
-                        >
-                          <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
-                        </svg>
                       </div>
-                    </Avatar>
-                  }
-                >
-                  <Dropdown.Header>
-                    <span className="block text-sm font-bold">
-                      {localStorage.getItem("page") === "account" ? (
-                        <p className="underline">{name}</p>
-                      ) : (
-                        <p>{name}</p>
-                      )}
-                    </span>
-                    <span className="block truncate text-sm font-medium">
-                      {role}
-                    </span>
-                  </Dropdown.Header>
+                    }
+                  >
+                    <Dropdown.Header>
+                      <span className="block text-sm font-bold">
+                        {localStorage.getItem("page") === "account" ? (
+                          <p className="underline">{name}</p>
+                        ) : (
+                          <p>{name}</p>
+                        )}
+                      </span>
+                      <span className="block truncate text-sm font-medium">
+                        {role}
+                      </span>
+                    </Dropdown.Header>
 
-                  <Dropdown.Item>
-                    <button
-                      onClick={() => {
-                        localStorage.setItem("page", "account");
-                        navigate("/account");
-                      }}
-                    >
-                      Trang cá nhân
-                    </button>
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Logout />
-                </Dropdown>
-                <FlowbiteNavbar.Toggle />
-              </>
+                    <Dropdown.Item>
+                      <button
+                        onClick={() => {
+                          localStorage.setItem("page", "account");
+                          navigate("/account");
+                        }}
+                      >
+                        Trang cá nhân
+                      </button>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Logout />
+                  </Dropdown>
+                  <FlowbiteNavbar.Toggle />
+                </>
+              )
             );
           }
         })()}

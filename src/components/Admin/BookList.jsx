@@ -21,6 +21,7 @@ export default function BookList() {
         .get("http://localhost:4000/api/customer/search?title=&address=")
         .then((res) => {
           console.log(res.data);
+          localStorage.setItem("bookList", JSON.stringify(res.data));
           setItems(res.data);
         })
         .catch((err) => {
@@ -62,10 +63,10 @@ export default function BookList() {
           <Table hoverable>
             <Table.Head className="text-center">
               <Table.HeadCell></Table.HeadCell>
+              <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell>Tên tác giả</Table.HeadCell>
               <Table.HeadCell>Tiêu đề</Table.HeadCell>
               <Table.HeadCell>Giá</Table.HeadCell>
-              <Table.HeadCell></Table.HeadCell>
               <Table.HeadCell></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
@@ -85,7 +86,12 @@ export default function BookList() {
                     <Table.Cell>ThisIsImage</Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
-                    <Table.Cell>{item1.salePrice}</Table.Cell>
+                    <Table.Cell>
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(item1.salePrice)}
+                    </Table.Cell>
                     <Table.Cell>
                       <Button
                         onClick={() =>
