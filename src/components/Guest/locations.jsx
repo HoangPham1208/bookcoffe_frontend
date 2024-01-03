@@ -39,8 +39,14 @@ export default function Locations() {
             <div>
               <Card
                 className="max-w-sm"
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/image1.png"
+                imgAlt={
+                  "This is a photo of a " +
+                  item.address +
+                  " branch"
+                }
+                imgSrc={
+                  "http://localhost:4000/api/admin/getImage/" + item.branchImage
+                }
               >
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.address}

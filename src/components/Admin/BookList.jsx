@@ -21,7 +21,6 @@ export default function BookList() {
         .get("http://localhost:4000/api/customer/search?title=&address=")
         .then((res) => {
           console.log(res.data);
-          localStorage.setItem("bookList", JSON.stringify(res.data));
           setItems(res.data);
         })
         .catch((err) => {
