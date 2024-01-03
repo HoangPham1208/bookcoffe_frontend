@@ -11,7 +11,10 @@ import Cookies from "universal-cookie";
 export default function Account() {
   const cookie = new Cookies();
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [fileAvatar, setFileAvatar] = useState(null);
+  const [dataUser, setDataUser] = useState({});
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/customer/getAvatar", {
@@ -25,6 +28,20 @@ export default function Account() {
         const blob = new Blob([res.data], { type: "image/*" });
         const imageUrl = URL.createObjectURL(blob);
         setAvatarUrl(imageUrl);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get("http://localhost:4000/api/customer/getProfile", {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      })
+
+      .then((res) => {
+        console.log(res.data);
+        setDataUser(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -47,6 +64,71 @@ export default function Account() {
         console.log(err);
       });
   };
+  const handleInfo = () => {
+    // check null
+    if (!dataUser.email || !dataUser.address || !dataUser.phoneNumber) {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+    // check email format
+    if (!dataUser.email.includes("@")) {
+      alert("Email không hợp lệ");
+      return;
+    }
+    const sentData = {
+      email: dataUser.email,
+      address: dataUser.address,
+      phoneNumber: dataUser.phoneNumber,
+    };
+    axios
+      .post("http://localhost:4000/api/customer/updateProfile", sentData, {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("Cập nhật thành công");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handlePassword = () => {
+    if (!oldPassword || !newPassword || !confirm) {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+    if (newPassword !== confirm) {
+      alert("Mật khẩu xác nhận không khớp");
+      return;
+    }
+    const sentData = {
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    };
+    axios
+      .post("http://localhost:4000/api/customer/changePassword", sentData, {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("Đổi mật khẩu thành công");
+        window.location.reload();
+      })
+      .catch((err) => {
+        // if code = 400 => old password is wrong
+        if (err.response.status === 400) {
+          alert("Mật khẩu cũ không đúng");
+          return;
+        }
+        alert("Lỗi hệ thống")
+        console.log(err);
+      });
+  }
   return (
     <>
       <Navbar />
@@ -94,7 +176,15 @@ export default function Account() {
               {/* Email  */}
               <div className="mb-5">
                 <Label for="email">Email</Label>
-                <TextInput id="email" placeholder="Email" className="w-full" />
+                <TextInput
+                  id="email"
+                  placeholder="Email"
+                  className="w-full"
+                  value={dataUser.email}
+                  onChange={(e) => {
+                    setDataUser({ ...dataUser, email: e.target.value });
+                  }}
+                />
               </div>
               {/* Address */}
               <div className="mb-5">
@@ -103,6 +193,10 @@ export default function Account() {
                   id="address"
                   placeholder="Address"
                   className="w-full"
+                  value={dataUser.address}
+                  onChange={(e) => {
+                    setDataUser({ ...dataUser, address: e.target.value });
+                  }}
                 />
               </div>
               {/* Phone number */}
@@ -112,11 +206,20 @@ export default function Account() {
                   id="phone"
                   placeholder="Phone number"
                   className="w-full"
+                  value={dataUser.phoneNumber}
+                  onChange={(e) => {
+                    setDataUser({ ...dataUser, phoneNumber: e.target.value });
+                  }}
                 />
               </div>
               <div className="flex justify-start">
                 <div className="flex flex-row space-x-3 ">
-                  <Button theme={customTheme} color="primary" pill>
+                  <Button
+                    theme={customTheme}
+                    color="primary"
+                    pill
+                    onClick={handleInfo}
+                  >
                     Save
                   </Button>
                   <div className="w-full"></div>
@@ -134,21 +237,43 @@ export default function Account() {
               <div className="mb-5">
                 <Label for="old password">Old password</Label>
                 <TextInput
+                  type = "password"
                   id="old password"
                   placeholder="Old password"
                   className="w-full"
+                  onChange={(e) => {
+                    setOldPassword(e.target.value);
+                  }}
                 />
               </div>
               <div className="mb-5">
                 <Label for="new password">New password</Label>
                 <TextInput
+                  type = "password"
                   id="new password"
                   placeholder="New password"
                   className="w-full"
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                  }}
                 />
               </div>
               <div className="mb-5">
-                <Button theme={customTheme} color="primary" pill>
+                <Label for="confirm password">Confirm password</Label>
+                <TextInput
+                  type = "password"
+                  id="confirm password"
+                  placeholder="Confirm password"
+                  className="w-full"
+                  onChange={(e) => {
+                    setConfirm(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="mb-5">
+                <Button theme={customTheme} color="primary" pill
+                onClick={handlePassword}
+                >
                   Change password
                 </Button>
               </div>

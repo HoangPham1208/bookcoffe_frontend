@@ -22,6 +22,10 @@ function LoginDialog({ visible, onClose }) {
       userName: userName,
       password: password,
     };
+    if (userName === "" || password === "") {
+      alert("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
     axios
       .post("http://localhost:5000/login", userData)
       .then((res) => {
@@ -50,6 +54,11 @@ function LoginDialog({ visible, onClose }) {
         }
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          alert("Sai tài khoản hoặc mật khẩu!");
+          return;
+        }
+        alert("Lỗi hệ thống");
         console.log(err);
       });
   };
@@ -121,6 +130,10 @@ function SignUpDialog({ visible, onClose }) {
   };
   if (!visible) return null;
   const handleRegister = () => {
+    if (userName === "" || email === "" || address === "" || password === "") {
+      alert("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
     if (!email.includes("@")) {
       alert("Email không hợp lệ, vui lòng nhập lại!");
       return;
