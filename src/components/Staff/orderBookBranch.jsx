@@ -16,7 +16,7 @@ export default function OrderBookBranchManager() {
   const [refresh, setRefresh] = useState(false);
   const handleBorrowAtBranch = async () => {
     try {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .get("http://localhost:4000/api/staff/showBorrowBookAtBranch", {
           headers: {
