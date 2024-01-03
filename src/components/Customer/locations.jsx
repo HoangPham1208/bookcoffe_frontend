@@ -37,31 +37,31 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
     if (dateTime < new Date().toISOString().split(".")[0]) {
       alert("Ngày đặt phải lớn hơn ngày hiện tại");
       return;
-    }
-    // check hour future  
-    let date = new Date();
-    let hourNow = date.getHours();
-    let minuteNow = date.getMinutes();
-    let hourOrder = dateTime.split("T")[1].split(":")[0];
-    let minuteOrder = dateTime.split("T")[1].split(":")[1];
-    if (hourOrder - hourNow < 0) {
-      alert("Vui lòng đặt vào tương lai");
-      return;
-    }
-    // check hour - must be 8-22 and sooner than 2 hours
-    let hour = dateTime.split("T")[1].split(":")[0];
-    if (hour < 8 || hour > 22) {
-      alert("Giờ đặt phải từ 8h đến 22h");
-      return;
-    }
-    if (hourOrder - hourNow < 2) {
-      alert("Vui lòng đặt trước ít nhất 2 tiếng");
-      return;
-    }
-    if (hourOrder - hourNow === 2) {
-      if (minuteOrder - minuteNow < 0) {
-        alert("Vui lòng đặt trước ít nhất 2 tiếng");
+    } else {
+      // check hour future
+      let date = new Date();
+      let hourNow = date.getHours();
+      let minuteNow = date.getMinutes();
+      let hourOrder = dateTime.split("T")[1].split(":")[0];
+      let minuteOrder = dateTime.split("T")[1].split(":")[1];
+
+      // check hour - must be 8-22 and sooner than 2 hours
+      let hour = dateTime.split("T")[1].split(":")[0];
+      if (hour < 8 || hour > 22) {
+        alert("Giờ đặt phải từ 8h đến 22h");
         return;
+      }
+      // check in the same day and sooner than 2 hours ( handle minutes)
+      if (dateTime.split("T")[0] === new Date().toISOString().split("T")[0]) {
+        if (hourNow > hourOrder) {
+          alert("Giờ đặt phải lớn hơn giờ hiện tại");
+          return;
+        } else if (hourNow === hourOrder) {
+          if (minuteNow > minuteOrder) {
+            alert("Giờ đặt phải lớn hơn giờ hiện tại");
+            return;
+          }
+        }
       }
     }
     axios
@@ -163,16 +163,6 @@ export default function Locations() {
         console.log(branchResponse.data);
         setData(branchResponse.data);
 
-        const staffResponse = await axios.get(
-          "http://localhost:4000/api/admin/showStaffandManager",
-          {
-            headers: {
-              Authorization: `Bearer ${cookie.get("accessToken")}`,
-            },
-          }
-        );
-        console.log(staffResponse.data);
-        setStaff(staffResponse.data);
 
         const showReservation = await axios.get(
           "http://localhost:4000/api/customer/showReservation",
@@ -213,22 +203,17 @@ export default function Locations() {
                 <div className="font-normal text-gray-700 dark:text-gray-400">
                   <div className="flex justify-between">
                     <div>
-                      <span className="font-semibold">Manager: </span>
-                      {(() => {
-                        for (let i = 0; i < staff.length; i++) {
-                          if (
-                            staff[i].staffId === item.managerId &&
-                            staff[i].branchId === item.branchId
-                          ) {
-                            return staff[i].userName;
-                          }
-                        }
-                      })()}
+                      <span className="font-semibold">Quản lý: </span>
+                      {item.managerName}
                     </div>
                   </div>
                   <div>
-                    <span className="font-semibold">Working Time: </span>{" "}
+                    <span className="font-semibold">Giờ hoạt động: </span>{" "}
                     {item.workingTime} <br />
+                  </div>
+                  <div>
+                    <span className="font-semibold">Số điện thoại: </span>{" "}
+                    {item.phoneNumber} <br />
                   </div>
                   <div className="flex place-content-end gap-10 my-5">
                     <Button
@@ -252,8 +237,8 @@ export default function Locations() {
           data={address}
           visible={visible}
           onClose={() => setVisible(false)}
-          refresh = {refresh}
-          setRefresh = {setRefresh}
+          refresh={refresh}
+          setRefresh={setRefresh}
         />
         <div className="my-5 font-semibold text-3xl">
           <hr className="border-black mt-10 mb-5" />
@@ -291,9 +276,13 @@ export default function Locations() {
                       <Table.Cell>{item.quantity}</Table.Cell>
                       <Table.Cell>
                         {item.isConfirm === 0 ? (
-                          <div className="text-red-500 font-semibold">Chưa xác nhận</div>
+                          <div className="text-red-500 font-semibold">
+                            Chưa xác nhận
+                          </div>
                         ) : (
-                          <div className="text-green-500 font-semibold">Đã xác nhận</div>
+                          <div className="text-green-500 font-semibold">
+                            Đã xác nhận
+                          </div>
                         )}
                       </Table.Cell>
                     </Table.Row>
