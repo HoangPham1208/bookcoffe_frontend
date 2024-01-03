@@ -27,51 +27,6 @@ export default function ListBook() {
 
 function AllBook() {
   const navigate = useNavigate();
-  const bookEntries = [
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    // Add more entries as needed
-  ];
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -106,7 +61,13 @@ function AllBook() {
               navigate("/booksCustomer/" + entry.bookId);
             }}
           >
-            <img src={entry.imageSrc} alt={`book-${index + 1}`} />
+            <img
+              src={
+                "http://localhost:4000/api/customer/getBookImage/" +
+                entry.bookId
+              }
+              alt={`book-${index + 1}`}
+            />
             <div className="flex flex-col space-y-1 p-2" id="book-card-details">
               <p className="font-bookTitle text-lg font-bold line-clamp-2">
                 {entry.title}

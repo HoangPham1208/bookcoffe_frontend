@@ -12,7 +12,7 @@ import { customTheme } from "../Utils/myButton";
 export default function ListBook() {
   return (
     <>
-      <Navbar mode = "login" />
+      <Navbar mode="login" />
       <section className="mx-auto px-6 md:px-10 py-10 space-y-5 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
           <div className="w-full font-bold text-3xl">Sách</div>
@@ -27,51 +27,6 @@ export default function ListBook() {
 
 function AllBook() {
   const navigate = useNavigate();
-  const bookEntries = [
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      authorName: "John Green",
-      rating: "4.95",
-    },
-    // Add more entries as needed
-  ];
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -106,7 +61,13 @@ function AllBook() {
               navigate("/books/" + entry.bookId);
             }}
           >
-            <img src={entry.imageSrc} alt={`book-${index + 1}`} />
+            <img
+              src={
+                "http://localhost:4000/api/customer/getBookImage/" +
+                entry.bookId
+              }
+              alt={`book-${index + 1}`}
+            />
             <div className="flex flex-col space-y-1 p-2" id="book-card-details">
               <p className="font-bookTitle text-lg font-bold line-clamp-2">
                 {entry.title}
