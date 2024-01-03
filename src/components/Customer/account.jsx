@@ -1,23 +1,7 @@
 import { Navbar } from "../navbar";
 import { Label, TextInput } from "flowbite-react";
 import { Button } from "flowbite-react";
-import type { CustomFlowbiteTheme } from "flowbite-react";
-
-const customTheme: CustomFlowbiteTheme["button"] = {
-  color: {
-    primary:
-      "bg-[#916239] hover:bg-[#7a5330] text-white p-1 hover:shadow-3 transition",
-    secondary:
-      "text-dark p-1 hover:shadow-3 transition bg-gray-200 hover:bg-gray-100",
-  },
-  pill: {
-    off: "rounded-lg",
-    on: "rounded-full",
-  },
-  disabled: "cursor-not-allowed opacity-50 hover:shadow-0",
-  isProcessing: "cursor-wait",
-  spinnerSlot: "absolute h-full top-0 flex items-center animate-fade-in",
-};
+import { customTheme } from "../Utils/myButton";
 
 export default function Account() {
   return (

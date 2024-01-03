@@ -12,7 +12,7 @@ import { customTheme } from "../Utils/myButton";
 export default function ListBook() {
   return (
     <>
-      <Navbar mode = "login" />
+      <Navbar />
       <section className="mx-auto px-6 md:px-10 py-10 space-y-5 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
           <div className="w-full font-bold text-3xl">Sách</div>
@@ -103,7 +103,7 @@ function AllBook() {
             className="flex flex-col shadow-2 hover:shadow-4 h-[300px] sm:h-96 w-40 sm:w-44` rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
             id="book-card"
             onClick={() => {
-              navigate("/books/" + entry.bookId);
+              navigate("/booksCustomer/" + entry.bookId);
             }}
           >
             <img src={entry.imageSrc} alt={`book-${index + 1}`} />
@@ -134,7 +134,7 @@ function AllBook() {
   );
 }
 
-export function BookDetail() {
+export function BookDetailCustomer() {
   const navigate = useNavigate();
   const bookInfo = {
     imageSrc: "/the-fault-in-our-stars.png",
@@ -156,7 +156,7 @@ export function BookDetail() {
   };
   return (
     <>
-      <Navbar mode="login" />
+      <Navbar />
       <section className="mx-auto px-6 md:px-10 py-10 space-y-5 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
           <div className="w-full font-bold text-3xl">Sách</div>
@@ -166,7 +166,7 @@ export function BookDetail() {
             color="secondary"
             withIcon
             onClick={() => {
-              navigate("/books");
+              navigate("/booksCustomer");
             }}
           >
             <HiOutlineArrowLeft className="h-5 w-5 mr-3" />

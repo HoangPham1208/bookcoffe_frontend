@@ -101,7 +101,7 @@ export default function Blogs() {
             key={index}
             className="flex flex-col sm:flex-row rounded-lg transition-all ease-m3-standard-accelerate text-left sm:space-x-5 max-sm:p-2"
             onClick={() => {
-              navigate("/blogs/"+index);
+              navigate("/blogsCustomer/"+index);
             }}
           >
             <img
@@ -121,10 +121,10 @@ export default function Blogs() {
   );
 }
 
-export function BlogPage() {
+export function BlogPageCustomer() {
   return (
     <>
-      <Navbar mode = "login" />
+      <Navbar />
       <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
           <div className="w-full font-bold text-3xl">Blog</div>
@@ -135,7 +135,7 @@ export function BlogPage() {
   );
 }
 
-export function BlogDetails() {
+export function BLogDetailsCustomer() {
   const navigate = useNavigate();
   const blogDetail = {
     imageSrc: "/blog-1.png",
@@ -164,7 +164,7 @@ export function BlogDetails() {
   };
   return (
     <>
-      <Navbar mode = "login" />
+      <Navbar />
       <section className="mx-auto px-6 md:px-10 py-10 space-y-5 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
           <Button
@@ -173,7 +173,7 @@ export function BlogDetails() {
             color="secondary"
             withIcon
             onClick={() => {
-              navigate("/blogs");
+              navigate("/blogsCustomer");
             }}
           >
             <HiOutlineArrowLeft className="h-5 w-5 mr-3" />
