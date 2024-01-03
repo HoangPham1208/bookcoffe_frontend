@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import RefreshTokenAPI from "../Utils/token";
 import ListFunc from "../Utils/listFunc";
+import { customTheme } from "../Utils/myButton";
 
 function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
   const cookie = new Cookies();
@@ -48,17 +49,21 @@ function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
         id="user-card-expanded"
         className="absolute top-16 right-36 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
       >
-        <div>Bạn muốn xác nhận đơn đặt sách #1 chứ?</div>
+        <div>Bạn muốn xác nhận đơn đặt chỗ này chứ?</div>
         <div className="flex place-content-start gap-10 my-5">
           <Button
             onClick={handleSuccess}
-            className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4] "
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Hoàn tất
           </Button>
           <Button
             onClick={handleCancel}
-            className="text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
+            theme={customTheme}
+            color="secondary"
+            pill
           >
             Hủy
           </Button>
@@ -114,36 +119,38 @@ export default function OrderLocationManager() {
   };
   useEffect(() => {
     RefreshTokenAPI();
-    // axios
-    //   .get("http://localhost:4000/api/staff/showReservation", {
-    //     headers: {
-    //       Authorization: `Bearer ${cookie.get("accessToken")}`,
-    //     },
-    //     params: {
-    //       role: cookie.get("role"),
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setItems(res.data);
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .get("http://localhost:4000/api/staff/showReservation", {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+        params: {
+          role: cookie.get("role"),
+        },
+      })
+      .then((res) => {
+        setItems(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [refresh]);
 
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto  flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="flex mx-36 gap-10">
-          <button
-            className="text-3xl font-semibold  flex text-end hover:underline"
+          <Button
             onClick={() => navigate("/manager/order/locations/history")}
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Xem lịch sử
-          </button>
+          </Button>
         </div>
         <div className="relative text-gray-600 mx-36 my-7">
           <input
@@ -183,7 +190,7 @@ export default function OrderLocationManager() {
                             {/* checkbox only one choice */}
                             <Radio
                               name="checkbox"
-                              className="text-[#6750A4]"
+                              className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
                               onClick={() => {
                                 handleCheck();
                               }}
@@ -212,7 +219,9 @@ export default function OrderLocationManager() {
                             <Button
                               onClick={handleCheck}
                               disabled={selectedItem !== index}
-                              className="bg-[#6750A4] rounded-full border-[#6750A4] enabled:hover:bg-white enabled:hover:text-[#6750A4]"
+                              theme={customTheme}
+                              color="primary"
+                              pill
                             >
                               Xác nhận
                             </Button>

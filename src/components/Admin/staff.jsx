@@ -121,7 +121,7 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
   );
 }
 
-export default function Staff() {
+export default function StaffAdmin() {
   const [showDialog, setShowDialog] = useState(false); // [false, true
   const navigate = useNavigate();
   const [items2, setItems2] = useState([]);
@@ -178,7 +178,46 @@ export default function Staff() {
     <div>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <ListFunc />
+        <div className="flex place-content-start fixed mt-8 mx-5 ">
+          <Button
+            onClick={() => navigate("/admin")}
+            theme={customTheme}
+            color="secondary"
+            pill
+          >
+            Trở về
+          </Button>
+        </div>
+        <div>
+          <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
+            <li>
+              <button
+                onClick={() => {
+                  localStorage.setItem("type", "book");
+                  navigate("/admin/branch/:id/books");
+                }}
+                className="hover:underline"
+              >
+                {localStorage.getItem("type") === "book" ||
+                localStorage.getItem("type") === null ? (
+                  <p className="underline"> Sách </p>
+                ) : (
+                  <p> Sách </p>
+                )}
+              </button>
+            </li>
+            <li>
+              <button className="hover:underline">
+                {/* staff */}
+                {localStorage.getItem("type") === "staff" ? (
+                  <p className="underline"> Nhân viên </p>
+                ) : (
+                  <p> Nhân viên </p>
+                )}
+              </button>
+            </li>
+          </ul>
+        </div>
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => setShowDialog(true)}
@@ -233,9 +272,10 @@ export default function Staff() {
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
                     <Table.Cell className="p-4">
-                      <Checkbox 
-                      className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                      checked={selected === index} />
+                      <Checkbox
+                        className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                        checked={selected === index}
+                      />
                     </Table.Cell>
                     <Table.Cell>{item.staffName}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>

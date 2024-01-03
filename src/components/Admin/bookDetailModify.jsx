@@ -2,17 +2,16 @@ import React from "react";
 import { Navbar } from "../navbar";
 import { Button, Label, List, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import ListFunc from "../Utils/listFunc";
 import { customTheme } from "../Utils/myButton";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import RefreshTokenAPI from "../Utils/token";
-import axios from "axios";
+import { useParams } from "react-router-dom";
 
-export default function BookDetails() {
+export default function BookDetailsModify() {
   const { id: title } = useParams();
-  const navigate = useNavigate();
   const [items, setItems] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -30,7 +29,8 @@ export default function BookDetails() {
         });
     };
     fetchData();
-  }, []);
+  }, [refresh]);
+  const navigate = useNavigate();
   return (
     <div>
       <Navbar />
@@ -40,13 +40,13 @@ export default function BookDetails() {
             theme={customTheme}
             color="secondary"
             pill
-            onClick={() => navigate("/manager/books")}
+            onClick={() => navigate("/admin/bookList")}
           >
             Trở về
           </Button>
         </div>
         <div className="flex my-7">
-          <div className="w-2/12 ml-36 font-semibold text-lg">Chi tiết</div>
+          <div className="w-2/12 ml-36 font-semibold text-lg">Chỉnh sửa </div>
           <div className="w-full mr-36">
             {/* Bìa  */}
             <div className="mb-5">
@@ -107,7 +107,6 @@ export default function BookDetails() {
                 }).format(items.salePrice)}
               />
             </div>
-            {/* Kho */}
           </div>
         </div>
       </main>

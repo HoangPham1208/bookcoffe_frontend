@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import RefreshTokenAPI from "../Utils/token";
 import axios from "axios";
 
-export default function BookDetails() {
+export default function BookDetailAdmin() {
   const { id: title } = useParams();
-  const navigate = useNavigate();
   const [items, setItems] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -34,13 +34,13 @@ export default function BookDetails() {
   return (
     <div>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="flex mx-36 gap-10">
+      <main className="mx-auto flex flex-col max-w-screen-xl pt-24">
+        <div className="flex mx-36">
           <Button
             theme={customTheme}
             color="secondary"
             pill
-            onClick={() => navigate("/manager/books")}
+            onClick={() => navigate("/admin/branch/1/books")}
           >
             Trở về
           </Button>
@@ -107,7 +107,6 @@ export default function BookDetails() {
                 }).format(items.salePrice)}
               />
             </div>
-            {/* Kho */}
           </div>
         </div>
       </main>

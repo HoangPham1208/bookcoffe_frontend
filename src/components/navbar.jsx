@@ -5,6 +5,8 @@ import axios from "axios";
 import Cookie from "universal-cookie";
 import RefreshTokenAPI from "./Utils/token";
 import { useNavigate } from "react-router-dom";
+import { Button } from "flowbite-react";
+import { customTheme } from "./Utils/myButton";
 
 function LoginDialog({ visible, onClose }) {
   const navigate = useNavigate();
@@ -25,10 +27,13 @@ function LoginDialog({ visible, onClose }) {
       .then((res) => {
         console.log(res.data);
         // cookie setup
+        // set new cookies
         cookie.set("accessToken", res.data.accessToken, { path: "/" });
         cookie.set("refreshToken", res.data.refreshToken, { path: "/" });
         cookie.set("userName", res.data.userName, { path: "/" });
         cookie.set("role", res.data.role, { path: "/" });
+        cookie.set("branchId", res.data.branchId, { path: "/" });
+        cookie.set("branchAddress", res.data.branchAddress, { path: "/" });
         // navigate("/homeUser");
         if (res.data.role === "customer") {
           localStorage.setItem("page", "home");
@@ -52,7 +57,7 @@ function LoginDialog({ visible, onClose }) {
     <>
       <div
         id="user-card-expanded"
-        className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
+        className="absolute top-0 right-5 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none "
       >
         <p className="text-left font-bold w-full">Đăng nhập</p>
         <button
@@ -88,14 +93,16 @@ function LoginDialog({ visible, onClose }) {
           className="w-80 select-none"
         />
         <div className="flex w-full flex-row justify-center px-2">
-          <button
+          <Button
             onClick={handleLogin}
             id="edit-account"
             type="button"
-            className="items inline-flex gap-x-3 rounded-full bg-button-primary px-6 py-2.5 text-center text-white shadow-1 transition ease-out hover:bg-button-primary-hover hover:shadow-3 active:bg-button-primary-active dark:bg-button-primary-dark dark:hover:bg-button-primary-hover-dark dark:active:bg-button-primary-active-dark"
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Đăng nhập
-          </button>
+          </Button>
         </div>
       </div>
     </>
@@ -142,7 +149,7 @@ function SignUpDialog({ visible, onClose }) {
   };
   return (
     <>
-      <div className="absolute top-0 right-12 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none ">
+      <div className="absolute top-0 right-5 my-auto box-content flex w-80  flex-col items-center space-y-5 rounded-lg  bg-white p-6 shadow-3 transition-all duration-[250ms] ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none ">
         <p className="text-left font-bold w-full">Đăng ký</p>
         <button
           onClick={handleOnClose}
@@ -218,14 +225,16 @@ function SignUpDialog({ visible, onClose }) {
           )}
         </div>
         <div className="flex w-full flex-row justify-center px-2">
-          <button
+          <Button
             onClick={handleRegister}
             id="edit-account"
             type="button"
-            className="items inline-flex gap-x-3 rounded-full bg-button-primary px-6 py-2.5 text-center text-white shadow-1 transition ease-out hover:bg-button-primary-hover hover:shadow-3 active:bg-button-primary-active dark:bg-button-primary-dark dark:hover:bg-button-primary-hover-dark dark:active:bg-button-primary-active-dark"
+            theme={customTheme}
+            color="primary"
+            pill
           >
             Đăng ký
-          </button>
+          </Button>
         </div>
       </div>
     </>
@@ -234,33 +243,39 @@ function SignUpDialog({ visible, onClose }) {
 
 function Logout() {
   const navigate = useNavigate();
+  const cookie = new Cookie();
 
   const handleLogOut = async () => {
-    const cookie = new Cookie();
-
     try {
-      // Wait for RefreshTokenAPI to complete
-      await RefreshTokenAPI();
-
-      // Now that refreshToken is done, proceed with logout
-      await axios.post("http://localhost:5000/logout", null, {
-        headers: {
-          Authorization: `Bearer ${cookie.get("accessToken")}`,
-        },
-      });
-
-      console.log("logout success");
+      // Use Promise.all to ensure all asynchronous operations complete before moving on
+      await Promise.all([
+        localStorage.clear(),
+        // await RefreshTokenAPI(),
+        axios.post("http://localhost:5000/logout", null, {
+          headers: {
+            Authorization: `Bearer ${cookie.get("accessToken")}`,
+          },
+        }),
+        // ... other asynchronous operations
+      ]);
 
       // Remove cookies and clear localStorage
-      cookie.remove("userName");
-      cookie.remove("role");
-      cookie.remove("accessToken");
-      cookie.remove("refreshToken");
-      localStorage.clear();
-      // Navigate to the desired location
-      navigate("/");
+      await Promise.all([
+        cookie.remove("userName"),
+        cookie.remove("role"),
+        cookie.remove("accessToken"),
+        cookie.remove("refreshToken"),
+        cookie.remove("branchId"),
+        cookie.remove("branchAddress"),
+      ]);
+
+      console.log("Logout success");
+
+      // Reload the page after successful logout
+      localStorage.setItem("page", "home");
+      window.location.reload();
     } catch (err) {
-      console.log(err);
+      console.error("Logout failed:", err);
     }
   };
 
@@ -270,6 +285,8 @@ function Logout() {
     </Dropdown.Item>
   );
 }
+
+
 
 export function Navbarlegacy({ mode = "logout" }) {
   const navigate = useNavigate();
@@ -368,6 +385,7 @@ export function Navbarlegacy({ mode = "logout" }) {
                     className="hover:underline transition"
                     onClick={() => {
                       localStorage.setItem("page", "manage");
+                      localStorage.removeItem("type");
                       if (role === "admin") {
                         navigate("/admin/branch");
                       } else {
@@ -540,6 +558,31 @@ export function Navbar({ mode = "logout" }) {
   const handleSignUpOnClose = () => setShowSignUpDialog(false);
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
+  const [refresh, setRefresh] = useState(false);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      // await RefreshTokenAPI();
+      await axios
+        .get("http://localhost:4000/api/customer/getAvatar", {
+          headers: {
+            Authorization: `Bearer ${new Cookie().get("accessToken")}`,
+          },
+          responseType: 'blob',
+        })
+        .then((res) => {
+          // console.log(res.data);
+          const imageUrl = URL.createObjectURL(res.data);
+          setItems(imageUrl);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (mode === "logout") {
+      fetchData();
+    }
+  }, [refresh]);
   return (
     <FlowbiteNavbar
       fluid
@@ -548,6 +591,18 @@ export function Navbar({ mode = "logout" }) {
       <FlowbiteNavbar.Brand>
         <img src="/logo.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
         <img src="/logo-text.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
+        {(() => {
+          if (role === "staff" || role === "manager") {
+            return (
+              <div className="fixed ml-48">
+                Chi nhánh:{" "}
+                <span className="font-semibold">
+                  {new Cookie().get("branchAddress")}
+                </span>
+              </div>
+            );
+          }
+        })()}
         {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Book Cafe
         </span> */}
@@ -578,7 +633,7 @@ export function Navbar({ mode = "logout" }) {
                   arrowIcon={false}
                   inline
                   label={
-                    <Avatar img="/avatar.png" alt="User settings" rounded>
+                    <Avatar src={items} alt="User settings" rounded>
                       <div className="flex flex-row ">
                         <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
                           {localStorage.getItem("page") === "account" ? (
@@ -615,22 +670,17 @@ export function Navbar({ mode = "logout" }) {
                       {role}
                     </span>
                   </Dropdown.Header>
-                  {(() => {
-                    if (role === "customer") {
-                      return (
-                        <Dropdown.Item>
-                          <button
-                            onClick={() => {
-                              localStorage.setItem("page", "account");
-                              navigate("/account");
-                            }}
-                          >
-                            Trang cá nhân
-                          </button>
-                        </Dropdown.Item>
-                      );
-                    }
-                  })()}
+
+                  <Dropdown.Item>
+                    <button
+                      onClick={() => {
+                        localStorage.setItem("page", "account");
+                        navigate("/account");
+                      }}
+                    >
+                      Trang cá nhân
+                    </button>
+                  </Dropdown.Item>
                   <Dropdown.Divider />
                   <Logout />
                 </Dropdown>
@@ -672,7 +722,6 @@ export function Navbar({ mode = "logout" }) {
                     ) : (
                       <p>Đơn đặt sách</p>
                     )}{" "}
-                    FakeData
                   </button>
                 </FlowbiteNavbar.Link>
                 <FlowbiteNavbar.Link>
@@ -713,6 +762,7 @@ export function Navbar({ mode = "logout" }) {
                   <button
                     onClick={() => {
                       localStorage.setItem("page", "manage");
+                      localStorage.removeItem("type");
                       navigate("/manager/books");
                     }}
                   >
@@ -728,10 +778,53 @@ export function Navbar({ mode = "logout" }) {
           } else if (role === "admin") {
             return (
               <>
-                <FlowbiteNavbar.Link href="#" active>
-                  Chi nhánh
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "home");
+                      navigate("/admin");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "home" ||
+                    localStorage.getItem("page") === null ? (
+                      <p className="font-bold">Trang chủ</p>
+                    ) : (
+                      <p>Trang chủ</p>
+                    )}
+                  </button>
                 </FlowbiteNavbar.Link>
-                <FlowbiteNavbar.Link href="#">Quản lí</FlowbiteNavbar.Link>
+                {/* Drink */}
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "menuDrink");
+                      localStorage.removeItem("type");
+                      navigate("/admin/menuDrink");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "menuDrink" ? (
+                      <p className="font-bold">Menu nước</p>
+                    ) : (
+                      <p>Menu nước</p>
+                    )}
+                  </button>
+                </FlowbiteNavbar.Link>
+                {/* Book */}
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "bookList");
+                      localStorage.removeItem("type");
+                      navigate("/admin/bookList");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "bookList" ? (
+                      <p className="font-bold">Sách</p>
+                    ) : (
+                      <p>Sách</p>
+                    )}
+                  </button>
+                </FlowbiteNavbar.Link>
               </>
             );
           } else {

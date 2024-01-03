@@ -8,21 +8,22 @@ import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
 import { customTheme } from "../Utils/myButton"
+import ListFunc from "../Utils/listFunc";
 
 
-export default function OrderBook() {
+export default function OrderBookManager() {
   const navigate = useNavigate();
   const cookie = new Cookies();
-  const [items, setItems] = React.useState([]);
   return (
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl py-20">
-        <div className="text-3xl font-semibold my-5 mx-36">Đơn đặt sách</div>
+        <ListFunc/>
+        <div className="text-3xl font-semibold mx-36">Đơn đặt sách</div>
 
         <div className="flex place-content-start gap-10 mx-36 my-5">
           <Button
-            onClick={() => navigate("/staff/order/books/add")}
+            onClick={() => navigate("/manager/order/books/add")}
             theme={customTheme}
             color="primary"
             pill
@@ -31,7 +32,7 @@ export default function OrderBook() {
           </Button>
           <Button
             onClick={async () => {
-              navigate("/staff/order/books/branch")
+              navigate("/manager/order/books/branch")
             }}
             theme={customTheme}
             color="secondary"
@@ -41,7 +42,7 @@ export default function OrderBook() {
           </Button>
           <Button
             onClick={async () => {
-              navigate("/staff/order/books/home")
+              navigate("/manager/order/books/home")
             }}
             theme={customTheme}
             color="secondary"

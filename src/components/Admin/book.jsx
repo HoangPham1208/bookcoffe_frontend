@@ -9,10 +9,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import RefreshTokenAPI from "../Utils/token";
 import { customTheme } from "../Utils/myButton";
+import { useParams } from "react-router-dom";
 
-export default function BookManager() {
+export default function BookAdmin() {
+  const { id: branchAddress } = useParams();
   const navigate = useNavigate();
-  const role = new Cookies().get("role");
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
@@ -31,17 +32,50 @@ export default function BookManager() {
     <div>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <ListFunc />
+        <div className="flex place-content-start fixed mt-8 mx-5 ">
+          <Button
+            onClick={() => navigate("/admin")}
+            theme={customTheme}
+            color="secondary"
+            pill
+          >
+            Trở về
+          </Button>
+        </div>
+        <div>
+          <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
+            <li>
+              <button className="hover:underline">
+                {localStorage.getItem("type") === "book" ||
+                localStorage.getItem("type") === null ? (
+                  <p className="underline"> Sách </p>
+                ) : (
+                  <p> Sách </p>
+                )}
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  localStorage.setItem("type", "staff");
+                  navigate("/admin/branch/:id/staff");
+                }}
+                className="hover:underline"
+              >
+                {/* staff */}
+                {localStorage.getItem("type") === "staff" ? (
+                  <p className="underline"> Nhân viên </p>
+                ) : (
+                  <p> Nhân viên </p>
+                )}
+              </button>
+            </li>
+          </ul>
+        </div>
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => {
-              if (localStorage.getItem("title") === null) {
-                alert("Vui lòng chọn sách");
-                return;
-              }
-              navigate(
-                "/manager/books/" + localStorage.getItem("title") + "/addcopy"
-              );
+              navigate("/admin/branch/:id/books/:id/addcopy");
             }}
             theme={customTheme}
             color="primary"
@@ -94,31 +128,37 @@ export default function BookManager() {
                     <Table.Cell>//</Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
-                    <Table.Cell>{
-                      (()=>{
+                    <Table.Cell>
+                      {(() => {
                         let count = 0;
                         for (let i = 0; i < item1.branch.length; i++) {
-                          if(item1.branch[i] === new Cookies().get("branchAddress")){
+                          if (item1.branch[i] === branchAddress) {
                             count++;
                           }
                         }
                         return count;
-                      })()
-                    }</Table.Cell>
+                      })()}
+                    </Table.Cell>
                     <Table.Cell>
                       <div className="flex justify-center">
-                      <Button
-                        onClick={() => {
-                          navigate("/manager/books/" + item1.title);
-                        }}
-                        theme={customTheme}
-                        color="secondary"
-                        pill
-                      >
-                        Chi tiết
-                      </Button>
+                        <Button
+                          onClick={() =>
+                            navigate(
+                              "/admin/branch/" +
+                                branchAddress +
+                                "/books/" +
+                                item1.title
+                            )
+                          }
+                          theme={customTheme}
+                          color="secondary"
+                          pill
+                        >
+                          Chi tiết
+                        </Button>
                       </div>
                     </Table.Cell>
+
                     {/* <Table.Cell>{item1.genre}</Table.Cell> */}
                     {/* <Table.Cell>{item1.publicationYear}</Table.Cell> */}
                     {/* <Table.Cell>{item1.salePrice}</Table.Cell> */}

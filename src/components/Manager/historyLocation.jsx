@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import RefreshTokenAPI from "../Utils/token";
 import { useNavigate } from "react-router-dom";
 import ListFunc from "../Utils/listFunc";
+import { customTheme } from "../Utils/myButton";
 
 function Check({ visible, onAccept, onCancel }) {
   const handleSuccess = () => {
@@ -107,38 +108,17 @@ export default function OrderLocationHistoryManager() {
         console.log(err);
       });
   }, [refresh]);
-  const handleConfirm = () => {
-    RefreshTokenAPI();
-    // axios
-    //   .post(
-    //     "http://localhost:4000/api/staff/confirmReservation",
-    //     {
-    //       reservationId: data.reservationId,
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${cookie.get("accessToken")}`,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setItems(res.data);
-    //     handleCheckSuccess();
-    //     setRefresh(!refresh); // <-- toggle value to force useEffect to run again
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  };
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mx-auto  flex flex-col max-w-screen-xl pt-20">
         <ListFunc />
         <div className="flex mx-36 gap-10">
-          <Button className=" text-3xl font-semibold text-[#6750A4] bg-white border-[#6750A4] rounded-full enabled:hover:bg-[#6750A4] enabled:hover:text-white"
-          onClick={() => navigate("/manager/order/locations")}
+          <Button
+            theme={customTheme}
+            color="secondary"
+            pill
+            onClick={() => navigate("/manager/order/locations")}
           >
             Trở về
           </Button>
@@ -190,7 +170,6 @@ export default function OrderLocationHistoryManager() {
                             }
                           </Table.Cell>
                           <Table.Cell>{item.quantity}</Table.Cell>
-                          
                         </Table.Row>
                       )
                   );
