@@ -551,6 +551,31 @@ export function Navbar({ mode = "logout" }) {
   const handleSignUpOnClose = () => setShowSignUpDialog(false);
   const role = new Cookie().get("role");
   const name = new Cookie().get("userName");
+  const [refresh, setRefresh] = useState(false);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      await RefreshTokenAPI();
+      await axios
+        .get("http://localhost:4000/api/customer/getAvatar", {
+          headers: {
+            Authorization: `Bearer ${new Cookie().get("accessToken")}`,
+          },
+          responseType: 'blob',
+        })
+        .then((res) => {
+          // console.log(res.data);
+          const imageUrl = URL.createObjectURL(res.data);
+          setItems(imageUrl);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (mode === "logout") {
+      fetchData();
+    }
+  }, [refresh]);
   return (
     <FlowbiteNavbar
       fluid
@@ -559,13 +584,16 @@ export function Navbar({ mode = "logout" }) {
       <FlowbiteNavbar.Brand href="localhost:3000">
         <img src="/logo.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
         <img src="/logo-text.png" className="mr-3 h-8 sm:h-10" alt="Logo" />
-        {(()=>{
-          if (role === "staff" || role === "manager" ){
+        {(() => {
+          if (role === "staff" || role === "manager") {
             return (
               <div className="fixed ml-48">
-                Chi nhánh: <span className="font-semibold">{new Cookie().get("branchAddress")}</span>
+                Chi nhánh:{" "}
+                <span className="font-semibold">
+                  {new Cookie().get("branchAddress")}
+                </span>
               </div>
-            )
+            );
           }
         })()}
         {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -598,7 +626,7 @@ export function Navbar({ mode = "logout" }) {
                   arrowIcon={false}
                   inline
                   label={
-                    <Avatar img="/avatar.png" alt="User settings" rounded>
+                    <Avatar src={items} alt="User settings" rounded>
                       <div className="flex flex-row ">
                         <div className="dark:text-white text-left max-lg:hidden truncate w-[120px] font-bold">
                           {localStorage.getItem("page") === "account" ? (
@@ -790,7 +818,6 @@ export function Navbar({ mode = "logout" }) {
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
-                
               </>
             );
           } else {
