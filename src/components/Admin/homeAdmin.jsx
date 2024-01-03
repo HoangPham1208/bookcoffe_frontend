@@ -17,7 +17,7 @@ export default function HomeAdmin() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await RefreshTokenAPI();
+        // await RefreshTokenAPI();
 
         const branchResponse = await axios.get(
           "http://localhost:4000/api/admin/showBranch",
@@ -56,7 +56,11 @@ export default function HomeAdmin() {
           <button>Chi nhánh</button>
         </div>
         <div className="flex place-content-start gap-10 my-5">
-          <Button theme={customTheme} color="primary" pill>
+          <Button theme={customTheme} color="primary" pill
+          onClick={()=>{
+            navigate("/admin/addBranch")
+          }}
+          >
             Thêm chi nhánh
           </Button>
           <Button theme={customTheme} color="secondary" pill>
@@ -101,6 +105,8 @@ export default function HomeAdmin() {
                   <div className="flex place-content-end gap-10 my-5">
                     <Button
                       onClick={() => {
+                        localStorage.setItem("branchId", item.branchId);
+                        localStorage.setItem("branchAddress", item.address);
                         navigate(`/admin/branch/${item.address}/books`);
                       }}
                       theme={customTheme}

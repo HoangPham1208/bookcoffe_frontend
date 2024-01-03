@@ -40,7 +40,7 @@ export default function BookDetailAdmin() {
             theme={customTheme}
             color="secondary"
             pill
-            onClick={() => navigate("/admin/branch/1/books")}
+            onClick={() => navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/books`)}
           >
             Trở về
           </Button>

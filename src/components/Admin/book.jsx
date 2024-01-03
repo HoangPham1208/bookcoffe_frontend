@@ -9,10 +9,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import RefreshTokenAPI from "../Utils/token";
 import { customTheme } from "../Utils/myButton";
-import { useParams } from "react-router-dom";
 
 export default function BookAdmin() {
-  const { id: branchAddress } = useParams();
+  const branchAddress = localStorage.getItem("branchAddress");
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -34,7 +33,10 @@ export default function BookAdmin() {
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="flex place-content-start fixed mt-8 mx-5 ">
           <Button
-            onClick={() => navigate("/admin")}
+            onClick={() => {
+              localStorage.clear();
+              navigate("/admin")}
+            }
             theme={customTheme}
             color="secondary"
             pill
@@ -58,7 +60,7 @@ export default function BookAdmin() {
               <button
                 onClick={() => {
                   localStorage.setItem("type", "staff");
-                  navigate("/admin/branch/:id/staff");
+                  navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/staff`);
                 }}
                 className="hover:underline"
               >
@@ -75,7 +77,11 @@ export default function BookAdmin() {
         <div className="flex ml-36 gap-4">
           <Button
             onClick={() => {
-              navigate("/admin/branch/:id/books/:id/addcopy");
+              if (selected === null) {
+                alert("Vui lòng chọn sách");
+                return
+              }
+              navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/books/${localStorage.getItem("title")}/addcopy`);
             }}
             theme={customTheme}
             color="primary"
@@ -145,7 +151,7 @@ export default function BookAdmin() {
                           onClick={() =>
                             navigate(
                               "/admin/branch/" +
-                                branchAddress +
+                                localStorage.getItem("branchAddress") +
                                 "/books/" +
                                 item1.title
                             )

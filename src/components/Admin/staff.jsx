@@ -32,7 +32,7 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
       password: password,
     };
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .post("http://localhost:4000/api/manager/addStaff", userData, {
           headers: {
@@ -130,9 +130,12 @@ export default function StaffAdmin() {
   // need sync the RefreshTokenAPI first then excute the axios
   useEffect(() => {
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .get("http://localhost:4000/api/manager/showStaff", {
+          params: {
+            branchId: localStorage.getItem("branchId"),
+          },
           headers: {
             Authorization: `Bearer ${cookie.get("accessToken")}`,
           },
@@ -151,12 +154,13 @@ export default function StaffAdmin() {
   const [staffData, setStaffData] = useState([]); // [1, 2, 3
   const handleUpdateStats = () => {
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       axios
         .put(
           "http://localhost:4000/api/manager/updateStaff",
           {
             staffId: staffData.staffId,
+            branchId: localStorage.getItem("branchId"),
           },
           {
             headers: {
@@ -180,7 +184,10 @@ export default function StaffAdmin() {
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
         <div className="flex place-content-start fixed mt-8 mx-5 ">
           <Button
-            onClick={() => navigate("/admin")}
+            onClick={() => {
+              localStorage.clear();
+              navigate("/admin")
+            }}
             theme={customTheme}
             color="secondary"
             pill
@@ -194,7 +201,7 @@ export default function StaffAdmin() {
               <button
                 onClick={() => {
                   localStorage.setItem("type", "book");
-                  navigate("/admin/branch/:id/books");
+                  navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/books`);
                 }}
                 className="hover:underline"
               >
