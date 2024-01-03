@@ -220,7 +220,7 @@ export default function AddDrink() {
               </Table.Body>
             </Table>
           </div>
-          <div className="flex place-content-start gap-10 mx-36 my-5">
+          <div className=" flex place-content-start gap-10 mx-36 my-5 ">
             <Button
               onClick={() => {
                 if (drinks.length === 0) {

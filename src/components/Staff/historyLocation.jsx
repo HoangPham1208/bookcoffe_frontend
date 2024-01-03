@@ -151,7 +151,7 @@ export default function OrderLocationHistory() {
             type="search"
             name="serch"
             placeholder="Tìm kiếm"
-            class="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            class="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
         <hr className="border-black mx-36 my-5" />

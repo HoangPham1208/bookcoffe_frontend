@@ -23,7 +23,7 @@ export default function AddCopy() {
       title: localStorage.getItem("title"),
     };
     try {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .post("http://localhost:4000/api/manager/addBookCopy", data, {
           headers: {
@@ -31,7 +31,9 @@ export default function AddCopy() {
           },
         })
         .then((res) => {
+          alert("Thêm thành công");
           console.log(res.data);
+          navigate("/manager/books");
         })
         .catch((err) => {
           console.log(err);
@@ -72,6 +74,14 @@ export default function AddCopy() {
             </div>
             <div className="flex place-content-end gap-10">
               <Button
+                onClick={handleAdd}
+                theme={customTheme}
+                color="primary"
+                pill
+              >
+                Hoàn tất
+              </Button>
+              <Button
                 onClick={() => {
                   navigate("/manager/books");
                   localStorage.removeItem("title");
@@ -81,14 +91,6 @@ export default function AddCopy() {
                 pill
               >
                 Hủy
-              </Button>
-              <Button
-                onClick={handleAdd}
-                theme={customTheme}
-                color="primary"
-                pill
-              >
-                Hoàn tất
               </Button>
             </div>
           </div>
