@@ -1,54 +1,71 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function BestBook() {
   const navigate = useNavigate();
   // Array of book entries
-  const bookEntries = [
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    {
-      imageSrc: "/the-fault-in-our-stars.png",
-      title: "The Fault in Our Stars",
-      author: "John Green",
-      rating: "4.95",
-    },
-    // Add more entries as needed
-  ];
+  // const bookEntries = [
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     imageSrc: "/the-fault-in-our-stars.png",
+  //     title: "The Fault in Our Stars",
+  //     author: "John Green",
+  //     rating: "4.95",
+  //   },
+  //   // Add more entries as needed
+  // ];
+  const [bookEntries, setBookEntries] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/customer/search")
+      .then((res) => {
+        console.log(res.data);
+        // random this res.data and got max 10
+        let randomData = res.data.sort(() => Math.random() - Math.random()).slice(0, 10);
+        setBookEntries(randomData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -73,7 +90,7 @@ export default function BestBook() {
               <p className="font-bookTitle text-lg font-bold line-clamp-2">
                 {entry.title}
               </p>
-              <p className="font-bookTitle line-clamp-2">{entry.author}</p>
+              <p className="font-bookTitle line-clamp-2">{entry.authorName}</p>
               <div className="flex items-center">
                 <svg
                   className="w-4 h-4 text-yellow-300 me-1"
