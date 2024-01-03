@@ -42,6 +42,7 @@ import OrderLocationManager from "./components/Manager/orderLocation";
 import OrderLocationHistoryManager from "./components/Manager/historyLocation";
 // Admin
 import HomeAdmin from "./components/Admin/homeAdmin";
+import AddBranch from "./components/Admin/AddBranch";
 import BookList from "./components/Admin/BookList";
 import AddBook from "./components/Admin/addBook";
 import BookDetailsModify from "./components/Admin/bookDetailModify";
@@ -111,6 +112,7 @@ function App() {
           />
           {/* Admin - inherited from staff */}
           <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/admin/addBranch" element={<AddBranch />} />
           <Route path="/admin/bookList" element={<BookList />} />
           <Route path="/admin/bookList/AddBook" element={<AddBook />} />
           <Route path="/admin/bookList/:id" element={<BookDetailsModify />} />

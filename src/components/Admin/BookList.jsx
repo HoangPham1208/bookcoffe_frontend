@@ -16,7 +16,7 @@ export default function BookList() {
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .get("http://localhost:4000/api/customer/search?title=&address=")
         .then((res) => {
@@ -55,7 +55,7 @@ export default function BookList() {
             type="search"
             name="serch"
             placeholder="Tìm kiếm"
-            className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
         <div className="overflow-x-auto mx-36">
