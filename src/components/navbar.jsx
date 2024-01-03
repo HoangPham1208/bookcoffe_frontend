@@ -287,6 +287,7 @@ function Logout() {
 
       // Reload the page after successful logout
       localStorage.setItem("page", "home");
+      navigate("/");
       window.location.reload();
     } catch (err) {
       console.error("Logout failed:", err);

@@ -86,7 +86,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
   return (
     <>
       <div class="w-[350px] h-[250px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 box-content flex flex-col items-center space-y-5 rounded-lg bg-white p-6 shadow-3 transition-all duration-250 ease-m3-standard-decelerate dark:bg-card-background-dark max-sm:right-2 max-sm:w-10/12 z-10 select-none">
-        <p className="text-left font-bold w-full">Đặt chỗ</p>
+        <p className="text-left font-bold w-full">Đặt chỗ tại {data}</p>
         <button
           onClick={handleOnClose}
           className="absolute right-5 top-0 cursor-pointer rounded-full transition-all hover:bg-[#d7e1e9] active:bg-[#b9cad8] dark:hover:bg-button-hover-dark dark:active:bg-button-active-dark"
@@ -194,8 +194,14 @@ export default function Locations() {
             <div>
               <Card
                 className="max-w-sm"
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/image1.png"
+                imgAlt={
+                  "This is a photo of a " +
+                  item.address +
+                  " branch"
+                }
+                imgSrc={
+                  "http://localhost:4000/api/admin/getImage/" + item.branchImage
+                }
               >
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.address}

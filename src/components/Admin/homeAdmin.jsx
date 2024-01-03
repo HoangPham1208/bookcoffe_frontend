@@ -29,17 +29,6 @@ export default function HomeAdmin() {
         );
         console.log(branchResponse.data);
         setData(branchResponse.data);
-
-        const staffResponse = await axios.get(
-          "http://localhost:4000/api/admin/showStaffandManager",
-          {
-            headers: {
-              Authorization: `Bearer ${cookie.get("accessToken")}`,
-            },
-          }
-        );
-        console.log(staffResponse.data);
-        setStaff(staffResponse.data);
       } catch (error) {
         console.error(error);
       }
@@ -56,10 +45,13 @@ export default function HomeAdmin() {
           <button>Chi nhánh</button>
         </div>
         <div className="flex place-content-start gap-10 my-5">
-          <Button theme={customTheme} color="primary" pill
-          onClick={()=>{
-            navigate("/admin/addBranch")
-          }}
+          <Button
+            theme={customTheme}
+            color="primary"
+            pill
+            onClick={() => {
+              navigate("/admin/addBranch");
+            }}
           >
             Thêm chi nhánh
           </Button>
@@ -71,9 +63,16 @@ export default function HomeAdmin() {
           {data.map((item) => (
             <div>
               <Card
-                className="max-w-sm"
-                imgAlt="Meaningful alt text for an image that is not purely decorative"
-                imgSrc="/image1.png"
+                className="max-w-sm "
+                imgAlt={
+                  "This is a photo of a " +
+                  item.address +
+                  " branch of our store"
+                }
+                imgSrc={
+                  "http://localhost:4000/api/customer/getBranchImage/" +
+                  item.branchId
+                }
               >
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.address}
@@ -81,26 +80,24 @@ export default function HomeAdmin() {
                 <div className="font-normal text-gray-700 dark:text-gray-400">
                   <div className="flex justify-between">
                     <div>
-                      <span className="font-semibold">Branch ID:</span>{" "}
-                      {item.branchId}
+                      <span className="font-semibold">ID:</span> {item.branchId}
                     </div>
                     <div>
-                      <span className="font-semibold">Manager: </span>
-                      {(() => {
-                        for (let i = 0; i < staff.length; i++) {
-                          if (
-                            staff[i].staffId === item.managerId &&
-                            staff[i].branchId === item.branchId
-                          ) {
-                            return staff[i].userName;
-                          }
-                        }
-                      })()}
+                      <span className="font-semibold">Quản lý: </span>
+                      {item.managerName}
                     </div>
                   </div>
                   <div>
-                    <span className="font-semibold">Working Time: </span>{" "}
-                    {item.workingTime} <br />
+                    <div>
+                      <span className="font-semibold">
+                        Thời gian làm việc:{" "}
+                      </span>{" "}
+                      {item.workingTime} <br />
+                    </div>
+                    <div>
+                      <span className="font-semibold">Số điện thoại: </span>{" "}
+                      {item.phoneNumber} <br />
+                    </div>
                   </div>
                   <div className="flex place-content-end gap-10 my-5">
                     <Button
@@ -113,7 +110,7 @@ export default function HomeAdmin() {
                       color="primary"
                       pill
                     >
-                      Xem chi tiết
+                      Quản lý
                     </Button>
                   </div>
                 </div>
