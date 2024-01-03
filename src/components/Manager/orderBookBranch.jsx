@@ -16,7 +16,7 @@ export default function OrderBookBranchManager() {
   const [refresh, setRefresh] = useState(false);
   const handleBorrowAtBranch = async () => {
     try {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .get("http://localhost:4000/api/staff/showBorrowBookAtBranch", {
           headers: {
@@ -86,7 +86,7 @@ export default function OrderBookBranchManager() {
             type="search"
             name="serch"
             placeholder="Tìm kiếm"
-            className="bg-[#ECE6F0] rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
           />
         </div>
         <hr className="border-black mx-36 my-5" />

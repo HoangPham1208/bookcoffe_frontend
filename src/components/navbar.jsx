@@ -141,10 +141,11 @@ function SignUpDialog({ visible, onClose }) {
         console.log(res.data);
         // show success dialog
         alert("Đăng ký thành công!");
+        handleOnClose();
       })
       .catch((err) => {
         console.log(err);
-        alert("Tên tài khoản đã tồn tại!");
+        alert("Đăng ký thất bại!");
       });
   };
   return (

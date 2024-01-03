@@ -50,7 +50,7 @@ export default function OrderDrinkManager() {
       return;
     }
     try {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .post("http://localhost:4000/api/staff/addBill", items, {
           headers: {
