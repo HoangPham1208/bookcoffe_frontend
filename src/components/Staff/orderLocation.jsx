@@ -117,23 +117,50 @@ export default function OrderLocation() {
     setSuccess(false);
   };
   useEffect(() => {
-    RefreshTokenAPI();
-    axios
-      .get("http://localhost:4000/api/staff/showReservation", {
-        headers: {
-          Authorization: `Bearer ${cookie.get("accessToken")}`,
-        },
-        params: {
-          role: cookie.get("role"),
-        },
-      })
-      .then((res) => {
+    const fetchData = async () => {
+      try {
+        // Attempt to fetch data
+        const res = await axios.get('http://localhost:4000/api/staff/showReservation', {
+          headers: {
+            Authorization: `Bearer ${cookie.get('accessToken')}`,
+          },
+          params: {
+            role: cookie.get('role'),
+          },
+        });
+        // If successful, set the items
         setItems(res.data);
         console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } catch (error) {
+        // If there's an error, check if it's an unauthorized error (e.g., expired token)
+        if (error.response && error.response.status === 403) {
+          try {
+            // Attempt to refresh the token
+            await RefreshTokenAPI();
+
+            // If the token refresh is successful, retry the axios request
+            const res = await axios.get('http://localhost:4000/api/staff/showReservation', {
+              headers: {
+                Authorization: `Bearer ${cookie.get('accessToken')}`,
+              },
+              params: {
+                role: cookie.get('role'),
+              },
+            });
+
+            // Set the items after the successful retry
+            setItems(res.data);
+            console.log(res.data);
+          } catch (refreshError) {
+            console.error('Token refresh failed:', refreshError);
+          }
+        } else {
+          console.error('Axios request failed:', error);
+        }
+      }
+    };
+
+    fetchData();
   }, [refresh]);
 
   return (

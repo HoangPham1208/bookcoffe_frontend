@@ -243,34 +243,39 @@ function SignUpDialog({ visible, onClose }) {
 
 function Logout() {
   const navigate = useNavigate();
+  const cookie = new Cookie();
 
   const handleLogOut = async () => {
-    const cookie = new Cookie();
     try {
-      await localStorage.clear();
-      await navigate("/");
-      // Navigate to the desired location
-      // Wait for RefreshTokenAPI to complete
-      await RefreshTokenAPI();
-      // Now that refreshToken is done, proceed with logout
-      await axios.post("http://localhost:5000/logout", null, {
-        headers: {
-          Authorization: `Bearer ${cookie.get("accessToken")}`,
-        },
-      });
-      await cookie.remove("userName");
-      await cookie.remove("role");
-      await cookie.remove("accessToken");
-      await cookie.remove("refreshToken");
-      await cookie.remove("branchId");
-      await cookie.remove("branchAddress");
-      console.log("logout success");
+      // Use Promise.all to ensure all asynchronous operations complete before moving on
+      await Promise.all([
+        localStorage.clear(),
+        await RefreshTokenAPI(),
+        axios.post("http://localhost:5000/logout", null, {
+          headers: {
+            Authorization: `Bearer ${cookie.get("accessToken")}`,
+          },
+        }),
+        // ... other asynchronous operations
+      ]);
+
       // Remove cookies and clear localStorage
-      // Reload the page
+      await Promise.all([
+        cookie.remove("userName"),
+        cookie.remove("role"),
+        cookie.remove("accessToken"),
+        cookie.remove("refreshToken"),
+        cookie.remove("branchId"),
+        cookie.remove("branchAddress"),
+      ]);
+
+      console.log("Logout success");
+
+      // Reload the page after successful logout
       localStorage.setItem("page", "home");
       window.location.reload();
     } catch (err) {
-      console.log(err);
+      console.error("Logout failed:", err);
     }
   };
 
@@ -280,6 +285,8 @@ function Logout() {
     </Dropdown.Item>
   );
 }
+
+
 
 export function Navbarlegacy({ mode = "logout" }) {
   const navigate = useNavigate();
