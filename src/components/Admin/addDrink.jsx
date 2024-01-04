@@ -24,18 +24,14 @@ export default function AddDrinkMenu() {
 
   const handleAddDrink = () => {
     const data = new FormData();
-    data.append("drinkImage", drinksImage);
+    data.append("drinksImage",drinksImage)
     data.append("drinksName", drinksName);
-    data.append("sizes", sizes);
-    data.append("prices", prices);
+    data.append("size", sizes);
+    data.append("price", prices);
     if (drinksImage === null || drinksName === "" || sizes.length === 0 || prices.length === 0) {
       alert("Vui lòng nhập đủ thông tin");
       return;
     }
-    console.log(drinksImage )
-    console.log(drinksName )
-    console.log(sizes )
-    console.log(prices )
     axios
       .post("http://localhost:4000/api/admin/addDrinks", data, {
         headers: {
@@ -114,14 +110,16 @@ export default function AddDrinkMenu() {
               <div className="flex gap-5">
                 <div className="mb-5">
                   <Label for="size">Size</Label>
-                  <TextInput
+                  <Select 
                     id="size"
-                    placeholder="Size"
-                    className="w-full"
                     onChange={(e) => {
                       setSize(e.target.value);
                     }}
-                  />
+                  >
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                  </Select>
                 </div>
                 <div className="mb-5">
                   <Label for="gia">Giá</Label>

@@ -162,7 +162,7 @@ export default function AddBook() {
             <div className="mb-5">
               <Label
                 htmlFor="file-upload"
-                value="Change avatar"
+                value="Ảnh sách"
                 // set the file to fileAvatar
               />
               <FileInput
