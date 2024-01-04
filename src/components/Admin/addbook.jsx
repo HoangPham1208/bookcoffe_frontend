@@ -209,7 +209,7 @@ export default function AddBook() {
                   setAuthorName(e.target.value);
                 }}
               >
-                <option value="" disabled="true">
+                <option value="" disabled="true" selected="true">
                   Tác giả
                 </option>
                 {author.map((item) => {

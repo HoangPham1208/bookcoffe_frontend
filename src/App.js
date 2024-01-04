@@ -16,6 +16,7 @@ import { BLogDetailsCustomer, BlogPageCustomer } from "./components/Customer/new
 import LocatonsCustomer from "./components/Customer/locations";
 import ContactCustomer from "./components/Customer/contact";
 import ListBookCustomer, { BookDetailCustomer } from "./components/Customer/listBook";
+import CategoryBook from "./components/Customer/categoryBooks";
 
 // Staff
 import OrderDrink from "./components/Staff/orderDrink";
@@ -77,6 +78,7 @@ function App() {
           <Route path="/contactCustomer" element={<ContactCustomer />} />
           <Route path="/booksCustomer" element={<ListBookCustomer />} />
           <Route path="/booksCustomer/:id" element={<BookDetailCustomer />} />
+          <Route path="/categoryBooks/:id" element={<CategoryBook />} />
           {/* Staff */}
           <Route path="/staff/order/drinks" element={<OrderDrink />} />
           <Route path="/staff/order/drinks/add" element={<AddDrink />} />

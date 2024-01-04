@@ -70,7 +70,10 @@ export default function Locations() {
                     </div>
                     <div className="flex place-content-end pt-2">
                       <Button
-                        onClick={() => Navigate("/")}
+                        onClick={() => {
+                          alert("Vui lòng đăng nhập để đặt chỗ!")
+                          localStorage.setItem("page","home")
+                          Navigate("/")}}
                         theme={customTheme}
                         color="primary"
                         pill

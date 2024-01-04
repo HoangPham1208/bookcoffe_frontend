@@ -35,8 +35,8 @@ export default function BookAdmin() {
           <Button
             onClick={() => {
               localStorage.clear();
-              navigate("/admin")}
-            }
+              navigate("/admin");
+            }}
             theme={customTheme}
             color="secondary"
             pill
@@ -60,7 +60,11 @@ export default function BookAdmin() {
               <button
                 onClick={() => {
                   localStorage.setItem("type", "staff");
-                  navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/staff`);
+                  navigate(
+                    `/admin/branch/${localStorage.getItem(
+                      "branchAddress"
+                    )}/staff`
+                  );
                 }}
                 className="hover:underline"
               >
@@ -79,9 +83,13 @@ export default function BookAdmin() {
             onClick={() => {
               if (selected === null) {
                 alert("Vui lòng chọn sách");
-                return
+                return;
               }
-              navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/books/${localStorage.getItem("title")}/addcopy`);
+              navigate(
+                `/admin/branch/${localStorage.getItem(
+                  "branchAddress"
+                )}/books/${localStorage.getItem("title")}/addcopy`
+              );
             }}
             theme={customTheme}
             color="primary"
@@ -131,7 +139,18 @@ export default function BookAdmin() {
                         className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
                       />
                     </Table.Cell>
-                    <Table.Cell>//</Table.Cell>
+                    <Table.Cell>
+                      {
+                        <img
+                          src={
+                            "http://localhost:4000/api/customer/getBookImage/" +
+                            item1.bookId
+                          }
+                          alt="mybook"
+                          className="h-36"
+                        />
+                      }
+                    </Table.Cell>
                     <Table.Cell>{item1.authorName}</Table.Cell>
                     <Table.Cell>{item1.title}</Table.Cell>
                     <Table.Cell>

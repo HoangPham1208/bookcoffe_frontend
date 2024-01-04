@@ -12,25 +12,7 @@ import axios from "axios";
 export default function BookDetails() {
   const { id: title } = useParams();
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get(
-          "http://localhost:4000/api/customer/search?title=" +
-            title +
-            "&address="
-        )
-        .then((res) => {
-          console.log(res.data[0]);
-          setItems(res.data[0]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    fetchData();
-  }, []);
+  const items = JSON.parse(localStorage.getItem("bookInfo"));
   return (
     <div>
       <Navbar />
@@ -51,7 +33,9 @@ export default function BookDetails() {
             {/* Bìa  */}
             <div className="mb-5">
               <Label for="bia">Bìa</Label>
-              <TextInput id="bia" placeholder="Bìa" className="w-full" />
+              <img src = {"http://localhost:4000/api/customer/getBookImage/" + items.bookId} alt = "mybook"
+                className="h-44"
+              />
             </div>
             {/* Tên */}
             <div className="mb-5">

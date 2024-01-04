@@ -146,6 +146,7 @@ export default function BookManager() {
                         <div className="flex justify-center">
                           <Button
                             onClick={() => {
+                              localStorage.setItem("bookInfo", JSON.stringify(item1));
                               navigate("/manager/books/" + item1.title);
                             }}
                             theme={customTheme}

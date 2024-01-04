@@ -15,7 +15,7 @@ export default function BestBook() {
         // random this res.data and got max 10
         let randomData = res.data
           .sort(() => Math.random() - Math.random())
-          .slice(0, 10);
+          .slice(0, 6);
         setBookEntries(randomData);
       })
       .catch((err) => {
