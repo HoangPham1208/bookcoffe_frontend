@@ -110,7 +110,7 @@ export default function BookList() {
                       className="w-20 h-20"
                       src={
                         "http://localhost:4000/api/customer/getBookImage/" +
-                        item1.bookId
+                        item1.bookId 
                       }
                       alt="book"
                     />

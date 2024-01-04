@@ -80,6 +80,7 @@ export default function BooksDetailsModify() {
     data.append("genre", genre);
     data.append("description", description);
     data.append("bookId", bookId);
+    console.log(description)
 
     const currentYear = new Date().getFullYear();
     if (publicationYear > currentYear || publicationYear < 0) {
@@ -260,7 +261,8 @@ export default function BooksDetailsModify() {
             {/* Mô tả */}
             <div className="mb-5">
               <Label for="mota">Mô tả</Label>
-              <Textarea
+              <TextInput
+              type = "textarea"
                 id="mota"
                 placeholder="Mô tả"
                 className="w-full"
