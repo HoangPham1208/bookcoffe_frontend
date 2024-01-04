@@ -14,7 +14,6 @@ export default function BooksDetailsModify() {
   const navigate = useNavigate();
   const [author, setAuthor] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const [items, setItems] = useState([]);
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/admin/showAuthor", {
@@ -69,46 +68,38 @@ export default function BooksDetailsModify() {
   const [description, setDescription] = useState("");
   const [bookId, setBookId] = useState("");
 
-  const handleAddBook = () => {
+  const handleEditBook = () => {
     const data = new FormData();
-    data.append("bookImage", bookImage);
+    if (bookImage !== null) {
+      data.append("bookImage", bookImage);
+    }
     data.append("authorName", authorName);
     data.append("title", title);
     data.append("publicationYear", publicationYear);
     data.append("salePrice", salePrice);
     data.append("genre", genre);
     data.append("description", description);
-    if (
-      bookImage === null ||
-      authorName === "" ||
-      title === "" ||
-      publicationYear === "" ||
-      salePrice === "" ||
-      genre === "" ||
-      description === ""
-    ) {
-      alert("Vui lòng nhập đủ thông tin");
-      return;
-    }
+    data.append("bookId", bookId);
+
     const currentYear = new Date().getFullYear();
     if (publicationYear > currentYear || publicationYear < 0) {
       alert("Năm xuất bản không hợp lệ");
       return;
     }
-    return ;
     axios
-      .post("http://localhost:4000/api/admin/addBook", data, {
+      .post("http://localhost:4000/api/admin/updateBook", data, {
         headers: {
           Authorization: `Bearer ${cookie.get("accessToken")}`,
         },
       })
       .then((res) => {
         console.log(res.data);
-        alert("Thêm sách thành công");
+        alert("chỉnh sửa sách thành công");
         navigate("/admin/bookList");
       })
       .catch((err) => {
         console.log(err);
+        alert("chỉnh sửa sách thất bại")
       });
   };
   useEffect(() => {
@@ -181,7 +172,7 @@ export default function BooksDetailsModify() {
                   "http://localhost:4000/api/customer/getBookImage/" + bookId
                 }
                 alt="bookImage"
-                className="h-64 shrink-0 border-b overflow-hidden rounded-t-xl"
+                className="h-40 w-20 shrink-0 border-b overflow-hidden rounded-t-xl"
               />
             </div>
           </div>
@@ -310,7 +301,7 @@ export default function BooksDetailsModify() {
                 theme={customTheme}
                 color="primary"
                 pill
-                onClick={handleAddBook}
+                onClick={handleEditBook}
               >
                 Hoàn tất
               </Button>
