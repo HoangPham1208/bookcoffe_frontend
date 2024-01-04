@@ -12,6 +12,7 @@ import { customTheme } from "../Utils/myButton";
 
 export default function MenuDrink() {
   const navigate = useNavigate();
+  const cookie = new Cookies();
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [result, setResult] = useState([]); // result of search
