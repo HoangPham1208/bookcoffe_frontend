@@ -39,7 +39,7 @@ export default function BestBook() {
               className="flex flex-col shadow-2 hover:shadow-4 h-[300px] sm:h-96 w-40 sm:w-44 rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
               id="book-card"
               onClick={() => {
-                navigate("/books/" + entry.bookId, {
+                navigate("/booksCustomer/" + entry.bookId, {
                   state: { id: entry.bookId, name: entry.title },
                 });
               }}
@@ -49,7 +49,7 @@ export default function BestBook() {
                   "http://localhost:4000/api/customer/getBookImage/" +
                   entry.bookId
                 }
-                className="object-cover h-64 shrink-0 border-b overflow-hidden"
+                className="object-cover h-64 shrink-0 border-b overflow-hidden w-full"
                 alt={`book-${index + 1}`}
               />
               <div
@@ -62,7 +62,7 @@ export default function BestBook() {
                 <p className="font-bookTitle line-clamp-2">
                   {entry.authorName}
                 </p>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <svg
                     className="w-4 h-4 text-yellow-300 me-1"
                     aria-hidden="true"
@@ -75,7 +75,7 @@ export default function BestBook() {
                   <p className="ms-2 text-xs text-gray-900 dark:text-white">
                     {entry.rating}
                   </p>
-                </div>
+                </div> */}
               </div>
             </button>
           ))}

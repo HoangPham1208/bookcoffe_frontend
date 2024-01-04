@@ -30,7 +30,7 @@ export default function Menu() {
   }, [refresh]);
   return (
     <>
-      {localStorage.getItem("role") === "customer" ? (
+      {localStorage.getItem("role") !== "customer" ? (
         <Navbar mode="login" />
       ) : (
         <Navbar />

@@ -69,7 +69,7 @@ function AllBook() {
                   "http://localhost:4000/api/customer/getBookImage/" +
                   entry.bookId
                 }
-                className="object-cover h-64 shrink-0 border-b overflow-hidden"
+                className="object-cover h-64 shrink-0 border-b overflow-hidden w-full"
                 alt={`book-${index + 1}`}
               />
               <div
@@ -180,7 +180,7 @@ export function BookDetail() {
               <p className="font-bold text-lg">Thể loại</p>
               <p className="pb-5">{bookInfo.genre}</p>
               <p className="font-bold text-lg">Mô tả</p>
-              <p>{bookInfo.description}</p>
+              <p className="whitespace-pre-line">{bookInfo.description}</p>
             </div>
           </div>
         </main>

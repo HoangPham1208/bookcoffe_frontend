@@ -49,7 +49,7 @@ export default function BestBook() {
                   "http://localhost:4000/api/customer/getBookImage/" +
                   entry.bookId
                 }
-                className="object-cover h-64 shrink-0 border-b overflow-hidden"
+                className="object-cover h-64 shrink-0 border-b overflow-hidden w-full"
                 alt={`book-${index + 1}`}
               />
               <div

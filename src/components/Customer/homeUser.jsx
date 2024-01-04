@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Navbar } from "../navbar";
-import Wrapper from "../Guest/wrapper";
-import BestBook from "../Guest/bestbook";
-import Category from "../Guest/category";
-import NewBlog from "../Guest/newblog";
+import Wrapper from "./wrapper";
+import BestBook from "./bestbook";
+import Category from "./category";
+import NewBlog from "./newblog";
 
 export default function HomeUser() {
   return (
