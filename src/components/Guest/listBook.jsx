@@ -82,7 +82,7 @@ function AllBook() {
                 <p className="font-bookTitle line-clamp-2">
                   {entry.authorName}
                 </p>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <svg
                     className="w-4 h-4 text-yellow-300 me-1"
                     aria-hidden="true"
@@ -95,7 +95,7 @@ function AllBook() {
                   <p className="ms-2 text-xs text-gray-900 dark:text-white">
                     {entry.rating}
                   </p>
-                </div>
+                </div> */}
               </div>
             </button>
           ))}

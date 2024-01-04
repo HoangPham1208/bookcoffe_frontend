@@ -7,6 +7,7 @@ import { BlogDetails, BlogPage } from "./components/Guest/newblog";
 import Locations from "./components/Guest/locations";
 import Contact from "./components/Guest/contact";
 import ListBook, { BookDetail } from "./components/Guest/listBook";
+import Menu from "./components/Guest/menu";
 
 // Customer
 import HomeUser from "./components/Customer/homeUser";
@@ -44,7 +45,7 @@ import OrderLocationHistoryManager from "./components/Manager/historyLocation";
 import HomeAdmin from "./components/Admin/homeAdmin";
 import AddBranch from "./components/Admin/AddBranch";
 import BookList from "./components/Admin/BookList";
-import AddBook from "./components/Admin/addbook";
+import AddBook from "./components/Admin/addBook";
 import BookDetailsModify from "./components/Admin/bookDetailModify";
 import MenuDrink from "./components/Admin/menuDrink";
 import AddBookOrder from "./components/Staff/addBookOrder";
@@ -64,6 +65,7 @@ function App() {
         <Route path="/blogs" element={<BlogPage />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/menu" element={<Menu />} />
         <Route element={<PrivateRoutes />}>
           {/* Customer */}
           <Route path="/homeUser" element={<HomeUser />} />

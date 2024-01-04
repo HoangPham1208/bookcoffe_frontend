@@ -13,7 +13,7 @@ import { customTheme } from "../Utils/myButton";
 function Check({ visible, onAccept, onCancel, setRefresh, refresh, data }) {
   const cookie = new Cookies();
   const handleConfirm = (data) => {
-    RefreshTokenAPI();
+    // RefreshTokenAPI();
     axios
       .post(
         "http://localhost:4000/api/staff/confirmReservation",
