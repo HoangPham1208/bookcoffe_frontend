@@ -36,7 +36,7 @@ export default function BestBook() {
           {bookEntries.map((entry, index) => (
             <button
               key={index}
-              className="flex flex-col shadow-2 hover:shadow-4 h-[300px] sm:h-96 w-40 sm:w-44 rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
+              className="flex flex-col shadow-2 hover:shadow-4 h-[340px] sm:h-96 w-40 sm:w-44 rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
               id="book-card"
               onClick={() => {
                 navigate("/books/" + entry.bookId, {

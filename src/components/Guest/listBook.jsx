@@ -56,7 +56,7 @@ function AllBook() {
           {data.map((entry, index) => (
             <button
               key={index}
-              className="flex flex-col shadow-2 hover:shadow-4 h-[300px] sm:h-96 w-40 sm:w-44 rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
+              className="flex flex-col shadow-2 hover:shadow-4 h-[340px] sm:h-96 w-40 sm:w-44 rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
               id="book-card"
               onClick={() => {
                 navigate("/books/" + entry.bookId, {
@@ -166,8 +166,7 @@ export function BookDetail() {
           <div className="flex flex-col md:flex-row gap-x-8 max-md:gap-y-5">
             <div className="shrink-0 h-full w-1/2 sm:w-1/3" id="book-cover">
               <img
-                src={
-                  "http://localhost:4000/api/customer/getBookImage/" + id}
+                src={"http://localhost:4000/api/customer/getBookImage/" + id}
                 alt="book cover"
                 className="w-full"
               ></img>
@@ -176,7 +175,9 @@ export function BookDetail() {
               <p className="font-bookTitle text-2xl font-bold">
                 {bookInfo.title}
               </p>
-              <p className="font-bookTitle text-lg pb-5">{bookInfo.authorName}</p>
+              <p className="font-bookTitle text-lg pb-5">
+                {bookInfo.authorName}
+              </p>
               <p className="font-bold text-lg">Thể loại</p>
               <p className="pb-5">{bookInfo.genre}</p>
               <p className="font-bold text-lg">Mô tả</p>

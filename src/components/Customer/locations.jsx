@@ -163,7 +163,6 @@ export default function Locations() {
         console.log(branchResponse.data);
         setData(branchResponse.data);
 
-
         const showReservation = await axios.get(
           "http://localhost:4000/api/customer/showReservation",
           {
@@ -185,14 +184,13 @@ export default function Locations() {
   return (
     <>
       <Navbar />
-      <main className="mx-autoflex flex-col max-w-screen-xl pt-20 mx-36">
-        <div className="my-5 font-semibold text-3xl">
-          <div>Chi nhánh</div>
-        </div>
-        <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
-          {data.map((item) => (
-            <div>
-              <Card
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="w-full font-bold text-3xl">Chi nhánh</div>
+          <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
+            {data.map((item) => (
+              <div>
+                <Card
                   className="rounded-xl w-full sm:w-80 "
                   renderImage={() => (
                     <img
@@ -205,105 +203,108 @@ export default function Locations() {
                     />
                   )}
                 >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {item.address}
-                </h5>
-                <div className="font-normal text-gray-700 dark:text-gray-400">
-                  <div className="flex justify-between">
+                  <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {item.address}
+                  </h5>
+                  <div className="font-normal text-gray-700 dark:text-gray-400">
+                    <div className="flex justify-between">
+                      <div>
+                        <span className="font-semibold">Quản lý: </span>
+                        {item.managerName}
+                      </div>
+                    </div>
                     <div>
-                      <span className="font-semibold">Quản lý: </span>
-                      {item.managerName}
+                      <span className="font-semibold">Giờ hoạt động: </span>{" "}
+                      {item.workingTime} <br />
+                    </div>
+                    <div>
+                      <span className="font-semibold">Số điện thoại: </span>{" "}
+                      {item.phoneNumber} <br />
+                    </div>
+                    <div className="flex place-content-end pt-2">
+                      <Button
+                        onClick={() => {
+                          setAddress(item.address);
+                          setVisible(true);
+                        }}
+                        theme={customTheme}
+                        color="primary"
+                        pill
+                      >
+                        Đặt chỗ
+                      </Button>
                     </div>
                   </div>
-                  <div>
-                    <span className="font-semibold">Giờ hoạt động: </span>{" "}
-                    {item.workingTime} <br />
-                  </div>
-                  <div>
-                    <span className="font-semibold">Số điện thoại: </span>{" "}
-                    {item.phoneNumber} <br />
-                  </div>
-                  <div className="flex place-content-end pt-2">
-                    <Button
-                      onClick={() => {
-                        setAddress(item.address);
-                        setVisible(true);
-                      }}
-                      theme={customTheme}
-                      color="primary"
-                      pill
-                    >
-                      Đặt chỗ
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          ))}
-        </div>
-        <Order
-          data={address}
-          visible={visible}
-          onClose={() => setVisible(false)}
-          refresh={refresh}
-          setRefresh={setRefresh}
-        />
-        <div className="my-5 font-semibold text-3xl">
-          <hr className="border-black mt-10 mb-5" />
-          <div>Đơn đặt chỗ</div>
-        </div>
-        <div className="overflow-x-auto mx-36 mb-20">
-          <Table hoverable>
-            <Table.Head className="text-center">
-              <Table.HeadCell>Địa điểm</Table.HeadCell>
-              <Table.HeadCell>Ngày đặt</Table.HeadCell>
-              <Table.HeadCell>Số lượng</Table.HeadCell>
-              <Table.HeadCell>Trạng thái</Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y text-center">
-              {(() => {
-                if (Array.isArray(reservation)) {
-                  return reservation.map((item, index) => (
-                    <Table.Row
-                      key={index}
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                    >
-                      <Table.Cell>{item.address}</Table.Cell>
-                      <Table.Cell>
-                        {
-                          // item.reservationDate 2023-12-20T05:12:12.000Z
-                          (() => {
-                            let date =
-                              item.reservationDate.split("T")[0] +
-                              " " +
-                              item.reservationDate.split("T")[1].split(".")[0];
-                            return date;
-                          })()
-                        }
-                      </Table.Cell>
-                      <Table.Cell>{item.quantity}</Table.Cell>
-                      <Table.Cell>
-                        {item.isConfirm === 0 ? (
-                          <div className="text-red-500 font-semibold">
-                            Chưa xác nhận
-                          </div>
-                        ) : (
-                          <div className="text-green-500 font-semibold">
-                            Đã xác nhận
-                          </div>
-                        )}
-                      </Table.Cell>
-                    </Table.Row>
-                  ));
-                } else {
-                  // Handle the case where items is not an array (e.g., set a default value or render an error message)
-                  return null;
-                }
-              })()}
-            </Table.Body>
-          </Table>
-        </div>
-      </main>
+                </Card>
+              </div>
+            ))}
+          </div>
+          <Order
+            data={address}
+            visible={visible}
+            onClose={() => setVisible(false)}
+            refresh={refresh}
+            setRefresh={setRefresh}
+          />
+          <div className="my-5 font-semibold text-3xl">
+            <hr className="border-black mt-10 mb-5" />
+            <div>Đơn đặt chỗ</div>
+          </div>
+          <div className="overflow-x-auto mx-36 mb-20">
+            <Table hoverable>
+              <Table.Head className="text-center">
+                <Table.HeadCell>Địa điểm</Table.HeadCell>
+                <Table.HeadCell>Ngày đặt</Table.HeadCell>
+                <Table.HeadCell>Số lượng</Table.HeadCell>
+                <Table.HeadCell>Trạng thái</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y text-center">
+                {(() => {
+                  if (Array.isArray(reservation)) {
+                    return reservation.map((item, index) => (
+                      <Table.Row
+                        key={index}
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      >
+                        <Table.Cell>{item.address}</Table.Cell>
+                        <Table.Cell>
+                          {
+                            // item.reservationDate 2023-12-20T05:12:12.000Z
+                            (() => {
+                              let date =
+                                item.reservationDate.split("T")[0] +
+                                " " +
+                                item.reservationDate
+                                  .split("T")[1]
+                                  .split(".")[0];
+                              return date;
+                            })()
+                          }
+                        </Table.Cell>
+                        <Table.Cell>{item.quantity}</Table.Cell>
+                        <Table.Cell>
+                          {item.isConfirm === 0 ? (
+                            <div className="text-red-500 font-semibold">
+                              Chưa xác nhận
+                            </div>
+                          ) : (
+                            <div className="text-green-500 font-semibold">
+                              Đã xác nhận
+                            </div>
+                          )}
+                        </Table.Cell>
+                      </Table.Row>
+                    ));
+                  } else {
+                    // Handle the case where items is not an array (e.g., set a default value or render an error message)
+                    return null;
+                  }
+                })()}
+              </Table.Body>
+            </Table>
+          </div>
+        </main>
+      </section>
     </>
   );
 }

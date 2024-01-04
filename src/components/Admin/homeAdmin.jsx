@@ -40,29 +40,28 @@ export default function HomeAdmin() {
   return (
     <>
       <Navbar />
-      <main className="mx-autoflex flex-col max-w-screen-xl pt-20 mx-36">
-        <div className="my-5 font-semibold text-3xl">
-          <button>Chi nhánh</button>
-        </div>
-        <div className="flex place-content-start gap-10 my-5">
-          <Button
-            theme={customTheme}
-            color="primary"
-            pill
-            onClick={() => {
-              navigate("/admin/addBranch");
-            }}
-          >
-            Thêm chi nhánh
-          </Button>
-          {/* <Button theme={customTheme} color="secondary" pill>
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="w-full font-bold text-3xl">Chi nhánh</div>
+          <div className="flex place-content-start gap-10 my-5">
+            <Button
+              theme={customTheme}
+              color="primary"
+              pill
+              onClick={() => {
+                navigate("/admin/addBranch");
+              }}
+            >
+              Thêm chi nhánh
+            </Button>
+            {/* <Button theme={customTheme} color="secondary" pill>
             Xóa chi nhánh
           </Button> */}
-        </div>
-        <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
-          {data.map((item) => (
-            <div>
-              <Card
+          </div>
+          <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
+            {data.map((item) => (
+              <div>
+                <Card
                   className="rounded-xl w-full sm:w-80 "
                   renderImage={() => (
                     <img
@@ -75,51 +74,53 @@ export default function HomeAdmin() {
                     />
                   )}
                 >
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {item.address}
-                </h5>
-                <div className="font-normal text-gray-700 dark:text-gray-400">
-                  <div className="flex justify-between">
-                    <div>
-                      <span className="font-semibold">ID:</span> {item.branchId}
+                  <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {item.address}
+                  </h5>
+                  <div className="font-normal text-gray-700 dark:text-gray-400">
+                    <div className="flex justify-between">
+                      <div>
+                        <span className="font-semibold">ID:</span>{" "}
+                        {item.branchId}
+                      </div>
+                      <div>
+                        <span className="font-semibold">Quản lý: </span>
+                        {item.managerName}
+                      </div>
                     </div>
                     <div>
-                      <span className="font-semibold">Quản lý: </span>
-                      {item.managerName}
+                      <div>
+                        <span className="font-semibold">
+                          Thời gian làm việc:{" "}
+                        </span>{" "}
+                        {item.workingTime} <br />
+                      </div>
+                      <div>
+                        <span className="font-semibold">Số điện thoại: </span>{" "}
+                        {item.phoneNumber} <br />
+                      </div>
+                    </div>
+                    <div className="flex place-content-end pt-2">
+                      <Button
+                        onClick={() => {
+                          localStorage.setItem("branchId", item.branchId);
+                          localStorage.setItem("branchAddress", item.address);
+                          navigate(`/admin/branch/${item.address}/books`);
+                        }}
+                        theme={customTheme}
+                        color="primary"
+                        pill
+                      >
+                        Quản lý
+                      </Button>
                     </div>
                   </div>
-                  <div>
-                    <div>
-                      <span className="font-semibold">
-                        Thời gian làm việc:{" "}
-                      </span>{" "}
-                      {item.workingTime} <br />
-                    </div>
-                    <div>
-                      <span className="font-semibold">Số điện thoại: </span>{" "}
-                      {item.phoneNumber} <br />
-                    </div>
-                  </div>
-                  <div className="flex place-content-end pt-2">
-                    <Button
-                      onClick={() => {
-                        localStorage.setItem("branchId", item.branchId);
-                        localStorage.setItem("branchAddress", item.address);
-                        navigate(`/admin/branch/${item.address}/books`);
-                      }}
-                      theme={customTheme}
-                      color="primary"
-                      pill
-                    >
-                      Quản lý
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          ))}
-        </div>
-      </main>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </main>
+      </section>
     </>
   );
 }
