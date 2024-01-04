@@ -53,6 +53,7 @@ import BookAdmin from "./components/Admin/book";
 import AddCopyAdmin from "./components/Admin/addCopy";
 import BookDetailAdmin from "./components/Admin/bookDetailAdmin";
 import StaffAdmin from "./components/Admin/staff";
+import AddDrinkMenu from "./components/Admin/addDrink";
 
 function App() {
   return (
@@ -119,6 +120,7 @@ function App() {
           <Route path="/admin/bookList/AddBook" element={<AddBook />} />
           <Route path="/admin/bookList/:id" element={<BookDetailsModify />} />
           <Route path="/admin/menuDrink" element={<MenuDrink />} />
+          <Route path="/admin/menuDrink/addDrink" element={<AddDrinkMenu />} />
           <Route path="/admin/branch/:id/books" element={<BookAdmin />} />
           <Route path="/admin/branch/:id/books/:id/addcopy" element={<AddCopyAdmin />} />
           <Route path="/admin/branch/:id/books/:id" element={<BookDetailAdmin />} />
