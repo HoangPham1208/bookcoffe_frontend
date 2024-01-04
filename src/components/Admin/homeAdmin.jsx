@@ -55,9 +55,9 @@ export default function HomeAdmin() {
           >
             Thêm chi nhánh
           </Button>
-          <Button theme={customTheme} color="secondary" pill>
+          {/* <Button theme={customTheme} color="secondary" pill>
             Xóa chi nhánh
-          </Button>
+          </Button> */}
         </div>
         <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
           {data.map((item) => (
