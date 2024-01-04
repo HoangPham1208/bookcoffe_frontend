@@ -75,6 +75,20 @@ export default function OrderLocationHistory() {
   const [data, setData] = React.useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [refresh, setRefresh] = useState(false); // <-- declare state variable
+  const [result, setResult] = useState([]); // <-- search
+  const handleSearch = (searchQuery) => {
+    // search by authorName and title and publicationYear
+    if (searchQuery === "") {
+      setResult(items);
+      return;
+    }
+    let temp = items.filter((item) => {
+      if (item.userName.includes(searchQuery)) return true;
+      return false;
+    });
+    setResult(temp);
+  };
+
   const handleCheck = () => {
     setCheck(true);
   };
@@ -102,6 +116,7 @@ export default function OrderLocationHistory() {
       .then((res) => {
         console.log(res.data);
         setItems(res.data);
+        setResult(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -135,12 +150,13 @@ export default function OrderLocationHistory() {
     <>
       <Navbar />
       <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-      <div className="text-3xl font-semibold my-5 mx-36">Lịch sử đặt chỗ</div>
+        <div className="text-3xl font-semibold my-5 mx-36">Lịch sử đặt chỗ</div>
         <div className="flex mx-36 gap-10 my-5">
-          <Button theme={customTheme}
+          <Button
+            theme={customTheme}
             color="secondary"
             pill
-          onClick={() => navigate("/staff/order/locations")}
+            onClick={() => navigate("/staff/order/locations")}
           >
             Trở về
           </Button>
@@ -150,8 +166,16 @@ export default function OrderLocationHistory() {
           <input
             type="search"
             name="serch"
-            placeholder="Tìm kiếm"
+            placeholder="Tìm kiếm theo tên người đặt"
             class="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={(e) => {
+              if (e.target.value === "") setResult(items);
+            }}
           />
         </div>
         <hr className="border-black mx-36 my-5" />
@@ -165,42 +189,35 @@ export default function OrderLocationHistory() {
               <Table.HeadCell>Số lượng</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {(() => {
-                if (Array.isArray(items)) {
-                  return items.map(
-                    (item, index) =>
-                      item.isConfirm === 1 && (
-                        <Table.Row
-                          key={index}
-                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                        >
-                          <Table.Cell>{item.reservationId}</Table.Cell>
-                          <Table.Cell>{item.userName}</Table.Cell>
-                          <Table.Cell>{item.address}</Table.Cell>
-                          <Table.Cell>
-                            {
-                              // item.reservationDate 2023-12-20T05:12:12.000Z
-                              (() => {
-                                let date =
-                                  item.reservationDate.split("T")[0] +
-                                  " - " +
-                                  item.reservationDate
-                                    .split("T")[1]
-                                    .split(".")[0];
-                                return date;
-                              })()
-                            }
-                          </Table.Cell>
-                          <Table.Cell>{item.quantity}</Table.Cell>
-                          
-                        </Table.Row>
-                      )
-                  );
-                } else {
-                  // Handle the case where items is not an array (e.g., set a default value or render an error message)
-                  return null;
-                }
-              })()}
+              {result &&
+                result.map(
+                  (item, index) =>
+                    item.isConfirm === 1 && (
+                      <Table.Row
+                        key={index}
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      >
+                        <Table.Cell>{item.reservationId}</Table.Cell>
+                        <Table.Cell>{item.userName}</Table.Cell>
+                        <Table.Cell>{item.address}</Table.Cell>
+                        <Table.Cell>
+                          {
+                            // item.reservationDate 2023-12-20T05:12:12.000Z
+                            (() => {
+                              let date =
+                                item.reservationDate.split("T")[0] +
+                                " - " +
+                                item.reservationDate
+                                  .split("T")[1]
+                                  .split(".")[0];
+                              return date;
+                            })()
+                          }
+                        </Table.Cell>
+                        <Table.Cell>{item.quantity}</Table.Cell>
+                      </Table.Row>
+                    )
+                )}
             </Table.Body>
           </Table>
         </div>

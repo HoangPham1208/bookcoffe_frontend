@@ -14,7 +14,7 @@ export default function AddBranch() {
   const [pass, setPass] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [workingTime, setWorkingTime] = React.useState("");
-  const [branchImage, setBranchImage] = React.useState("");
+  const [branchImage, setBranchImage] = React.useState(null);
   const [description, setDescription] = React.useState("");
   const handleAddBranch = () => {
     if (
@@ -22,7 +22,7 @@ export default function AddBranch() {
       pass === "" ||
       address === "" ||
       workingTime === "" ||
-      branchImage === "" ||
+      branchImage === null ||
       description === ""
     ) {
       alert("Vui lòng nhập đủ thông tin");
@@ -35,6 +35,7 @@ export default function AddBranch() {
     data.append("workingTime", workingTime);
     data.append("branchImage", branchImage);
     data.append("description", description);
+    console.log(branchImage);
     axios
       .post("http://localhost:4000/api/admin/addBranch", data, {
         headers: {
@@ -47,6 +48,8 @@ export default function AddBranch() {
         navigate("/admin");
       })
       .catch((err) => {
+        if (err.response.status === 409) alert("Tài khoản đã tồn tại");
+        else alert("Thêm chi nhánh thất bại");
         console.log(err);
       });
   };
@@ -62,10 +65,10 @@ export default function AddBranch() {
             <div className="mb-5">
               <Label for="file">Ảnh chi nhánh</Label>
               <FileInput
-                id="file"
-                className="w-full"
+                id="file-upload-helper-text"
+                helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
                 onChange={(e) => {
-                  setBranchImage(e.target.value);
+                  setBranchImage(e.target.files[0]);
                 }}
               />
             </div>
@@ -143,8 +146,11 @@ export default function AddBranch() {
               >
                 Hủy
               </Button>
-              <Button theme={customTheme} color="primary" pill
-              onClick={handleAddBranch}
+              <Button
+                theme={customTheme}
+                color="primary"
+                pill
+                onClick={handleAddBranch}
               >
                 Hoàn tất
               </Button>

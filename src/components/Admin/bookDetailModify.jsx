@@ -70,9 +70,7 @@ export default function BooksDetailsModify() {
 
   const handleEditBook = () => {
     const data = new FormData();
-    if (bookImage !== null) {
-      data.append("bookImage", bookImage);
-    }
+    data.append("bookImage", bookImage);
     data.append("authorName", authorName);
     data.append("title", title);
     data.append("publicationYear", publicationYear);
@@ -80,8 +78,6 @@ export default function BooksDetailsModify() {
     data.append("genre", genre);
     data.append("description", description);
     data.append("bookId", bookId);
-    console.log(description)
-
     const currentYear = new Date().getFullYear();
     if (publicationYear > currentYear || publicationYear < 0) {
       alert("Năm xuất bản không hợp lệ");
@@ -97,10 +93,11 @@ export default function BooksDetailsModify() {
         console.log(res.data);
         alert("chỉnh sửa sách thành công");
         navigate("/admin/bookList");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        alert("chỉnh sửa sách thất bại")
+        alert("chỉnh sửa sách thất bại");
       });
   };
   useEffect(() => {
@@ -262,7 +259,7 @@ export default function BooksDetailsModify() {
             <div className="mb-5">
               <Label for="mota">Mô tả</Label>
               <TextInput
-              type = "textarea"
+                type="textarea"
                 id="mota"
                 placeholder="Mô tả"
                 className="w-full"
