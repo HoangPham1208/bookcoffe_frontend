@@ -5,39 +5,39 @@ export default function Wrapper() {
   const carouselItems = [
     {
       imageSrc: "/image1.png",
-      title: "Book",
+      title: "Nơi làm việc và thư giãn hiệu quả",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Tận hưởng không gian yên tĩnh, đầy hứng khởi với không gian rộng rãi của quán. Phù hợp cho nhiều đối tượng từ khách hàng đơn lẻ tới nhóm nhỏ từ 2-4 người, quán gồm nhiều không gian khác nhau cho các mục đích như học tập, làm việc, trò chuyện thân mật.",
     },
     {
-      imageSrc: "/image1.png",
-      title: "Book",
+      imageSrc: "/image2.jpg",
+      title: "Lựa chọn thức uống đa dạng",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Lựa chọn thức uống yêu thích của bạn bao gồm các loại trà, cà phê, nước ép và đá xay. Vào những ngày se lạnh, bạn có thể thưởng thức menu thức uống nóng bao gồm các loại trà và cà phê.",
     },
     {
-      imageSrc: "/image1.png",
-      title: "Book",
+      imageSrc: "/image3.jpg",
+      title: "Tủ sách yêu thích",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Được lựa chọn từ những cuốn sách bán chạy nhất, tủ sách của quán là nơi lý tưởng để khám phá cuốn sách yêu thích tiếp theo của bạn. Ngoài ra đây cũng là nơi để các tín đồ yêu sách gặp gỡ và trò chuyện về cuốn sách yêu thích của mình.",
     },
     {
-      imageSrc: "/image1.png",
-      title: "Book",
+      imageSrc: "/image4.jpg",
+      title: "Không gian thoải mái",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Không gian bố trí thuận tiện cho việc đi lại, trong khi đó vẫn đảm bảo được không gian riêng tư cho mỗi bàn. Khu đọc sách được bố trí riêng nhằm đảm bảo yên tĩnh để bạn có thể thoải mái thư giãn với tách trà của mình.",
     },
     {
-      imageSrc: "/image1.png",
-      title: "Book",
+      imageSrc: "/image5.jpg",
+      title: "Nơi hoàn hảo để thưởng thức cà phê",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Quán có những loại cà phê truyền thống với hương vị đặc sắc của cà phê Việt Nam, cùng với các loại cà phê pha máy đem lại hương vị cà phê đậm đà nhất, hoàn hảo để bắt đầu một ngày mới tràn đầy năng lượng.",
     },
     // Add more items as needed
   ];
 
   return (
-    <div className="h-[400px] sm:h-[600px] md:h-80 2xl:h-96">
+    <div className="h-[500px] sm:h-[600px] md:h-80 2xl:h-96">
       <Carousel slide={true} className="">
         {carouselItems.map((item, index) => (
           <div
@@ -50,7 +50,7 @@ export default function Wrapper() {
               <div className="text-white text-2xl font-bold leading-9">
                 {item.title}
               </div>
-              <div className="text-white text-sm font-bold leading-5">
+              <div className="text-white text-sm leading-5">
                 {item.description}
               </div>
             </div>

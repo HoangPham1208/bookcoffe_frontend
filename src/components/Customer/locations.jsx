@@ -189,20 +189,22 @@ export default function Locations() {
         <div className="my-5 font-semibold text-3xl">
           <div>Chi nhánh</div>
         </div>
-        <div className="grid grid-cols-3 gap-10">
+        <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
           {data.map((item) => (
             <div>
               <Card
-                className="max-w-sm"
-                imgAlt={
-                  "This is a photo of a " +
-                  item.address +
-                  " branch"
-                }
-                imgSrc={
-                  "http://localhost:4000/api/customer/getBranchImage/" + item.branchId
-                }
-              >
+                  className="rounded-xl w-full sm:w-80 "
+                  renderImage={() => (
+                    <img
+                      className="object-cover h-64 shrink-0 border-b overflow-hidden rounded-t-xl"
+                      src={
+                        "http://localhost:4000/api/customer/getBranchImage/" +
+                        item.branchId
+                      }
+                      alt="branch number 1"
+                    />
+                  )}
+                >
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.address}
                 </h5>
@@ -221,7 +223,7 @@ export default function Locations() {
                     <span className="font-semibold">Số điện thoại: </span>{" "}
                     {item.phoneNumber} <br />
                   </div>
-                  <div className="flex place-content-end gap-10 my-5">
+                  <div className="flex place-content-end pt-2">
                     <Button
                       onClick={() => {
                         setAddress(item.address);
