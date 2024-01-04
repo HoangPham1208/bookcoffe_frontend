@@ -237,7 +237,7 @@ export default function AddBook() {
             {/* Mô tả */}
             <div className="mb-5">
               <Label for="mota">Mô tả</Label>
-              <Textarea
+              <TextInput
                 id="mota"
                 placeholder="Mô tả"
                 className="w-full"
