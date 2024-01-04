@@ -157,7 +157,9 @@ export function BookDetailCustomer() {
             color="secondary"
             withIcon
             onClick={() => {
-              navigate("/booksCustomer");
+              localStorage.getItem("page") === "home"
+                ? navigate("/homeUser")
+                : navigate("/booksCustomer");
             }}
           >
             <HiOutlineArrowLeft className="h-5 w-5 mr-3" />
