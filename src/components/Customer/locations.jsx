@@ -189,7 +189,7 @@ export default function Locations() {
         <div className="my-5 font-semibold text-3xl">
           <div>Chi nhánh</div>
         </div>
-        <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5">
+        <div className="flex max-sm:flex-col flex-wrap max-sm:gap-y-5 sm:gap-5 justify-evenly">
           {data.map((item) => (
             <div>
               <Card

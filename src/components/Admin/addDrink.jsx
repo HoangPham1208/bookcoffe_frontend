@@ -125,6 +125,7 @@ export default function AddDrinkMenu() {
                       setSize(e.target.value);
                     }}
                   >
+                    <option value="Chọn size" disabled = {true} selected= {true}>Chọn size</option>
                     <option disabled={checkSize[0].S} value="S">
                       S
                     </option>

@@ -47,7 +47,11 @@ export default function Category() {
             Viễn tưởng
           </button> */}
           {genre && genre.map((item, index) => (
-            <button key={index} className="shadow-2 hover:shadow-4 h-14 w-40 md:h-16 md:w-44 rounded-xl transition-all ease-m3-standard-accelerate shrink-0">
+            <button 
+            onClick={()=>{
+              alert("Hãy đăng nhập để thực hiện chức năng này")
+            }}
+            key={index} className="shadow-2 hover:shadow-4 h-14 w-40 md:h-16 md:w-44 rounded-xl transition-all ease-m3-standard-accelerate shrink-0">
               {item}
             </button>
           ))}

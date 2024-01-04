@@ -103,6 +103,7 @@ export default function OrderLocation() {
   const [data, setData] = React.useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [refresh, setRefresh] = useState(false); // <-- declare state variable
+  const [result, setResult] = useState([]); // <-- search
   const handleCheck = () => {
     setCheck(true);
   };
@@ -120,16 +121,20 @@ export default function OrderLocation() {
     const fetchData = async () => {
       try {
         // Attempt to fetch data
-        const res = await axios.get('http://localhost:4000/api/staff/showReservation', {
-          headers: {
-            Authorization: `Bearer ${cookie.get('accessToken')}`,
-          },
-          params: {
-            role: cookie.get('role'),
-          },
-        });
+        const res = await axios.get(
+          "http://localhost:4000/api/staff/showReservation",
+          {
+            headers: {
+              Authorization: `Bearer ${cookie.get("accessToken")}`,
+            },
+            params: {
+              role: cookie.get("role"),
+            },
+          }
+        );
         // If successful, set the items
         setItems(res.data);
+        setResult(res.data);
         console.log(res.data);
       } catch (error) {
         // If there's an error, check if it's an unauthorized error (e.g., expired token)
@@ -138,30 +143,45 @@ export default function OrderLocation() {
             // Attempt to refresh the token
             // await RefreshTokenAPI();
             // If the token refresh is successful, retry the axios request
-            const res = await axios.get('http://localhost:4000/api/staff/showReservation', {
-              headers: {
-                Authorization: `Bearer ${cookie.get('accessToken')}`,
-              },
-              params: {
-                role: cookie.get('role'),
-              },
-            });
+            const res = await axios.get(
+              "http://localhost:4000/api/staff/showReservation",
+              {
+                headers: {
+                  Authorization: `Bearer ${cookie.get("accessToken")}`,
+                },
+                params: {
+                  role: cookie.get("role"),
+                },
+              }
+            );
 
             // Set the items after the successful retry
             setItems(res.data);
+            setResult(res.data);
             console.log(res.data);
           } catch (refreshError) {
-            console.error('Token refresh failed:', refreshError);
+            console.error("Token refresh failed:", refreshError);
           }
         } else {
-          console.error('Axios request failed:', error);
+          console.error("Axios request failed:", error);
         }
       }
     };
 
     fetchData();
   }, [refresh]);
-
+  const handleSearch = (searchQuery) => {
+    // search by authorName and title and publicationYear
+    if (searchQuery === "") {
+      setResult(items);
+      return;
+    }
+    let temp = items.filter((item) => {
+      if (item.userName.includes(searchQuery)) return true;
+      return false;
+    });
+    setResult(temp);
+  };
   return (
     <>
       <Navbar />
@@ -181,8 +201,16 @@ export default function OrderLocation() {
           <input
             type="search"
             name="serch"
-            placeholder="Tìm kiếm"
+            placeholder="Tìm kiếm theo tên người đặt"
             className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={(e) => {
+              if (e.target.value === "") setResult(items);
+            }}
           />
         </div>
         <hr className="border-black mx-36 my-5" />
@@ -198,64 +226,58 @@ export default function OrderLocation() {
               <Table.HeadCell></Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {(() => {
-                if (Array.isArray(items)) {
-                  return items.map(
-                    (item, index) =>
-                      item.isConfirm === 0 && (
-                        <Table.Row
-                          onClick={() => {
-                            setData(item);
-                            setSelectedItem(index);
-                          }}
-                          key={index}
-                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                        >
-                          <Table.Cell className="p-4">
-                            {/* checkbox only one choice */}
-                            <Radio
-                              name="checkbox"
-                              className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                              checked={selectedItem === index}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>{item.reservationId}</Table.Cell>
-                          <Table.Cell>{item.userName}</Table.Cell>
-                          <Table.Cell>{item.address}</Table.Cell>
-                          <Table.Cell>
-                            {
-                              // item.reservationDate 2023-12-20T05:12:12.000Z
-                              (() => {
-                                let date =
-                                  item.reservationDate.split("T")[0] +
-                                  " - " +
-                                  item.reservationDate
-                                    .split("T")[1]
-                                    .split(".")[0];
-                                return date;
-                              })()
-                            }
-                          </Table.Cell>
-                          <Table.Cell>{item.quantity}</Table.Cell>
-                          <Table.Cell className="grid justify-items-center">
-                            <Button
-                              onClick={handleCheck}
-                              disabled={selectedItem !== index}
-                              theme={customTheme}
-                              color="primary"
-                              pill
-                            >
-                              Xác nhận
-                            </Button>
-                          </Table.Cell>
-                        </Table.Row>
-                      )
-                  );
-                } else {
-                  // Handle the case where items is not an array (e.g., set a default value or render an error message)
-                  return null;
-                }
-              })()}
+              {result &&
+                result.map(
+                  (item, index) =>
+                    item.isConfirm === 0 && (
+                      <Table.Row
+                        onClick={() => {
+                          setData(item);
+                          setSelectedItem(index);
+                        }}
+                        key={index}
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      >
+                        <Table.Cell className="p-4">
+                          {/* checkbox only one choice */}
+                          <Radio
+                            name="checkbox"
+                            className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                            checked={selectedItem === index}
+                          />
+                        </Table.Cell>
+                        <Table.Cell>{item.reservationId}</Table.Cell>
+                        <Table.Cell>{item.userName}</Table.Cell>
+                        <Table.Cell>{item.address}</Table.Cell>
+                        <Table.Cell>
+                          {
+                            // item.reservationDate 2023-12-20T05:12:12.000Z
+                            (() => {
+                              let date =
+                                item.reservationDate.split("T")[0] +
+                                " - " +
+                                item.reservationDate
+                                  .split("T")[1]
+                                  .split(".")[0];
+                              return date;
+                            })()
+                          }
+                        </Table.Cell>
+                        <Table.Cell>{item.quantity}</Table.Cell>
+                        <Table.Cell className="grid justify-items-center">
+                          <Button
+                            onClick={handleCheck}
+                            disabled={selectedItem !== index}
+                            theme={customTheme}
+                            color="primary"
+                            pill
+                          >
+                            Xác nhận
+                          </Button>
+                        </Table.Cell>
+                      </Table.Row>
+                    )
+                )}
             </Table.Body>
           </Table>
         </div>
