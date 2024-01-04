@@ -11,6 +11,7 @@ import { Checkbox } from "flowbite-react";
 import { customTheme } from "../Utils/myButton";
 
 export default function MenuDrink() {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [result, setResult] = useState([]); // result of search
@@ -50,7 +51,11 @@ export default function MenuDrink() {
           <button>Menu</button>
         </div>
         <div className="flex place-content-start gap-10 my-5 mx-36">
-          <Button theme={customTheme} color="primary" pill>
+          <Button theme={customTheme} color="primary" pill
+          onClick={() => {
+            navigate("/admin/menuDrink/addDrink");
+          }}
+          >
             Thêm nước
           </Button>
         </div>
