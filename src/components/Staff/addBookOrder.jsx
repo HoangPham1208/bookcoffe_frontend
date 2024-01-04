@@ -83,7 +83,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
         });
     };
     const borrowBookToGo = async () => {
-      await RefreshTokenAPI();
+      // await RefreshTokenAPI();
       await axios
         .post("http://localhost:4000/api/staff/borrowBookToGo", userData, {
           headers: {
@@ -111,6 +111,10 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
       borrowBookToGo();
     }
     setRadio(1);
+    setUserName("");
+    setIdCard("");
+    setPhoneNumber("");
+    setAddress("");
     // navigate("/staff/order/books");
   };
   return (

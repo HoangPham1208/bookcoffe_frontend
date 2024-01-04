@@ -108,7 +108,7 @@ export default function OrderLocationHistory() {
       });
   }, [refresh]);
   const handleConfirm = () => {
-    RefreshTokenAPI();
+    // RefreshTokenAPI();
     axios
       .post(
         "http://localhost:4000/api/staff/confirmReservation",

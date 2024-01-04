@@ -731,9 +731,9 @@ export function Navbar({ mode = "logout" }) {
                   >
                     {localStorage.getItem("page") === "drink" ||
                     localStorage.getItem("page") === null ? (
-                      <p className="font-bold">Đơn nước</p>
+                      <p className="font-bold text-lg">Đơn nước</p>
                     ) : (
-                      <p>Đơn nước</p>
+                      <p className="text-lg">Đơn nước</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -745,9 +745,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "books" ? (
-                      <p className="font-bold">Đơn đặt sách</p>
+                      <p className="font-bold text-lg">Đơn đặt sách</p>
                     ) : (
-                      <p>Đơn đặt sách</p>
+                      <p className="text-lg">Đơn đặt sách</p>
                     )}{" "}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -759,9 +759,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "location" ? (
-                      <p className="font-bold">Đơn đặt chỗ</p>
+                      <p className="font-bold text-lg">Đơn đặt chỗ</p>
                     ) : (
-                      <p>Đơn đặt chỗ</p>
+                      <p className="text-lg">Đơn đặt chỗ</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -794,9 +794,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "manage" ? (
-                      <p className="font-bold">Quản lí</p>
+                      <p className="font-bold text-lg">Quản lí</p>
                     ) : (
-                      <p>Quản lí</p>
+                      <p className="text-lg">Quản lí</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -814,9 +814,9 @@ export function Navbar({ mode = "logout" }) {
                   >
                     {localStorage.getItem("page") === "home" ||
                     localStorage.getItem("page") === null ? (
-                      <p className="font-bold">Trang chủ</p>
+                      <p className="font-bold text-lg">Trang chủ</p>
                     ) : (
-                      <p>Trang chủ</p>
+                      <p className="text-lg">Trang chủ</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -830,9 +830,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "menuDrink" ? (
-                      <p className="font-bold">Menu nước</p>
+                      <p className="font-bold text-lg">Menu nước</p>
                     ) : (
-                      <p>Menu nước</p>
+                      <p className="text-lg">Menu nước</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -846,9 +846,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "bookList" ? (
-                      <p className="font-bold">Sách</p>
+                      <p className="font-bold text-lg">Sách</p>
                     ) : (
-                      <p>Sách</p>
+                      <p className="text-lg">Sách</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -867,9 +867,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "home" ? (
-                      <p className="font-bold">Trang chủ</p>
+                      <p className="font-bold text-lg">Trang chủ</p>
                     ) : (
-                      <p>Trang chủ</p>
+                      <p className="text-lg">Trang chủ</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -883,9 +883,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "books" ? (
-                      <p className="font-bold">Sách</p>
+                      <p className="font-bold text-lg">Sách</p>
                     ) : (
-                      <p>Sách</p>
+                      <p className="text-lg">Sách</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -899,9 +899,25 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "locations" ? (
-                      <p className="font-bold">Chi nhánh</p>
+                      <p className="font-bold text-lg">Chi nhánh</p>
                     ) : (
-                      <p>Chi nhánh</p>
+                      <p className="text-lg">Chi nhánh</p>
+                    )}
+                  </button>
+                </FlowbiteNavbar.Link>
+                <FlowbiteNavbar.Link>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("page", "menu");
+                      if (role === "customer") {
+                        navigate("/menu");
+                      } else navigate("/menu");
+                    }}
+                  >
+                    {localStorage.getItem("page") === "menu" ? (
+                      <p className="font-bold text-lg">Menu nước</p>
+                    ) : (
+                      <p className="text-lg">Menu nước</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -915,9 +931,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "blog" ? (
-                      <p className="font-bold">Blog</p>
+                      <p className="font-bold text-lg">Blog</p>
                     ) : (
-                      <p>Blog</p>
+                      <p className="text-lg">Blog</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
@@ -931,9 +947,9 @@ export function Navbar({ mode = "logout" }) {
                     }}
                   >
                     {localStorage.getItem("page") === "contact" ? (
-                      <p className="font-bold">Liên hệ</p>
+                      <p className="font-bold text-lg">Liên hệ</p>
                     ) : (
-                      <p>Liên hệ</p>
+                      <p className="text-lg">Liên hệ</p>
                     )}
                   </button>
                 </FlowbiteNavbar.Link>
