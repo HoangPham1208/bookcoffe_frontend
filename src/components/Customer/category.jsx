@@ -20,7 +20,7 @@ export default function Category() {
   }, []);
   return (
     <>
-      <div className="space-y-2">
+      <div className="space-y-3">
         <h2 className="text-black text-2xl not-italic font-bold">
           Đọc theo thể loại
         </h2>
