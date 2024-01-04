@@ -21,14 +21,24 @@ export default function AddDrinkMenu() {
   const [prices, setPrices] = useState([]);
   const [size, setSize] = useState([]);
   const [price, setPrice] = useState([]);
+  const [checkSize, setCheckSize] = useState([
+    { S: false },
+    { M: false },
+    { L: false },
+  ]);
 
   const handleAddDrink = () => {
     const data = new FormData();
-    data.append("drinksImage",drinksImage)
+    data.append("drinksImage", drinksImage);
     data.append("drinksName", drinksName);
     data.append("size", sizes);
     data.append("price", prices);
-    if (drinksImage === null || drinksName === "" || sizes.length === 0 || prices.length === 0) {
+    if (
+      drinksImage === null ||
+      drinksName === "" ||
+      sizes.length === 0 ||
+      prices.length === 0
+    ) {
       alert("Vui lòng nhập đủ thông tin");
       return;
     }
@@ -44,11 +54,10 @@ export default function AddDrinkMenu() {
         navigate("/admin/menuDrink");
       })
       .catch((err) => {
-        if(err.response.status === 409){
+        if (err.response.status === 409) {
           alert("Gặp xung đột dữ liệu");
           return;
-        }
-        else alert("Lỗi kết nối")
+        } else alert("Lỗi kết nối");
         console.log(err);
       });
   };
@@ -57,7 +66,6 @@ export default function AddDrinkMenu() {
       <Navbar />
       <main className="mx-autoflex flex-col max-w-screen-xl py-32 mx-36">
         <div className="flex">
-          
           <div className="w-2/12  font-semibold text-lg">Thêm nước</div>
           <div className="w-full ">
             <div className="flex place-content-start gap-10 mb-5">
@@ -65,7 +73,7 @@ export default function AddDrinkMenu() {
                 theme={customTheme}
                 color="primary"
                 pill
-                onClick = {handleAddDrink}
+                onClick={handleAddDrink}
               >
                 Hoàn tất
               </Button>
@@ -111,15 +119,21 @@ export default function AddDrinkMenu() {
               <div className="flex gap-5">
                 <div className="mb-5">
                   <Label for="size">Size</Label>
-                  <Select 
+                  <Select
                     id="size"
                     onChange={(e) => {
                       setSize(e.target.value);
                     }}
                   >
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
+                    <option disabled={checkSize[0].S} value="S">
+                      S
+                    </option>
+                    <option disabled={checkSize[1].M} value="M">
+                      M
+                    </option>
+                    <option disabled={checkSize[2].L} value="L">
+                      L
+                    </option>
                   </Select>
                 </div>
                 <div className="mb-5">
@@ -143,8 +157,23 @@ export default function AddDrinkMenu() {
                         alert("Vui lòng nhập đủ thông tin");
                         return;
                       }
-                      setSizes([...sizes, size]);
-                      setPrices([...prices, price]);
+                      if (size === "S") {
+                        setCheckSize([{ S: true }, { M: false }, { L: false }]);
+                      }
+                      if (size === "M") {
+                        setCheckSize([{ S: false }, { M: true }, { L: false }]);
+                      }
+                      if (size === "L") {
+                        setCheckSize([{ S: false }, { M: false }, { L: true }]);
+                      }
+                      for (let i = 0; i < sizes.length; i++) {
+                        if (sizes[i] === size) {
+                          alert("Size đã tồn tại");
+                          return;
+                        }
+                      }
+                      setSizes((sizes) => [...sizes, size]);
+                      setPrices((prices) => [...prices, price]);
                     }}
                   />
                 </button>
@@ -154,6 +183,11 @@ export default function AddDrinkMenu() {
                     onClick={() => {
                       setSizes([]);
                       setPrices([]);
+                      setCheckSize([
+                        { S: false },
+                        { M: false },
+                        { L: false },
+                      ]);
                     }}
                   />
                 </button>
