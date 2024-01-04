@@ -26,9 +26,15 @@ export default function CategoryBook() {
             color="secondary"
             withIcon
             onClick={() => {
-              localStorage.getItem("page") === "home"
-                ? navigate("/homeUser")
-                : navigate("/booksCustomer");
+              if (cookie.get("role") === "customer") {
+                localStorage.getItem("page") === "home"
+                  ? navigate("/homeUser")
+                  : navigate("/booksCustomer");
+              } else {
+                localStorage.getItem("page") === "home"
+                  ? navigate("/")
+                  : navigate("/books");
+              }
             }}
           >
             <HiOutlineArrowLeft className="h-5 w-5 mr-3" />
