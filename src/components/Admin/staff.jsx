@@ -26,6 +26,7 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
       return;
     }
     const userData = {
+      branchId: localStorage.getItem("branchId"),
       staffName: userName,
       email: email,
       address: address,
@@ -48,7 +49,8 @@ function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
         })
         .catch((err) => {
           console.log(err);
-          alert("Tên tài khoản đã tồn tại!");
+          if (err.response.status === 409) alert("Tên tài khoản đã tồn tại!");
+          else alert("Tạo tài khoản thất bại!");
         });
     };
     fetchData();
@@ -186,7 +188,7 @@ export default function StaffAdmin() {
           <Button
             onClick={() => {
               localStorage.clear();
-              navigate("/admin")
+              navigate("/admin");
             }}
             theme={customTheme}
             color="secondary"
@@ -201,7 +203,11 @@ export default function StaffAdmin() {
               <button
                 onClick={() => {
                   localStorage.setItem("type", "book");
-                  navigate(`/admin/branch/${localStorage.getItem("branchAddress")}/books`);
+                  navigate(
+                    `/admin/branch/${localStorage.getItem(
+                      "branchAddress"
+                    )}/books`
+                  );
                 }}
                 className="hover:underline"
               >
