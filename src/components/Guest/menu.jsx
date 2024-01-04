@@ -8,8 +8,10 @@ import { useState } from "react";
 import axios from "axios";
 import { Card } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 export default function Menu() {
+  const cookie = new Cookies();
   const Navigate = useNavigate();
   const [data, setData] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -30,7 +32,7 @@ export default function Menu() {
   }, [refresh]);
   return (
     <>
-      {localStorage.getItem("role") !== "customer" ? (
+      {cookie.get("role") !== "customer" ? (
         <Navbar mode="login" />
       ) : (
         <Navbar />
