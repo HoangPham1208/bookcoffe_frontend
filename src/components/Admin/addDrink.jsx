@@ -57,6 +57,7 @@ export default function AddDrinkMenu() {
       <Navbar />
       <main className="mx-autoflex flex-col max-w-screen-xl py-32 mx-36">
         <div className="flex">
+          
           <div className="w-2/12  font-semibold text-lg">Thêm nước</div>
           <div className="w-full ">
             <div className="flex place-content-start gap-10 mb-5">
