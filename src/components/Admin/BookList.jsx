@@ -125,8 +125,11 @@ export default function BookList() {
                     </Table.Cell>
                     <Table.Cell>
                       <Button
-                        onClick={() =>
-                          navigate("/admin/bookList/" + item1.title)
+                        onClick={async () =>
+                          {
+                            await localStorage.setItem("bookInfo", JSON.stringify(item1));
+                            navigate("/admin/bookList/" + item1.title)
+                          }
                         }
                         theme={customTheme}
                         color="secondary"
