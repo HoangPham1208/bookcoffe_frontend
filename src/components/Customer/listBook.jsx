@@ -150,7 +150,7 @@ export function BookDetailCustomer() {
       <Navbar />
       <section className="mx-auto px-6 md:px-10 py-10 space-y-5 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
-          <div className="w-full font-bold text-3xl">Sách</div>
+          <div className="w-full font-bold text-2xl">Thông tin sách</div>
           <Button
             theme={customTheme}
             pill
@@ -182,6 +182,8 @@ export function BookDetailCustomer() {
               </p>
               <p className="font-bold text-lg">Thể loại</p>
               <p className="pb-5">{bookInfo.genre}</p>
+              <p className="font-bold text-lg">Năm xuất bản</p>
+              <p className="pb-5">{bookInfo.publicationYear}</p>
               <p className="font-bold text-lg">Mô tả</p>
               <p className="whitespace-pre-line">{bookInfo.description}</p>
             </div>

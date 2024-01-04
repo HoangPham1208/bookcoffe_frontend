@@ -1,24 +1,40 @@
 import { Navbar } from "../navbar";
-import BestBook from "./bestbook";
-import Category from "./category";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Label, TextInput } from "flowbite-react";
+import axios from "axios";
 import { Button } from "flowbite-react";
 import { HiOutlineArrowLeft } from "react-icons/hi";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { customTheme } from "../Utils/myButton";
 import { useParams } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 export default function CategoryBook() {
-    const {id: genre} = useParams();
+  const navigate = useNavigate();
+  const cookie = new Cookies();
+  const { id: genre } = useParams();
   return (
     <>
-      <Navbar />
+      {cookie.get("role") !== "customer" ? <Navbar mode="login" /> : <Navbar />}
       <section className="mx-auto px-6 md:px-10 py-10 space-y-5 flex flex-col max-w-screen-xl pt-20">
         <main className="my-5 space-y-5">
-          <div className="w-full font-bold text-3xl">Thể loại: <span className="font-medium">{genre}</span></div>
-          <AllBook/>
+          <div className="w-full font-bold text-2xl">
+            Thể loại: <span className="font-medium">{genre}</span>
+          </div>
+          <Button
+            theme={customTheme}
+            pill
+            color="secondary"
+            withIcon
+            onClick={() => {
+              localStorage.getItem("page") === "home"
+                ? navigate("/homeUser")
+                : navigate("/booksCustomer");
+            }}
+          >
+            <HiOutlineArrowLeft className="h-5 w-5 mr-3" />
+            Quay lại
+          </Button>
+          <AllBook />
         </main>
       </section>
     </>
@@ -26,9 +42,10 @@ export default function CategoryBook() {
 }
 
 function AllBook() {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const {id: genre} = useParams();
+  const { id: genre } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,9 +64,9 @@ function AllBook() {
   return (
     <>
       <div className="">
-        <h2 className="text-black text-xl not-italic ">
+        <p className="text-black text-lg not-italic ">
           Tất cả sách được xếp theo thể loại {genre}
-        </h2>
+        </p>
         <div
           className="flex flex-wrap py-5 gap-5 overflow-auto px-2"
           id="list-all-books"
@@ -60,9 +77,13 @@ function AllBook() {
               className="flex flex-col shadow-2 hover:shadow-4 h-[300px] sm:h-96 w-40 sm:w-44 rounded-lg transition-all ease-m3-standard-accelerate text-left shrink-0"
               id="book-card"
               onClick={() => {
-                navigate("/booksCustomer/" + entry.bookId, {
-                  state: { id: entry.bookId, name: entry.title },
-                });
+                cookie.get("role") === "customer"
+                  ? navigate("/booksCustomer/" + entry.bookId, {
+                      state: { id: entry.bookId, name: entry.title },
+                    })
+                  : navigate("/books/" + entry.bookId, {
+                      state: { id: entry.bookId, name: entry.title },
+                    });
               }}
             >
               <img
