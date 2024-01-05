@@ -187,7 +187,6 @@ export default function OrderLocationHistory() {
               <Table.HeadCell>Email</Table.HeadCell>
               <Table.HeadCell>Số điện thoại</Table.HeadCell>
               <Table.HeadCell>Ngày đặt</Table.HeadCell>
-              <Table.HeadlCell>Ngày xác nhận</Table.HeadlCell>
               <Table.HeadCell>Số lượng</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
