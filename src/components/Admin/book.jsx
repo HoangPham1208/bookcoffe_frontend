@@ -97,9 +97,9 @@ export default function BookAdmin() {
           >
             Thêm copy
           </Button>
-          <Button theme={customTheme} color="secondary" pill>
+          {/* <Button theme={customTheme} color="secondary" pill>
             Xóa sách
-          </Button>
+          </Button> */}
         </div>
         <div className="relative text-gray-600 mx-36 my-7">
           <input
@@ -142,12 +142,12 @@ export default function BookAdmin() {
                     <Table.Cell>
                       {
                         <img
+                          className="h-28 w-52"
                           src={
                             "http://localhost:4000/api/customer/getBookImage/" +
                             item1.bookId
                           }
                           alt="mybook"
-                          className="h-36"
                         />
                       }
                     </Table.Cell>
