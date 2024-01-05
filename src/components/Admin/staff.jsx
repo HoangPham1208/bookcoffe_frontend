@@ -10,6 +10,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import { FloatingLabel } from "flowbite-react";
 import { customTheme } from "../Utils/myButton";
+import { HiOutlineArrowLeft } from "react-icons/hi";
 
 function SignUpDialog({ visible, onClose, refresh, setRefresh }) {
   const [userName, setUserName] = useState("");
@@ -183,143 +184,147 @@ export default function StaffAdmin() {
   return (
     <div>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="flex place-content-start fixed mt-8 mx-5 ">
-          <Button
-            onClick={() => {
-              localStorage.clear();
-              navigate("/admin");
-            }}
-            theme={customTheme}
-            color="secondary"
-            pill
-          >
-            Trở về
-          </Button>
-        </div>
-        <div>
-          <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
-            <li>
-              <button
-                onClick={() => {
-                  localStorage.setItem("type", "book");
-                  navigate(
-                    `/admin/branch/${localStorage.getItem(
-                      "branchAddress"
-                    )}/books`
-                  );
-                }}
-                className="hover:underline"
-              >
-                {localStorage.getItem("type") === "book" ||
-                localStorage.getItem("type") === null ? (
-                  <p className="underline"> Sách </p>
-                ) : (
-                  <p> Sách </p>
-                )}
-              </button>
-            </li>
-            <li>
-              <button className="hover:underline">
-                {/* staff */}
-                {localStorage.getItem("type") === "staff" ? (
-                  <p className="underline"> Nhân viên </p>
-                ) : (
-                  <p> Nhân viên </p>
-                )}
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div className="flex ml-36 gap-4">
-          <Button
-            onClick={() => setShowDialog(true)}
-            theme={customTheme}
-            color="primary"
-            pill
-          >
-            Thêm nhân viên
-          </Button>
-          <SignUpDialog
-            visible={showDialog}
-            onClose={() => setShowDialog(false)}
-            refresh={refresh}
-            setRefresh={setRefresh}
-          />
-          <Button
-            onClick={handleUpdateStats}
-            theme={customTheme}
-            color="secondary"
-            pill
-          >
-            ON/OFF
-          </Button>
-        </div>
-        <div className="relative text-gray-600 mx-36 my-7">
-          <input
-            type="search"
-            name="serch"
-            placeholder="Tìm kiếm"
-            className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
-          />
-        </div>
-        <hr className="mt-10 mx-36 border-black" />
-        <div className="overflow-x-auto mx-36 py-10">
-          <Table hoverable>
-            <Table.Head className="text-center">
-              <Table.HeadCell className="p-4"></Table.HeadCell>
-              <Table.HeadCell>ID</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
-              <Table.HeadCell>Số điện thoại</Table.HeadCell>
-              <Table.HeadCell>Địa chỉ</Table.HeadCell>
-              <Table.HeadCell>Ngày bắt đầu làm việc</Table.HeadCell>
-              <Table.HeadCell>Trạng Thái</Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y text-center">
-              {items2.map((item, index) => (
-                <>
-                  <Table.Row
-                    onClick={() => {
-                      setSelected(index);
-                      setStaffData(item);
-                    }}
-                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    <Table.Cell className="p-4">
-                      <Checkbox
-                        className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                        checked={selected === index}
-                      />
-                    </Table.Cell>
-                    <Table.Cell>{item.staffName}</Table.Cell>
-                    <Table.Cell>{item.email}</Table.Cell>
-                    <Table.Cell>{item.phoneNumber}</Table.Cell>
-                    <Table.Cell>{item.address}</Table.Cell>
-                    <Table.Cell>
-                      {new Date(item.workingDate).toLocaleDateString("en-GB", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {item.disable === 0 ? (
-                        <Label className="text-green-500 font-semibold">
-                          Active
-                        </Label>
-                      ) : (
-                        <Label className="text-red-500 font-semibold">
-                          Inactive
-                        </Label>
-                      )}
-                    </Table.Cell>
-                  </Table.Row>
-                </>
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
-      </main>
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="flex place-content-start fixed mt-8">
+            <Button
+              onClick={() => {
+                localStorage.clear();
+                navigate("/admin");
+              }}
+              theme={customTheme}
+              color="secondary"
+              pill
+            >
+              <HiOutlineArrowLeft className="h-5 w-5 mr-3" />
+              Trở về
+            </Button>
+          </div>
+          <div>
+            <ul className="flex gap-4 ml-36 my-10 text-xl font-semibold">
+              <li>
+                <button
+                  onClick={() => {
+                    localStorage.setItem("type", "book");
+                    navigate(
+                      `/admin/branch/${localStorage.getItem(
+                        "branchAddress"
+                      )}/books`
+                    );
+                  }}
+                  className="hover:underline"
+                >
+                  {localStorage.getItem("type") === "book" ||
+                  localStorage.getItem("type") === null ? (
+                    <p className="underline"> Sách </p>
+                  ) : (
+                    <p> Sách </p>
+                  )}
+                </button>
+              </li>
+              <li>
+                <button className="hover:underline">
+                  {/* staff */}
+                  {localStorage.getItem("type") === "staff" ? (
+                    <p className="underline"> Nhân viên </p>
+                  ) : (
+                    <p> Nhân viên </p>
+                  )}
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div className="flex ml-36 gap-4">
+            <Button
+              onClick={() => setShowDialog(true)}
+              theme={customTheme}
+              color="primary"
+              pill
+            >
+              Thêm nhân viên
+            </Button>
+            <SignUpDialog
+              visible={showDialog}
+              onClose={() => setShowDialog(false)}
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
+            <Button
+              onClick={handleUpdateStats}
+              theme={customTheme}
+              color="secondary"
+              pill
+            >
+              Cập nhật trạng thái
+            </Button>
+          </div>
+          <div className="relative text-gray-600 mx-36 my-7">
+            <input
+              type="search"
+              name="serch"
+              placeholder="Tìm kiếm"
+              className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+            />
+          </div>
+          <hr className="mt-10 mx-36 border-black" />
+          <div className="overflow-x-auto mx-36 py-10">
+            <Table hoverable>
+              <Table.Head className="text-center">
+                <Table.HeadCell className="p-4"></Table.HeadCell>
+                <Table.HeadCell>ID</Table.HeadCell>
+                <Table.HeadCell>Email</Table.HeadCell>
+                <Table.HeadCell>Địa chỉ</Table.HeadCell>
+                <Table.HeadCell>Ngày bắt đầu làm việc</Table.HeadCell>
+                <Table.HeadCell>Trạng Thái</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y text-center">
+                {items2.map((item, index) => (
+                  <>
+                    <Table.Row
+                      onClick={() => {
+                        setSelected(index);
+                        setStaffData(item);
+                      }}
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    >
+                      <Table.Cell className="p-4">
+                        <Checkbox
+                          className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                          checked={selected === index}
+                        />
+                      </Table.Cell>
+                      <Table.Cell>{item.staffName}</Table.Cell>
+                      <Table.Cell>{item.email}</Table.Cell>
+                      <Table.Cell>{item.address}</Table.Cell>
+                      <Table.Cell>
+                        {new Date(item.workingDate).toLocaleDateString(
+                          "en-GB",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {item.disable === 0 ? (
+                          <Label className="text-green-500 font-semibold">
+                            Active
+                          </Label>
+                        ) : (
+                          <Label className="text-red-500 font-semibold">
+                            Inactive
+                          </Label>
+                        )}
+                      </Table.Cell>
+                    </Table.Row>
+                  </>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        </main>
+      </section>
     </div>
   );
 }

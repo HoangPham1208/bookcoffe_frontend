@@ -57,107 +57,109 @@ export default function AddBranch() {
   return (
     <div>
       <Navbar />
-      <main className="mx-autoflex flex-col max-w-screen-xl py-32 mx-36">
-        <div className="flex">
-          <div className="w-2/12  font-semibold text-lg">Thêm chi nhánh</div>
-          <div className="w-full ">
-            {/* File */}
-            <div className="mb-5">
-              <Label for="file">Ảnh chi nhánh</Label>
-              <FileInput
-                id="file-upload-helper-text"
-                helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
-                onChange={(e) => {
-                  setBranchImage(e.target.files[0]);
-                }}
-              />
-            </div>
-            {/* Tên manager */}
-            <div className="mb-5">
-              <Label for="ten">Tài khoản quản lý</Label>
-              <TextInput
-                id="ten"
-                placeholder="Tài khoản quản lý"
-                className="w-full"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </div>
-            {/* pass */}
-            <div className="mb-5">
-              <Label for="pass">Mật khẩu</Label>
-              <TextInput
-                id="pass"
-                placeholder="Mật khẩu"
-                className="w-full"
-                type="password"
-                onChange={(e) => {
-                  setPass(e.target.value);
-                }}
-              />
-            </div>
-            {/* Tên chi nhanh */}
-            <div className="mb-5">
-              <Label for="ten">Địa chỉ</Label>
-              <TextInput
-                id="ten"
-                placeholder="Tên"
-                className="w-full"
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-              />
-            </div>
-            {/* Thời gian làm việc */}
-            <div className="mb-5">
-              <Label for="time">Thời gian làm việc</Label>
-              <TextInput
-                id="time"
-                placeholder="Thời gian làm việc"
-                className="w-full"
-                onChange={(e) => {
-                  setWorkingTime(e.target.value);
-                }}
-              />
-            </div>
-            {/* Mô tả */}
-            <div className="mb-5">
-              <Label for="mota">Mô tả</Label>
-              <Textarea
-                id="mota"
-                placeholder="Mô tả"
-                className="w-full"
-                required
-                rows={5}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </div>
-            {/* Giá */}
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="flex flex-col md:flex-row gap-5">
+            <div className="w-full md:w-2/12 font-semibold text-lg">Thêm chi nhánh</div>
+            <div className="w-full ">
+              {/* File */}
+              <div className="mb-5">
+                <Label for="file">Ảnh chi nhánh</Label>
+                <FileInput
+                  id="file-upload-helper-text"
+                  helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
+                  onChange={(e) => {
+                    setBranchImage(e.target.files[0]);
+                  }}
+                />
+              </div>
+              {/* Tên manager */}
+              <div className="mb-5">
+                <Label for="ten">Tài khoản quản lý</Label>
+                <TextInput
+                  id="ten"
+                  placeholder="Tài khoản quản lý"
+                  className="w-full"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </div>
+              {/* pass */}
+              <div className="mb-5">
+                <Label for="pass">Mật khẩu</Label>
+                <TextInput
+                  id="pass"
+                  placeholder="Mật khẩu"
+                  className="w-full"
+                  type="password"
+                  onChange={(e) => {
+                    setPass(e.target.value);
+                  }}
+                />
+              </div>
+              {/* Tên chi nhanh */}
+              <div className="mb-5">
+                <Label for="ten">Địa chỉ</Label>
+                <TextInput
+                  id="ten"
+                  placeholder="Tên"
+                  className="w-full"
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                />
+              </div>
+              {/* Thời gian làm việc */}
+              <div className="mb-5">
+                <Label for="time">Thời gian làm việc</Label>
+                <TextInput
+                  id="time"
+                  placeholder="Thời gian làm việc"
+                  className="w-full"
+                  onChange={(e) => {
+                    setWorkingTime(e.target.value);
+                  }}
+                />
+              </div>
+              {/* Mô tả */}
+              <div className="mb-5">
+                <Label for="mota">Mô tả</Label>
+                <Textarea
+                  id="mota"
+                  placeholder="Mô tả"
+                  className="w-full"
+                  required
+                  rows={5}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                />
+              </div>
+              {/* Giá */}
 
-            <div className="flex place-content-end gap-10">
-              <Button
-                onClick={() => navigate("/admin")}
-                theme={customTheme}
-                color="secondary"
-                pill
-              >
-                Hủy
-              </Button>
-              <Button
-                theme={customTheme}
-                color="primary"
-                pill
-                onClick={handleAddBranch}
-              >
-                Hoàn tất
-              </Button>
+              <div className="flex place-content-end gap-10">
+                <Button
+                  onClick={() => navigate("/admin")}
+                  theme={customTheme}
+                  color="secondary"
+                  pill
+                >
+                  Hủy
+                </Button>
+                <Button
+                  theme={customTheme}
+                  color="primary"
+                  pill
+                  onClick={handleAddBranch}
+                >
+                  Hoàn tất
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </section>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { CustomFlowbiteTheme } from "flowbite-react";
 export const customTheme = {
   color: {
     primary:
-      'bg-[#916239] hover:bg-[#7a5330] text-white p-1 hover:shadow-3 transition ',
+      'bg-[#916239] hover:bg-[#7a5330] text-white p-1 hover:shadow-3 transition w-fit',
     secondary: 'bg-white border-[#916239] text-[#916239] p-1 hover:shadow-3 transition border-2 ',
   },
   pill: {

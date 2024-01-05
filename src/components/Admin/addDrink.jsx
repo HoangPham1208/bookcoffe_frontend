@@ -64,161 +64,177 @@ export default function AddDrinkMenu() {
   return (
     <div>
       <Navbar />
-      <main className="mx-autoflex flex-col max-w-screen-xl py-32 mx-36">
-        <div className="flex">
-          <div className="w-2/12  font-semibold text-lg">Thêm nước</div>
-          <div className="w-full ">
-            <div className="flex place-content-start gap-10 mb-5">
-              <Button
-                theme={customTheme}
-                color="primary"
-                pill
-                onClick={handleAddDrink}
-              >
-                Hoàn tất
-              </Button>
-              <Button
-                onClick={() => navigate("/admin/menuDrink")}
-                theme={customTheme}
-                color="secondary"
-                pill
-              >
-                Hủy
-              </Button>
-            </div>
-            <div className="w-full ">
-              {/* Bìa  */}
-              <div className="mb-5">
-                <Label
-                  htmlFor="file-upload"
-                  value="Ảnh nước "
-                  // set the file to fileAvatar
-                />
-                <FileInput
-                  id="file-upload-helper-text"
-                  helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
-                  onChange={(e) => {
-                    setDrinksImage(e.target.files[0]);
-                  }}
-                />
-                {/* <Label for="avatar" className="ml-40">Avatar</Label> */}
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="flex flex-col md:flex-row gap-5">
+            <div className="w-full md:w-2/12 font-semibold text-lg">Thêm nước</div>
+            <div className="w-full gap-5">
+              <div className="flex flex-row place-content-start mb-5 gap-5">
+                <Button
+                  theme={customTheme}
+                  color="primary"
+                  pill
+                  onClick={handleAddDrink}
+                >
+                  Hoàn tất
+                </Button>
+                <Button
+                  onClick={() => navigate("/admin/menuDrink")}
+                  theme={customTheme}
+                  color="secondary"
+                  pill
+                >
+                  Hủy
+                </Button>
               </div>
-              {/* Tên */}
-              <div className="mb-5">
-                <Label for="ten">Tên nước</Label>
-                <TextInput
-                  id="ten"
-                  placeholder="Tên"
-                  className="w-full"
-                  onChange={(e) => {
-                    setDrinksName(e.target.value);
-                  }}
-                />
-              </div>
-              {/* Size + Giá */}
-              <div className="flex gap-5">
+              <div className="w-full ">
+                {/* Bìa  */}
                 <div className="mb-5">
-                  <Label for="size">Size</Label>
-                  <Select
-                    id="size"
+                  <Label
+                    htmlFor="file-upload"
+                    value="Ảnh nước "
+                    // set the file to fileAvatar
+                  />
+                  <FileInput
+                    id="file-upload-helper-text"
+                    helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
                     onChange={(e) => {
-                      setSize(e.target.value);
+                      setDrinksImage(e.target.files[0]);
                     }}
-                  >
-                    <option value="Chọn size" disabled = {true} selected= {true}>Chọn size</option>
-                    <option disabled={checkSize[0].S} value="S">
-                      S
-                    </option>
-                    <option disabled={checkSize[1].M} value="M">
-                      M
-                    </option>
-                    <option disabled={checkSize[2].L} value="L">
-                      L
-                    </option>
-                  </Select>
+                  />
+                  {/* <Label for="avatar" className="ml-40">Avatar</Label> */}
                 </div>
+                {/* Tên */}
                 <div className="mb-5">
-                  <Label for="gia">Giá</Label>
+                  <Label for="ten">Tên nước</Label>
                   <TextInput
-                    type="number"
-                    id="gia"
-                    placeholder="Giá"
+                    id="ten"
+                    placeholder="Tên"
                     className="w-full"
-                    min="0"
                     onChange={(e) => {
-                      setPrice(e.target.value);
+                      setDrinksName(e.target.value);
                     }}
                   />
                 </div>
-                <button>
-                  <FaCirclePlus
-                    className="w-7 h-7"
-                    onClick={() => {
-                      if (size.length === 0 || price.length === 0) {
-                        alert("Vui lòng nhập đủ thông tin");
-                        return;
-                      }
-                      if (size === "S") {
-                        setCheckSize([{ S: true }, { M: false }, { L: false }]);
-                      }
-                      if (size === "M") {
-                        setCheckSize([{ S: false }, { M: true }, { L: false }]);
-                      }
-                      if (size === "L") {
-                        setCheckSize([{ S: false }, { M: false }, { L: true }]);
-                      }
-                      for (let i = 0; i < sizes.length; i++) {
-                        if (sizes[i] === size) {
-                          alert("Size đã tồn tại");
+                {/* Size + Giá */}
+                <div className="flex gap-5">
+                  <div className="mb-5">
+                    <Label for="size">Size</Label>
+                    <Select
+                      id="size"
+                      onChange={(e) => {
+                        setSize(e.target.value);
+                      }}
+                    >
+                      <option value="Chọn size" disabled={true} selected={true}>
+                        Chọn size
+                      </option>
+                      <option disabled={checkSize[0].S} value="S">
+                        S
+                      </option>
+                      <option disabled={checkSize[1].M} value="M">
+                        M
+                      </option>
+                      <option disabled={checkSize[2].L} value="L">
+                        L
+                      </option>
+                    </Select>
+                  </div>
+                  <div className="mb-5">
+                    <Label for="gia">Giá</Label>
+                    <TextInput
+                      type="number"
+                      id="gia"
+                      placeholder="Giá"
+                      className="w-full"
+                      min="0"
+                      onChange={(e) => {
+                        setPrice(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <button>
+                    <FaCirclePlus
+                      className="w-7 h-7"
+                      onClick={() => {
+                        if (size.length === 0 || price.length === 0) {
+                          alert("Vui lòng nhập đủ thông tin");
                           return;
                         }
-                      }
-                      setSizes((sizes) => [...sizes, size]);
-                      setPrices((prices) => [...prices, price]);
-                    }}
-                  />
-                </button>
-                <button>
-                  <AiOutlineClear
-                    className="w-7 h-7"
-                    onClick={() => {
-                      setSizes([]);
-                      setPrices([]);
-                      setCheckSize([
-                        { S: false },
-                        { M: false },
-                        { L: false },
-                      ]);
-                    }}
-                  />
-                </button>
-              </div>
-              <div className="flex gap-20">
-                <div>
-                  {sizes &&
-                    sizes.map((item, index) => (
-                      <div>
-                        <span className="font-semibold">Size: </span> {item}
-                      </div>
-                    ))}
+                        if (size === "S") {
+                          setCheckSize([
+                            { S: true },
+                            { M: false },
+                            { L: false },
+                          ]);
+                        }
+                        if (size === "M") {
+                          setCheckSize([
+                            { S: false },
+                            { M: true },
+                            { L: false },
+                          ]);
+                        }
+                        if (size === "L") {
+                          setCheckSize([
+                            { S: false },
+                            { M: false },
+                            { L: true },
+                          ]);
+                        }
+                        for (let i = 0; i < sizes.length; i++) {
+                          if (sizes[i] === size) {
+                            alert("Size đã tồn tại");
+                            return;
+                          }
+                        }
+                        setSizes((sizes) => [...sizes, size]);
+                        setPrices((prices) => [...prices, price]);
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <AiOutlineClear
+                      className="w-7 h-7"
+                      onClick={() => {
+                        setSizes([]);
+                        setPrices([]);
+                        setCheckSize([
+                          { S: false },
+                          { M: false },
+                          { L: false },
+                        ]);
+                      }}
+                    />
+                  </button>
                 </div>
-                <div>
-                  {sizes &&
-                    sizes.map((item, index) => (
-                      <div>
-                        <span className="font-semibold">Giá: </span>
-                        {new Intl.NumberFormat("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        }).format(prices[index])}
-                      </div>
-                    ))}
+                <div className="flex gap-20">
+                  <div>
+                    {sizes &&
+                      sizes.map((item, index) => (
+                        <div>
+                          <span className="font-semibold">Size: </span> {item}
+                        </div>
+                      ))}
+                  </div>
+                  <div>
+                    {sizes &&
+                      sizes.map((item, index) => (
+                        <div>
+                          <span className="font-semibold">Giá: </span>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(prices[index])}
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </section>
     </div>
   );
 }

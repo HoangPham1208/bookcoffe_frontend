@@ -47,61 +47,63 @@ export default function AddCopyAdmin() {
   return (
     <div>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl mx-36 py-32">
-        <div className="flex">
-          <div className="w-2/12  font-semibold text-lg">Thêm copy</div>
-          <div className="w-full ">
-            {/* Bìa  */}
-            <div className="mb-5">
-              <Label for="bia">Tên</Label>
-              <TextInput
-                id="ten"
-                placeholder="Tên"
-                className="w-full"
-                value={localStorage.getItem("title")}
-              />
-            </div>
-            {/* Tên */}
-            <div className="mb-5">
-              <Label for="ten">Copies</Label>
-              <TextInput
-                type="number"
-                id="copies"
-                placeholder="Copies"
-                className="w-full"
-                onChange={(e) => {
-                  setNumCopies(e.target.value);
-                }}
-              />
-            </div>
-            <div className="flex place-content-end gap-10">
-              <Button
-                onClick={() => {
-                  navigate(
-                    `/admin/branch/${localStorage.getItem(
-                      "branchAddress"
-                    )}/books`
-                  );
-                  localStorage.removeItem("title");
-                }}
-                theme={customTheme}
-                color="secondary"
-                pill
-              >
-                Hủy
-              </Button>
-              <Button
-                theme={customTheme}
-                color="primary"
-                pill
-                onClick={handleAdd}
-              >
-                Hoàn tất
-              </Button>
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="flex">
+            <div className="w-2/12  font-semibold text-lg">Thêm copy</div>
+            <div className="w-full ">
+              {/* Bìa  */}
+              <div className="mb-5">
+                <Label for="bia">Tên</Label>
+                <TextInput
+                  id="ten"
+                  placeholder="Tên"
+                  className="w-full"
+                  value={localStorage.getItem("title")}
+                />
+              </div>
+              {/* Tên */}
+              <div className="mb-5">
+                <Label for="ten">Copies</Label>
+                <TextInput
+                  type="number"
+                  id="copies"
+                  placeholder="Copies"
+                  className="w-full"
+                  onChange={(e) => {
+                    setNumCopies(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="flex place-content-end gap-10">
+                <Button
+                  onClick={() => {
+                    navigate(
+                      `/admin/branch/${localStorage.getItem(
+                        "branchAddress"
+                      )}/books`
+                    );
+                    localStorage.removeItem("title");
+                  }}
+                  theme={customTheme}
+                  color="secondary"
+                  pill
+                >
+                  Hủy
+                </Button>
+                <Button
+                  theme={customTheme}
+                  color="primary"
+                  pill
+                  onClick={handleAdd}
+                >
+                  Hoàn tất
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </section>
     </div>
   );
 }
