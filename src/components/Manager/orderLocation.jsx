@@ -167,7 +167,8 @@ export default function OrderLocationManager() {
               <Table.HeadCell className="p-4"></Table.HeadCell>
               <Table.HeadCell>ID</Table.HeadCell>
               <Table.HeadCell>Tên người đặt</Table.HeadCell>
-              <Table.HeadCell>Địa điểm</Table.HeadCell>
+              <Table.HeadCell>Email</Table.HeadCell>
+              <Table.HeadCell>Số điện thoại</Table.HeadCell>
               <Table.HeadCell>Ngày đặt</Table.HeadCell>
               <Table.HeadCell>Số lượng</Table.HeadCell>
               <Table.HeadCell></Table.HeadCell>
@@ -199,7 +200,8 @@ export default function OrderLocationManager() {
                           </Table.Cell>
                           <Table.Cell>{item.reservationId}</Table.Cell>
                           <Table.Cell>{item.userName}</Table.Cell>
-                          <Table.Cell>{item.address}</Table.Cell>
+                          <Table.Cell>{item.email}</Table.Cell>
+                          <Table.Cell>{item.phoneNumber}</Table.Cell>
                           <Table.Cell>
                             {
                               // item.reservationDate 2023-12-20T05:12:12.000Z

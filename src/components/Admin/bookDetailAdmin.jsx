@@ -50,8 +50,10 @@ export default function BookDetailAdmin() {
           <div className="w-full mr-36">
             {/* Bìa  */}
             <div className="mb-5">
-              <Label for="bia">Bìa</Label>
-              <TextInput id="bia" placeholder="Bìa" className="w-full" />
+            <Label for="bia">Bìa</Label>
+              <img src = {"http://localhost:4000/api/customer/getBookImage/" + items.bookId} alt = "mybook"
+                className="h-44"
+              />
             </div>
             {/* Tên */}
             <div className="mb-5">

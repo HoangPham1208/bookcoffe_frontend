@@ -116,6 +116,8 @@ export default function OrderBookHomeManager() {
               <Table.HeadCell>Id</Table.HeadCell>
               <Table.HeadCell>Tên sách</Table.HeadCell>
               <Table.HeadCell>Tên</Table.HeadCell>
+              <Table.HeadCell>Email</Table.HeadCell>
+              <Table.HeadCell>Số điện thoại</Table.HeadCell>
               <Table.HeadCell>Ngày mượn</Table.HeadCell>
               <Table.HeadCell>Tiền cọc</Table.HeadCell>
               <Table.HeadCell>Trạng thái</Table.HeadCell>
@@ -127,6 +129,8 @@ export default function OrderBookHomeManager() {
                     <Table.Cell>{item.borrowingId}</Table.Cell>
                     <Table.Cell>{item.title}</Table.Cell>
                     <Table.Cell>{item.userName}</Table.Cell>
+                    <Table.Cell>{item.email}</Table.Cell>
+                    <Table.Cell>{item.phoneNumber}</Table.Cell>
                     <Table.Cell>
                       {(() => {
                         let date = new Date(item.borrowDate);
