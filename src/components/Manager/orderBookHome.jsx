@@ -130,7 +130,11 @@ export default function OrderBookHomeManager() {
                     <Table.Cell>
                       {(() => {
                         let date = new Date(item.borrowDate);
-                        return date.toLocaleDateString();
+                        // Fri Jan 05 2024 11:41:22 GMT+0700 (Indochina Time)
+                        // Take only "Fri Jan 05 2024 11:41:22", we need add 2 hours to get return date 
+                        let temp = date.toString().split(" ");
+                        temp = temp.slice(0, 5);
+                        return temp.join(" ");
                       })()}
                     </Table.Cell>
                     <Table.Cell>
