@@ -255,7 +255,7 @@ export default function StaffAdmin() {
               color="secondary"
               pill
             >
-              Cập nhật trạng thái
+              ON/OFF
             </Button>
           </div>
           <div className="relative text-gray-600 mx-36 my-7">
@@ -273,6 +273,7 @@ export default function StaffAdmin() {
                 <Table.HeadCell className="p-4"></Table.HeadCell>
                 <Table.HeadCell>ID</Table.HeadCell>
                 <Table.HeadCell>Email</Table.HeadCell>
+                <Table.HeadCell>Số điện thoại</Table.HeadCell>
                 <Table.HeadCell>Địa chỉ</Table.HeadCell>
                 <Table.HeadCell>Ngày bắt đầu làm việc</Table.HeadCell>
                 <Table.HeadCell>Trạng Thái</Table.HeadCell>
@@ -295,6 +296,7 @@ export default function StaffAdmin() {
                       </Table.Cell>
                       <Table.Cell>{item.staffName}</Table.Cell>
                       <Table.Cell>{item.email}</Table.Cell>
+                      <Table.Cell>{item.phoneNumber}</Table.Cell>
                       <Table.Cell>{item.address}</Table.Cell>
                       <Table.Cell>
                         {new Date(item.workingDate).toLocaleDateString(
