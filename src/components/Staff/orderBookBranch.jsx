@@ -127,55 +127,64 @@ export default function OrderBookBranchManager() {
               <Table.HeadCell>Trạng thái</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y text-center">
-              {result && result.map((item, index) => (
-                <>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>{item.borrowingId}</Table.Cell>
-                    <Table.Cell>{item.title}</Table.Cell>
-                    <Table.Cell>{item.customerName}</Table.Cell>
-                    <Table.Cell>{item.citizenId}</Table.Cell>
-                    <Table.Cell>{item.phoneNumber}</Table.Cell>
-                    <Table.Cell>
-                      {(() => {
-                        let date = new Date(item.borrowDate);
-                       return date.toLocaleDateString();
-                      })()}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {(() => {
-                        let date = new Date(item.returnDate);
-                        return date.toLocaleDateString();
-                      })()}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <div className="flex justify-center">
-                        {item.isReturn === 0 ? (
-                          <Button
-                            onClick={() => {
-                              handleReturnBook(item.borrowingId);
-                            }}
-                            className="text-white bg-red-500 hover:bg-red-600"
-                            color="primary"
-                            pill
-                          >
-                            Chưa trả
-                          </Button>
-                        ) : (
-                          <Button
-                            className="text-white bg-green-500"
-                            theme={customTheme}
-                            color="primary"
-                            disabled={true}
-                            pill
-                          >
-                            Đã trả
-                          </Button>
-                        )}
-                      </div>
-                    </Table.Cell>
-                  </Table.Row>
-                </>
-              ))}
+              {result &&
+                result.map((item, index) => (
+                  <>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                      <Table.Cell>{item.borrowingId}</Table.Cell>
+                      <Table.Cell>{item.title}</Table.Cell>
+                      <Table.Cell>{item.customerName}</Table.Cell>
+                      <Table.Cell>{item.citizenId}</Table.Cell>
+                      <Table.Cell>{item.phoneNumber}</Table.Cell>
+                      <Table.Cell>
+                        {(() => {
+                          let date = new Date(item.borrowDate);
+                          // Fri Jan 05 2024 11:41:22 GMT+0700 (Indochina Time)
+                          // Take only "Fri Jan 05 2024 11:41:22"
+                          let temp = date.toString().split(" ");
+                          temp = temp.slice(0, 5);
+                          return temp.join(" ");
+                        })()}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {(() => {
+                          let date = new Date(item.returnDate);
+                          // Fri Jan 05 2024 11:41:22 GMT+0700 (Indochina Time)
+                          // Take only "Fri Jan 05 2024 11:41:22", we need add 2 hours to get return date 
+                          let temp = date.toString().split(" ");
+                          temp = temp.slice(0, 5);
+                          return temp.join(" ");
+                        })()}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <div className="flex justify-center">
+                          {item.isReturn === 0 ? (
+                            <Button
+                              onClick={() => {
+                                handleReturnBook(item.borrowingId);
+                              }}
+                              className="text-white bg-red-500 hover:bg-red-600"
+                              color="primary"
+                              pill
+                            >
+                              Chưa trả
+                            </Button>
+                          ) : (
+                            <Button
+                              className="text-white bg-green-500"
+                              theme={customTheme}
+                              color="primary"
+                              disabled={true}
+                              pill
+                            >
+                              Đã trả
+                            </Button>
+                          )}
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  </>
+                ))}
             </Table.Body>
           </Table>
         </div>
