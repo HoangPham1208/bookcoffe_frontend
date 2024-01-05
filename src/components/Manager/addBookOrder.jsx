@@ -126,7 +126,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
               onClick={() => {
                 setRadio(1);
               }}
-              checked = {radio === 1}
+              checked={radio === 1}
             />
             Mượn tại quán
           </div>
@@ -140,7 +140,7 @@ function Order({ data, visible, onClose, refresh, setRefresh }) {
               onClick={() => {
                 setRadio(2);
               }}
-              checked = {radio === 2}
+              checked={radio === 2}
             />
             Mượn về nhà
           </div>
@@ -262,129 +262,131 @@ export default function AddBookOrderManager() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl pt-20">
-        <div className="text-3xl font-semibold my-5 mx-36">
-          Tạo phiếu mượn sách
-        </div>
-        <div className="relative text-gray-600 mx-36 my-7">
-          <input
-            type="search"
-            name="search"
-            placeholder="Tìm kiếm với tên tác giả, tiêu đề, năm xuất bản"
-            className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch(e.target.value);
-              }
-            }}
-            onChange={(e) => {
-              if (e.target.value === "") setResult(items);
-            }}
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="text-3xl font-semibold my-5 mx-36">
+            Tạo phiếu mượn sách
+          </div>
+          <div className="relative text-gray-600 mx-36 my-7">
+            <input
+              type="search"
+              name="search"
+              placeholder="Tìm kiếm với tên tác giả, tiêu đề, năm xuất bản"
+              className="bg-gray-100 rounded-full text-sm focus:outline-none w-full px-5 h-12"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch(e.target.value);
+                }
+              }}
+              onChange={(e) => {
+                if (e.target.value === "") setResult(items);
+              }}
+            />
+          </div>
+          <hr className="border-black mx-36 my-5" />
+          <div className="overflow-x-auto mx-36">
+            <Table hoverable>
+              <Table.Head className="text-center">
+                <Table.HeadCell></Table.HeadCell>
+                <Table.HeadCell>Copy Id</Table.HeadCell>
+                <Table.HeadCell>Tên tác giả</Table.HeadCell>
+                <Table.HeadCell>Tiêu đề</Table.HeadCell>
+                <Table.HeadCell>Năm xuất bản</Table.HeadCell>
+                <Table.HeadCell>Trạng thái</Table.HeadCell>
+                <Table.HeadCell className="p-4"></Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y text-center">
+                {result &&
+                  result.map((item1, index1) =>
+                    item1.branch.map((item2, index2) => (
+                      <>
+                        <Table.Row
+                          onClick={() => {
+                            setSelect(item1.copyId[index2]);
+                            setInfoData({
+                              copyId: item1.copyId[index2],
+                              authorName: item1.authorName,
+                              title: item1.title,
+                              publicationYear: item1.publicationYear,
+                              branch: item2,
+                            });
+                          }}
+                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                        >
+                          <Table.Cell>
+                            {
+                              <img
+                                className="h-28 w-36"
+                                src={
+                                  "http://localhost:4000/api/customer/getBookImage/" +
+                                  item1.bookId
+                                }
+                              />
+                            }
+                          </Table.Cell>
+                          <Table.Cell>{item1.copyId[index2]}</Table.Cell>
+                          <Table.Cell>{item1.authorName}</Table.Cell>
+                          <Table.Cell>{item1.title}</Table.Cell>
+                          <Table.Cell>{item1.publicationYear}</Table.Cell>
+                          <Table.Cell>
+                            {item1.isBorrowed[index2] === 1 ? (
+                              <p className="text-red-500">Đã mượn</p>
+                            ) : (
+                              <p className="text-green-500">Có sẵn</p>
+                            )}
+                          </Table.Cell>
+                          <Table.Cell className="p-4">
+                            {(() => {
+                              if (item1.isBorrowed[index2] === 0)
+                                return (
+                                  <Checkbox
+                                    checked={select === item1.copyId[index2]}
+                                    className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                                  />
+                                );
+                            })()}
+                          </Table.Cell>
+                        </Table.Row>
+                      </>
+                    ))
+                  )}
+              </Table.Body>
+            </Table>
+          </div>
+          <div className="flex place-content-start gap-10 mx-36 my-5">
+            <Button
+              onClick={() => {
+                if (select === null) {
+                  alert("Vui lòng chọn sách!");
+                } else {
+                  handleOrder();
+                }
+              }}
+              theme={customTheme}
+              color="primary"
+              pill
+            >
+              Hoàn tất
+            </Button>
+            <Button
+              onClick={() => navigate("/manager/order/books")}
+              theme={customTheme}
+              color="secondary"
+              pill
+            >
+              Hủy
+            </Button>
+          </div>
+          <Order
+            data={infoData}
+            visible={visible}
+            onClose={handleClose}
+            refresh={refresh}
+            setRefresh={setRefresh}
           />
-        </div>
-        <hr className="border-black mx-36 my-5" />
-        <div className="overflow-x-auto mx-36">
-          <Table hoverable>
-            <Table.Head className="text-center">
-              <Table.HeadCell></Table.HeadCell>
-              <Table.HeadCell>Copy Id</Table.HeadCell>
-              <Table.HeadCell>Tên tác giả</Table.HeadCell>
-              <Table.HeadCell>Tiêu đề</Table.HeadCell>
-              <Table.HeadCell>Năm xuất bản</Table.HeadCell>
-              <Table.HeadCell>Trạng thái</Table.HeadCell>
-              <Table.HeadCell className="p-4"></Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y text-center">
-              {result &&
-                result.map((item1, index1) =>
-                  item1.branch.map((item2, index2) => (
-                    <>
-                      <Table.Row
-                        onClick={() => {
-                          setSelect(item1.copyId[index2]);
-                          setInfoData({
-                            copyId: item1.copyId[index2],
-                            authorName: item1.authorName,
-                            title: item1.title,
-                            publicationYear: item1.publicationYear,
-                            branch: item2,
-                          });
-                        }}
-                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                      >
-                        <Table.Cell>
-                          {
-                            <img
-                              className="h-28 w-36"
-                              src={
-                                "http://localhost:4000/api/customer/getBookImage/" +
-                                item1.bookId
-                              }
-                            />
-                          }
-                        </Table.Cell>
-                        <Table.Cell>{item1.copyId[index2]}</Table.Cell>
-                        <Table.Cell>{item1.authorName}</Table.Cell>
-                        <Table.Cell>{item1.title}</Table.Cell>
-                        <Table.Cell>{item1.publicationYear}</Table.Cell>
-                        <Table.Cell>
-                          {item1.isBorrowed[index2] === 1 ? (
-                            <p className="text-red-500">Đã mượn</p>
-                          ) : (
-                            <p className="text-green-500">Có sẵn</p>
-                          )}
-                        </Table.Cell>
-                        <Table.Cell className="p-4">
-                          {(() => {
-                            if (item1.isBorrowed[index2] === 0)
-                              return (
-                                <Checkbox
-                                  checked={select === item1.copyId[index2]}
-                                  className="text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                                />
-                              );
-                          })()}
-                        </Table.Cell>
-                      </Table.Row>
-                    </>
-                  ))
-                )}
-            </Table.Body>
-          </Table>
-        </div>
-        <div className="flex place-content-start gap-10 mx-36 my-5">
-          <Button
-            onClick={() => {
-              if (select === null) {
-                alert("Vui lòng chọn sách!");
-              } else {
-                handleOrder();
-              }
-            }}
-            theme={customTheme}
-            color="primary"
-            pill
-          >
-            Hoàn tất
-          </Button>
-          <Button
-            onClick={() => navigate("/manager/order/books")}
-            theme={customTheme}
-            color="secondary"
-            pill
-          >
-            Hủy
-          </Button>
-        </div>
-        <Order
-          data={infoData}
-          visible={visible}
-          onClose={handleClose}
-          refresh={refresh}
-          setRefresh={setRefresh}
-        />
-        <BookOrder data={infoData} visible={visible} />
-      </main>
+          <BookOrder data={infoData} visible={visible} />
+        </main>
+      </section>
     </>
   );
 }
