@@ -117,7 +117,6 @@ export default function BookManager() {
                       <Table.Cell>
                         {
                           <img
-                            className="w-20 h-20"
                             src={
                               "http://localhost:4000/api/customer/getBookImage/" +
                               item1.bookId
