@@ -91,162 +91,157 @@ export default function AddDrink() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto flex flex-col max-w-screen-xl py-20">
-        <div className="text-3xl font-semibold my-5 mx-36">Chọn đồ uống</div>
-        <div>
-          <hr className="border-black mx-36 my-5" />
-          <div className="overflow-x-auto mx-36">
-            <Table hoverable>
-              <Table.Head className="text-center">
-                <Table.HeadCell></Table.HeadCell>
-                {/* <Table.HeadCell>ID</Table.HeadCell> */}
-                <Table.HeadCell>Tên</Table.HeadCell>
-                <Table.HeadCell>Giá</Table.HeadCell>
-                <Table.HeadCell>Size</Table.HeadCell>
-                <Table.HeadCell>Số lượng</Table.HeadCell>
-                <Table.HeadCell className="p-4"></Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y text-center">
-                {items.map((item1, index1) =>
-                  item1.price.map((item2, index2) => (
-                    <>
-                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell className="grid justify-center">
-                          {/* search by id like this :
+      <section className="mx-auto px-6 md:px-10 py-10 space-y-6 flex flex-col max-w-screen-xl pt-20">
+        <main className="my-5 space-y-5">
+          <div className="text-3xl font-semibold my-5 mx-36">Chọn đồ uống</div>
+          <div>
+            <hr className="border-black mx-36 my-5" />
+            <div className="overflow-x-auto mx-36">
+              <Table hoverable>
+                <Table.Head className="text-center">
+                  <Table.HeadCell></Table.HeadCell>
+                  {/* <Table.HeadCell>ID</Table.HeadCell> */}
+                  <Table.HeadCell>Tên</Table.HeadCell>
+                  <Table.HeadCell>Giá</Table.HeadCell>
+                  <Table.HeadCell>Size</Table.HeadCell>
+                  <Table.HeadCell>Số lượng</Table.HeadCell>
+                  <Table.HeadCell className="p-4"></Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y text-center">
+                  {items.map((item1, index1) =>
+                    item1.price.map((item2, index2) => (
+                      <>
+                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                          <Table.Cell className="grid justify-center">
+                            {/* search by id like this :
                           http://localhost:4000/api/staff/getDrinksImage/item.drinksId
                            */}
-                          <img
-                            src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
-                            alt={item1.image}
-                            className="w-16 h-16 rounded-full"
-                          />
-                        </Table.Cell>
-                        {/* <Table.Cell>{item1.drinksId}</Table.Cell> */}
-                        <Table.Cell>{item1.drinksName}</Table.Cell>
-                        <Table.Cell>{item1.price[index2]}</Table.Cell>
-                        <Table.Cell>{item1.size[index2]}</Table.Cell>
-                        <Table.Cell>
-                          <div className="flex justify-center gap-5">
-                            <button
-                              onClick={() => {
-                                if (
-                                  selectedItems[index1]?.[index2]
-                                    ?.inputValue
-                                )
-                                  handleInputChange(
-                                    index1,
-                                    index2,
-                                    selectedItems[index1]?.[index2]
-                                      ?.inputValue - 1
-                                  );
-                                else
-                                  handleInputChange(index1, index2, 1);
-                              }}
-                              disabled={
-                                selectedItems[index1]?.[index2]
-                                  ?.isChecked
-                              }
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                height="20"
-                                width="20"
-                                viewBox="0 0 512 512"
-                              >
-                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
-                              </svg>
-                            </button>
-                            <div>
-                              <input
-                                type="text"
-                                data-input-counter
-                                class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center"
-                                value={
-                                  selectedItems[index1]?.[index2]
-                                    ?.inputValue
-                                    ? selectedItems[index1]?.[index2]
-                                        ?.inputValue
-                                    : 1
+                            <img
+                              src={`http://localhost:4000/api/staff/getDrinksImage/${item1.drinksId}`}
+                              alt={item1.image}
+                              className="w-16 h-16 rounded-full"
+                            />
+                          </Table.Cell>
+                          {/* <Table.Cell>{item1.drinksId}</Table.Cell> */}
+                          <Table.Cell>{item1.drinksName}</Table.Cell>
+                          <Table.Cell>{item1.price[index2]}</Table.Cell>
+                          <Table.Cell>{item1.size[index2]}</Table.Cell>
+                          <Table.Cell>
+                            <div className="flex justify-center gap-5">
+                              <button
+                                onClick={() => {
+                                  if (
+                                    selectedItems[index1]?.[index2]?.inputValue
+                                  )
+                                    handleInputChange(
+                                      index1,
+                                      index2,
+                                      selectedItems[index1]?.[index2]
+                                        ?.inputValue - 1
+                                    );
+                                  else handleInputChange(index1, index2, 1);
+                                }}
+                                disabled={
+                                  selectedItems[index1]?.[index2]?.isChecked
                                 }
-                                required
-                              />
-                            </div>
-                            <button
-                              onClick={() => {
-                                if (
-                                  selectedItems[index1]?.[index2]
-                                    ?.inputValue
-                                )
-                                  handleInputChange(
-                                    index1,
-                                    index2,
-                                    selectedItems[index1]?.[index2]
-                                      ?.inputValue + 1
-                                  );
-                                else
-                                  handleInputChange(index1, index2, 1);
-                              }}
-                              disabled={
-                                selectedItems[index1]?.[index2]
-                                  ?.isChecked
-                              }
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                height="20"
-                                width="20"
-                                viewBox="0 0 512 512"
                               >
-                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-                              </svg>
-                            </button>
-                          </div>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <Checkbox
-                            className="w-5 h-5 text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
-                            checked={
-                              selectedItems[index1]?.[index2]?.isChecked
-                            }
-                            onChange={() =>
-                              handleCheckboxChange(index1, index2)
-                            }
-                          />
-                        </Table.Cell>
-                      </Table.Row>
-                    </>
-                  ))
-                )}
-              </Table.Body>
-            </Table>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  height="20"
+                                  width="20"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
+                                </svg>
+                              </button>
+                              <div>
+                                <input
+                                  type="text"
+                                  data-input-counter
+                                  class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center"
+                                  value={
+                                    selectedItems[index1]?.[index2]?.inputValue
+                                      ? selectedItems[index1]?.[index2]
+                                          ?.inputValue
+                                      : 1
+                                  }
+                                  required
+                                />
+                              </div>
+                              <button
+                                onClick={() => {
+                                  if (
+                                    selectedItems[index1]?.[index2]?.inputValue
+                                  )
+                                    handleInputChange(
+                                      index1,
+                                      index2,
+                                      selectedItems[index1]?.[index2]
+                                        ?.inputValue + 1
+                                    );
+                                  else handleInputChange(index1, index2, 1);
+                                }}
+                                disabled={
+                                  selectedItems[index1]?.[index2]?.isChecked
+                                }
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  height="20"
+                                  width="20"
+                                  viewBox="0 0 512 512"
+                                >
+                                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                                </svg>
+                              </button>
+                            </div>
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Checkbox
+                              className="w-5 h-5 text-[#916239] bg-white border-[#916239] rounded-full enabled:hover:bg-[#916239] enabled:hover:text-white"
+                              checked={
+                                selectedItems[index1]?.[index2]?.isChecked
+                              }
+                              onChange={() =>
+                                handleCheckboxChange(index1, index2)
+                              }
+                            />
+                          </Table.Cell>
+                        </Table.Row>
+                      </>
+                    ))
+                  )}
+                </Table.Body>
+              </Table>
+            </div>
+            <div className=" flex place-content-start gap-10 mx-36 my-5 ">
+              <Button
+                onClick={() => {
+                  if (drinks.length === 0) {
+                    alert("Hãy chọn đồ uống");
+                    return;
+                  }
+                  localStorage.setItem("drinks", JSON.stringify(drinks));
+                  navigate("/staff/order/drinks");
+                }}
+                theme={customTheme}
+                color="primary"
+                pill
+              >
+                Hoàn tất
+              </Button>
+              <Button
+                onClick={() => navigate("/staff/order/drinks")}
+                theme={customTheme}
+                color="secondary"
+                pill
+              >
+                Hủy
+              </Button>
+            </div>
           </div>
-          <div className=" flex place-content-start gap-10 mx-36 my-5 ">
-            <Button
-              onClick={() => {
-                if (drinks.length === 0) {
-                  alert("Hãy chọn đồ uống");
-                  return;
-                }
-                localStorage.setItem("drinks", JSON.stringify(drinks));
-                navigate("/staff/order/drinks");
-              }}
-              theme={customTheme}
-              color="primary"
-              pill
-            >
-              Hoàn tất
-            </Button>
-            <Button
-              onClick={() => navigate("/staff/order/drinks")}
-              theme={customTheme}
-              color="secondary"
-              pill
-            >
-              Hủy
-            </Button>
-          </div>
-        </div>
-      </main>
+        </main>
+      </section>
     </>
   );
 }
