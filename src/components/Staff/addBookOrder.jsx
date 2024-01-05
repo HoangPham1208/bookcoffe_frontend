@@ -319,7 +319,7 @@ export default function AddBookOrder() {
                       <Table.Cell>
                         {
                           <img
-                            className="h-20 w-20"
+                            className="h-28 w-36"
                             src={
                               "http://localhost:4000/api/customer/getBookImage/" +
                               item1.bookId
